@@ -3,4 +3,51 @@ scalar Cursor
 
 type Query {
   ping: String!
+  story(input: ModelIdInput!): Story!
+}
+
+input ModelIdInput {
+  id: String!
+}
+
+type Story {
+  id: String!
+  name: String
+  teaser: String
+  body: String
+  slug: String
+  primaryImage: Image
+  images: [Image]
+  created: Date
+  updated: Date
+  published: Date
+  status: Int
+  primarySection: WebsiteSection
+  taxonomy: [Taxonomy]
+}
+
+type Image {
+  id: String!
+  name: String
+  filePath: String
+  fileName: String
+}
+
+type WebsiteSection {
+  id: String!
+  name: String
+  fullName: String
+  alias: String
+  parent: WebsiteSection
+  children: [WebsiteSection]
+}
+
+type Taxonomy {
+  id: String!
+  name: String
+  fullName: String
+  type: String
+  parent: Taxonomy
+  status: Int
+  children: [Taxonomy]
 }

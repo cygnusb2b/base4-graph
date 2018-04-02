@@ -12,4 +12,4 @@ app.get('/', (req, res) => {
 routes(app);
 
 app.listen(port);
-process.stdout.write(`Base4 Graph listening on port ${port}.`);
+process.stdout.write(`Base4 Graph listening on port ${port}.\n`);
