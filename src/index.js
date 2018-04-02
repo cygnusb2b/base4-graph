@@ -1,0 +1,15 @@
+const express = require('express');
+const routes = require('./routes');
+
+const app = express();
+
+const port = 8937;
+
+app.get('/', (req, res) => {
+  res.send('Hi guys!');
+});
+
+routes(app);
+
+app.listen(port);
+process.stdout.write(`Base4 Graph listening on port ${port}.`);
