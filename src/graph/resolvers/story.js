@@ -1,20 +1,7 @@
 const DB = require('../../db');
-const Utils = require('../../utils');
+const { isObject, extractMutationValue, fillMutation } = require('../../utils');
 
 const { isArray } = Array;
-
-const extractMutationValue = (doc, type, field) => {
-  const { mutations } = doc;
-  if (!Utils.isObject(mutations)) return null;
-  const keyValues = mutations[type];
-  if (!Utils.isObject(keyValues)) return null;
-  return keyValues[field];
-};
-
-const fillMutation = (doc, type, field) => {
-  const value = extractMutationValue(doc, type, field);
-  return value || doc[field];
-};
 
 module.exports = {
   /**
@@ -105,7 +92,7 @@ module.exports = {
      */
     primarySection: async (story, args, { tenant }) => {
       const primarySection = extractMutationValue(story, 'Website', 'primarySection');
-      if (!Utils.isObject(primarySection)) return null;
+      if (!isObject(primarySection)) return null;
       const sectionId = primarySection.oid;
       if (!sectionId) return null;
 
