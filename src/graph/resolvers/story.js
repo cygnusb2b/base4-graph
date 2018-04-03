@@ -107,6 +107,15 @@ module.exports = {
       return section;
     },
 
+    primarySite: async (story, args, { tenant }) => {
+      const primarySite = extractMutationValue(story, 'Website', 'primarySite');
+      if (!primarySite) return null;
+
+      const collection = await DB.collection(`${tenant}_platform`, 'Product');
+      const product = await collection.findOne({ _id: primarySite, type: 'Site' });
+      return product;
+    },
+
     /**
      *
      */

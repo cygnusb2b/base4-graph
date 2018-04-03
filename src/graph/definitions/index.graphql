@@ -4,6 +4,7 @@
 # import * from 'website-section.graphql'
 # import * from 'user.graphql'
 # import * from 'contact.graphql'
+# import * from 'website-product.graphql'
 
 scalar Date
 scalar Cursor
