@@ -6,6 +6,9 @@ const {
   getIdsFromRefMany,
   getContacts,
   getUser,
+  getImages,
+  getTaxonomies,
+  getPrimaryImage,
 } = require('../../utils');
 
 const { isArray } = Array;
@@ -51,48 +54,17 @@ module.exports = {
     /**
      *
      */
-    primaryImage: async (story, args, { tenant }) => {
-      const imageId = story.primaryImage;
-      if (!imageId) return null;
-
-      const collection = await DB.collection(`${tenant}_platform`, 'Asset');
-      const image = await collection.findOne({ _id: imageId }, {
-        name: 1,
-        filePath: 1,
-        fileName: 1,
-      });
-      return image;
-    },
+    primaryImage: async (story, args, { tenant }) => getPrimaryImage(tenant, story.primaryImage),
 
     /**
      *
      */
-    images: async (story, args, { tenant }) => {
-      const imageIds = story.images;
-      if (!isArray(imageIds) || !imageIds.length) return [];
-
-      const collection = await DB.collection(`${tenant}_platform`, 'Asset');
-      const cursor = await collection.find({ _id: { $in: imageIds } }, {
-        name: 1,
-        filePath: 1,
-        fileName: 1,
-      });
-      const images = await cursor.toArray();
-      return images;
-    },
+    images: async (story, args, { tenant }) => getImages(tenant, story.images),
 
     /**
      *
      */
-    taxonomies: async (story, args, { tenant }) => {
-      const taxonomyIds = getIdsFromRefMany(story.taxonomy);
-      if (!taxonomyIds.length) return [];
-
-      const collection = await DB.collection(`${tenant}_platform`, 'Taxonomy');
-      const cursor = await collection.find({ _id: { $in: taxonomyIds } });
-      const docs = await cursor.toArray();
-      return docs;
-    },
+    taxonomies: async (story, args, { tenant }) => getTaxonomies(tenant, story.taxonomy),
 
     /**
      *
@@ -114,6 +86,21 @@ module.exports = {
       const collection = await DB.collection(`${tenant}_platform`, 'Product');
       const product = await collection.findOne({ _id: primarySite, type: 'Site' });
       return product;
+    },
+
+    company: async (story, args, { tenant }) => {
+      const collection = await DB.collection(`${tenant}_platform`, 'Content');
+      if (story.company) {
+        const company = await collection.findOne({ _id: story.company, type: 'Company' });
+        return company;
+      }
+      const { relatedTo } = story;
+      if (!isArray(relatedTo) || !relatedTo.length) return null;
+
+      const contentIds = getIdsFromRefMany(relatedTo);
+      if (!contentIds.length) return null;
+      const doc = await collection.findOne({ _id: { $in: contentIds }, type: 'Company' });
+      return doc;
     },
 
     /**

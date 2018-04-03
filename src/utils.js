@@ -66,11 +66,58 @@ const getContacts = async (tenant, contactIds) => {
   return docs;
 };
 
+/**
+ *
+ * @param {string} tenant
+ * @param {string} userId
+ */
 const getUser = async (tenant, userId) => {
   if (!userId) return null;
   const collection = await DB.collection(`${tenant}_platform`, 'User');
   const user = await collection.findOne({ _id: userId });
   return user;
+};
+
+/**
+ *
+ * @param {string} tenant
+ * @param {?Object[]} taxonomyRefs
+ */
+const getTaxonomies = async (tenant, taxonomyRefs) => {
+  const taxonomyIds = getIdsFromRefMany(taxonomyRefs);
+  if (!taxonomyIds.length) return [];
+
+  const collection = await DB.collection(`${tenant}_platform`, 'Taxonomy');
+  const cursor = await collection.find({ _id: { $in: taxonomyIds } });
+  const docs = await cursor.toArray();
+  return docs;
+};
+
+/**
+ *
+ * @param {string} tenant
+ * @param {?String[]} imageIds
+ */
+const getImages = async (tenant, imageIds) => {
+  if (!isArray(imageIds) || !imageIds.length) return [];
+
+  const collection = await DB.collection(`${tenant}_platform`, 'Asset');
+  const cursor = await collection.find({ _id: { $in: imageIds } });
+  const images = await cursor.toArray();
+  return images;
+};
+
+/**
+ *
+ * @param {string} tenant
+ * @param {?string} imageId
+ */
+const getPrimaryImage = async (tenant, imageId) => {
+  if (!imageId) return null;
+
+  const collection = await DB.collection(`${tenant}_platform`, 'Asset');
+  const image = await collection.findOne({ _id: imageId });
+  return image;
 };
 
 module.exports = {
@@ -81,4 +128,7 @@ module.exports = {
   getIdFromRefOne,
   getIdsFromRefMany,
   getUser,
+  getTaxonomies,
+  getImages,
+  getPrimaryImage,
 };

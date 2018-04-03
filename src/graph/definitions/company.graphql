@@ -1,0 +1,17 @@
+type Company {
+  id: Int!
+  status: Int
+  name: String
+  seoTitle: String
+  slug: String
+  teaser: String
+  body: String
+  hash: String
+  createdAt: Date
+  updatedAt: Date
+  taxonomies: [Taxonomy]
+  logo: Image # resolves from primaryImage
+  images: [Image]
+  createdBy: User
+  updatedBy: User
+}

@@ -26,4 +26,5 @@ type Story {
   authors: [Contact]
   contributors: [Contact]
   photographers: [Contact]
+  company: Company
 }

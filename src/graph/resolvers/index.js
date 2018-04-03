@@ -7,8 +7,9 @@ const websiteSection = require('./website-section');
 const taxonomy = require('./taxonomy');
 const user = require('./user');
 const contact = require('./contact');
+const company = require('./company');
 
-module.exports = deepAssign(story, websiteSection, taxonomy, user, contact, {
+module.exports = deepAssign(story, websiteSection, taxonomy, user, contact, company, {
   /**
    *
    */
