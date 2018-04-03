@@ -10,7 +10,7 @@ type Company {
   createdAt: Date
   updatedAt: Date
   taxonomies: [Taxonomy]
-  logo: Image # resolves from primaryImage
+  logo: Image
   images: [Image]
   createdBy: User
   updatedBy: User
