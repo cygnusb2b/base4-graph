@@ -1,0 +1,16 @@
+type Image {
+  id: String!
+  name: String
+  filePath: String
+  fileName: String
+  credit: String
+  caption: String
+  source: ImageSource
+  approvedWeb: Boolean
+}
+
+type ImageSource {
+  name: String
+  height: Int
+  width: Int
+}

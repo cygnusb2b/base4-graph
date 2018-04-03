@@ -1,4 +1,7 @@
 # import * from 'story.graphql'
+# import * from 'image.graphql'
+# import * from 'taxonomy.graphql'
+# import * from 'website-section.graphql'
 
 scalar Date
 scalar Cursor
@@ -9,40 +12,4 @@ type Query {
 
 input ModelIdInput {
   id: String!
-}
-
-type Image {
-  id: String!
-  name: String
-  filePath: String
-  fileName: String
-  credit: String
-  caption: String
-  source: ImageSource
-  approvedWeb: Boolean #mutations.Website.approved
-}
-
-type ImageSource {
-  name: String
-  height: Int
-  width: Int
-}
-
-type WebsiteSection {
-  id: String!
-  name: String
-  fullName: String
-  alias: String
-  parent: WebsiteSection
-  children: [WebsiteSection]
-}
-
-type Taxonomy {
-  id: String!
-  name: String
-  fullName: String
-  type: String
-  parent: Taxonomy
-  status: Int
-  children: [Taxonomy]
 }

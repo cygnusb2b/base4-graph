@@ -1,0 +1,8 @@
+type WebsiteSection {
+  id: String!
+  name: String
+  fullName: String
+  alias: String
+  parent: WebsiteSection
+  children: [WebsiteSection]
+}

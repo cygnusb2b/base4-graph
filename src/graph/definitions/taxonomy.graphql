@@ -1,0 +1,9 @@
+type Taxonomy {
+  id: String!
+  name: String
+  fullName: String
+  type: String
+  parent: Taxonomy
+  status: Int
+  children: [Taxonomy]
+}
