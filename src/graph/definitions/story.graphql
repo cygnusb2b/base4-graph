@@ -20,4 +20,6 @@ type Story {
   taxonomies: [Taxonomy]
   primaryImage: Image
   images: [Image]
+  createdBy: User
+  updatedBy: User
 }

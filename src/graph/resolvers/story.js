@@ -38,6 +38,8 @@ module.exports = {
     createdAt: doc => doc.created,
     updatedAt: doc => doc.updated,
     publishedAt: doc => doc.published,
+    slug: story => extractMutationValue(story, 'Website', 'slug'),
+    seoTitle: story => extractMutationValue(story, 'Website', 'seoTitle'),
 
     /**
      *
@@ -101,7 +103,28 @@ module.exports = {
       return section;
     },
 
-    slug: story => extractMutationValue(story, 'Website', 'slug'),
-    seoTitle: story => extractMutationValue(story, 'Website', 'seoTitle'),
+    /**
+     *
+     */
+    createdBy: async (story, args, { tenant }) => {
+      const userId = story.createdBy;
+      if (!userId) return null;
+
+      const collection = await DB.collection(`${tenant}_platform`, 'User');
+      const user = await collection.findOne({ _id: userId });
+      return user;
+    },
+
+    /**
+     *
+     */
+    updatedBy: async (story, args, { tenant }) => {
+      const userId = story.updatedBy;
+      if (!userId) return null;
+
+      const collection = await DB.collection(`${tenant}_platform`, 'User');
+      const user = await collection.findOne({ _id: userId });
+      return user;
+    },
   },
 };
