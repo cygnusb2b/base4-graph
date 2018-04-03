@@ -1,3 +1,7 @@
+type Query {
+  taxonomy(input: ModelIdInput!): Taxonomy!
+}
+
 type Taxonomy {
   id: String!
   name: String

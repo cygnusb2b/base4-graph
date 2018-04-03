@@ -4,8 +4,9 @@ const { extractMutationValue } = require('../../utils');
 
 const story = require('./story');
 const websiteSection = require('./website-section');
+const taxonomy = require('./taxonomy');
 
-module.exports = deepAssign(story, websiteSection, {
+module.exports = deepAssign(story, websiteSection, taxonomy, {
   /**
    *
    */
@@ -17,13 +18,6 @@ module.exports = deepAssign(story, websiteSection, {
   Image: {
     id: doc => doc._id,
     approvedWeb: doc => extractMutationValue(doc, 'Website', 'approved'),
-  },
-
-  /**
-   *
-   */
-  Taxonomy: {
-    id: doc => doc._id,
   },
 
   /**
