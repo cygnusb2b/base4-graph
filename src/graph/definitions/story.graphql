@@ -1,0 +1,23 @@
+type Query {
+  story(input: ModelIdInput!): Story!
+}
+
+type Story {
+  id: String!
+  type: String
+  status: Int
+  title: String
+  shortTitle: String
+  seoTitle: String
+  slug: String
+  teaser: String
+  body: String
+  hash: String
+  createdAt: Date
+  updatedAt: Date
+  publishedAt: Date
+  primarySection: WebsiteSection
+  taxonomies: [Taxonomy]
+  primaryImage: Image
+  images: [Image]
+}

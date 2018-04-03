@@ -24,14 +24,23 @@ const tenants = [
   'scomm_nvp',
 ];
 
+const mutations = [
+  'Website',
+  'Magazine',
+  'Email',
+];
+
 router.use(
   bodyParser.json(),
   graphqlExpress((req) => {
     const tenant = req.get('X-Tenant-Key');
+    let mutation = req.get('X-Mutation-Type');
+    if (!mutations.includes(mutation)) mutation = 'Website';
+
     if (!tenants.includes(tenant)) throw new Error(`No tenant found for '${tenant}'`);
     return {
       schema,
-      context: { auth: { }, tenant },
+      context: { auth: { }, tenant, mutation },
     };
   }),
 );

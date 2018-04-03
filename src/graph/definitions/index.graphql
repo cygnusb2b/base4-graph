@@ -1,29 +1,14 @@
+# import * from 'story.graphql'
+
 scalar Date
 scalar Cursor
 
 type Query {
   ping: String!
-  story(input: ModelIdInput!): Story!
 }
 
 input ModelIdInput {
   id: String!
-}
-
-type Story {
-  id: String!
-  name: String
-  teaser: String
-  body: String
-  slug: String
-  primaryImage: Image
-  images: [Image]
-  created: Date
-  updated: Date
-  published: Date
-  status: Int
-  primarySection: WebsiteSection
-  taxonomy: [Taxonomy]
 }
 
 type Image {
@@ -31,6 +16,16 @@ type Image {
   name: String
   filePath: String
   fileName: String
+  credit: String
+  caption: String
+  source: ImageSource
+  approvedWeb: Boolean #mutations.Website.approved
+}
+
+type ImageSource {
+  name: String
+  height: Int
+  width: Int
 }
 
 type WebsiteSection {
