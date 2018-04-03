@@ -21,6 +21,7 @@ module.exports = deepAssign(story, websiteSection, taxonomy, user, contact, comp
   Image: {
     id: doc => doc._id,
     approvedWeb: doc => extractMutationValue(doc, 'Website', 'approved'),
+    src: doc => `https://cdn.baseplatform.io/${doc.filePath}/${doc.fileName}`,
   },
 
   /**
