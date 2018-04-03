@@ -1,6 +1,5 @@
 type Image {
   id: String!
-  name: String
   src: String
   filePath: String
   fileName: String
