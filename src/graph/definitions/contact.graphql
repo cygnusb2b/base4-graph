@@ -1,0 +1,18 @@
+type Contact {
+  id: Int!
+  status: Int
+  firstName: String
+  lastName: String
+  fullName: String
+  title: String
+  bio: String
+  phone: String
+  mobile: String
+  email: String
+  publicEmail: String
+  website: String
+  createdAt: Date
+  updatedAt: Date
+  createdBy: User
+  updatedBy: User
+}

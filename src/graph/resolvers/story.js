@@ -1,5 +1,12 @@
 const DB = require('../../db');
-const { isObject, extractMutationValue, fillMutation } = require('../../utils');
+const {
+  extractMutationValue,
+  fillMutation,
+  getIdFromRefOne,
+  getIdsFromRefMany,
+  getContacts,
+  getUser,
+} = require('../../utils');
 
 const { isArray } = Array;
 
@@ -16,7 +23,7 @@ module.exports = {
       const types = ['Article', 'Blog', 'MediaGallery', 'News', 'Video', 'PressRelease', 'Webinar', 'Podcast'];
 
       const collection = await DB.collection(`${tenant}_platform`, 'Content');
-      const story = await collection.findOne({ _id: parseInt(id, 10), type: { $in: types } });
+      const story = await collection.findOne({ _id: id, type: { $in: types } });
 
       if (!story) throw new Error(`No story found for ID ${id}`);
       return story;
@@ -78,9 +85,7 @@ module.exports = {
      *
      */
     taxonomies: async (story, args, { tenant }) => {
-      const { taxonomy } = story;
-      if (!isArray(taxonomy) || !taxonomy.length) return [];
-      const taxonomyIds = taxonomy.map(tax => tax.oid).filter(id => id);
+      const taxonomyIds = getIdsFromRefMany(story.taxonomy);
       if (!taxonomyIds.length) return [];
 
       const collection = await DB.collection(`${tenant}_platform`, 'Taxonomy');
@@ -94,8 +99,7 @@ module.exports = {
      */
     primarySection: async (story, args, { tenant }) => {
       const primarySection = extractMutationValue(story, 'Website', 'primarySection');
-      if (!isObject(primarySection)) return null;
-      const sectionId = primarySection.oid;
+      const sectionId = getIdFromRefOne(primarySection);
       if (!sectionId) return null;
 
       const collection = await DB.collection(`${tenant}_website`, 'Section');
@@ -106,25 +110,18 @@ module.exports = {
     /**
      *
      */
-    createdBy: async (story, args, { tenant }) => {
-      const userId = story.createdBy;
-      if (!userId) return null;
-
-      const collection = await DB.collection(`${tenant}_platform`, 'User');
-      const user = await collection.findOne({ _id: userId });
-      return user;
-    },
+    createdBy: (story, args, { tenant }) => getUser(tenant, story.createdBy),
 
     /**
      *
      */
-    updatedBy: async (story, args, { tenant }) => {
-      const userId = story.updatedBy;
-      if (!userId) return null;
+    updatedBy: (story, args, { tenant }) => getUser(tenant, story.updatedBy),
 
-      const collection = await DB.collection(`${tenant}_platform`, 'User');
-      const user = await collection.findOne({ _id: userId });
-      return user;
-    },
+    /**
+     *
+     */
+    authors: (story, args, { tenant }) => getContacts(tenant, story.authors),
+    contributors: (story, args, { tenant }) => getContacts(tenant, story.contributors),
+    photographers: (story, args, { tenant }) => getContacts(tenant, story.photographers),
   },
 };

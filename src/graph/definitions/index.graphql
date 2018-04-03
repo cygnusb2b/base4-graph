@@ -3,6 +3,7 @@
 # import * from 'taxonomy.graphql'
 # import * from 'website-section.graphql'
 # import * from 'user.graphql'
+# import * from 'contact.graphql'
 
 scalar Date
 scalar Cursor
@@ -12,5 +13,5 @@ type Query {
 }
 
 input ModelIdInput {
-  id: String!
+  id: Int!
 }

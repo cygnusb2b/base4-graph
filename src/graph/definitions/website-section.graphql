@@ -3,7 +3,7 @@ type Query {
 }
 
 type WebsiteSection {
-  id: String!
+  id: Int!
   name: String
   fullName: String
   alias: String

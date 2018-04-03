@@ -1,5 +1,5 @@
 const DB = require('../../db');
-const { isObject } = require('../../utils');
+const { getIdFromRefOne } = require('../../utils');
 
 module.exports = {
   /**
@@ -13,7 +13,7 @@ module.exports = {
       const { id } = input;
 
       const collection = await DB.collection(`${tenant}_platform`, 'Taxonomy');
-      const taxonomy = await collection.findOne({ _id: parseInt(id, 10) });
+      const taxonomy = await collection.findOne({ _id: id });
 
       if (!taxonomy) throw new Error(`No website taxonomy found for ID ${id}`);
       return taxonomy;
@@ -33,9 +33,7 @@ module.exports = {
      *
      */
     parent: async (doc, args, { tenant }) => {
-      const { parent } = doc;
-      if (!isObject(parent)) return null;
-      const taxonomyId = parent.oid;
+      const taxonomyId = getIdFromRefOne(doc.parent);
       if (!taxonomyId) return null;
 
       const collection = await DB.collection(`${tenant}_platform`, 'Taxonomy');
@@ -49,7 +47,7 @@ module.exports = {
     children: async (doc, args, { tenant }) => {
       const taxonomyId = doc._id;
       const collection = await DB.collection(`${tenant}_platform`, 'Taxonomy');
-      const cursor = await collection.find({ 'parent.$id': parseInt(taxonomyId, 10) });
+      const cursor = await collection.find({ 'parent.$id': taxonomyId });
       const taxonomies = await cursor.toArray();
       return taxonomies;
     },
