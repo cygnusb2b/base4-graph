@@ -22,6 +22,7 @@ const tenants = [
   'scomm_wcp',
   'scomm_kcp',
   'scomm_nvp',
+  'as3_baseplatform',
 ];
 
 const mutations = [
