@@ -3,8 +3,9 @@ const { DateType } = require('../custom-types');
 const { extractMutationValue } = require('../../utils');
 
 const story = require('./story');
+const websiteSection = require('./website-section');
 
-module.exports = deepAssign(story, {
+module.exports = deepAssign(story, websiteSection, {
   /**
    *
    */
@@ -22,13 +23,6 @@ module.exports = deepAssign(story, {
    *
    */
   Taxonomy: {
-    id: doc => doc._id,
-  },
-
-  /**
-   *
-   */
-  WebsiteSection: {
     id: doc => doc._id,
   },
 

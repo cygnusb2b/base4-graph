@@ -1,3 +1,7 @@
+type Query {
+  websiteSection(input: ModelIdInput!): WebsiteSection!
+}
+
 type WebsiteSection {
   id: String!
   name: String
