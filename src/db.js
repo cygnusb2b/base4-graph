@@ -1,7 +1,7 @@
 const { MongoClient } = require('mongodb');
 
 let mongo;
-const dsn = 'mongodb://mongo.platform.baseplatform.io:27017/?replicaSet=platform&connectTimeoutMS=200&journal=true&readPreference=nearest';
+const dsn = process.env.MONGO_DSN;
 
 module.exports = {
   async connect() {
