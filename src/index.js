@@ -1,18 +1,13 @@
 require('dotenv').config();
-const express = require('express');
-const DB = require('./db');
-const routes = require('./routes');
-
-const app = express();
+require('./db');
+const app = require('./app');
+const pkg = require('../package.json');
 
 const port = process.env.PORT;
+const host = process.env.HOSTNAME;
 
-routes(app);
-
-DB.connect().then(() => {
-  app.listen(port);
-  process.stdout.write(`Base4 Graph listening on port ${port}.\n`);
-}).catch((e) => {
-  throw e;
+const server = app.listen(port, host, () => {
+  process.stdout.write(`Express app '${pkg.name}' listening on http://${host}:${port}\n`);
 });
 
+module.exports = server;
