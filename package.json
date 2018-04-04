@@ -40,6 +40,19 @@
       "prune": "docker volume prune --filter label=io.as3.appname=base4-graph --filter label=io.as3.env=test --filter label=io.as3.discard=true --force"
     }
   },
+  "nyc": {
+    "check-coverage": false,
+    "per-file": true,
+    "reporter": [
+      "text",
+      "cobertura"
+    ],
+    "all": true,
+    "cache": false,
+    "include": [
+      "src/**/*.js"
+    ]
+  },
   "dependencies": {
     "apollo-server-express": "^1.3.4",
     "bluebird": "^3.5.1",
