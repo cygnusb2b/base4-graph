@@ -8,6 +8,10 @@ const port = process.env.PORT;
 
 routes(app);
 
-DB.connect();
-app.listen(port);
-process.stdout.write(`Base4 Graph listening on port ${port}.\n`);
+DB.connect().then(() => {
+  app.listen(port);
+  process.stdout.write(`Base4 Graph listening on port ${port}.\n`);
+}).catch((e) => {
+  throw e;
+});
+
