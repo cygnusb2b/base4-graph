@@ -22,6 +22,7 @@ module.exports = {
      *
      */
     story: async (root, { input }, { tenant }) => {
+      tenant.check();
       const { id } = input;
       const types = ['Article', 'Blog', 'MediaGallery', 'News', 'Video', 'PressRelease', 'Webinar', 'Podcast'];
 
