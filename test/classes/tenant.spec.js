@@ -54,4 +54,21 @@ describe('classes/tenant', function() {
       });
     });
   });
+
+  describe('#toString', function() {
+    ['', undefined, null].forEach((value) => {
+      it(`should return a string value with an empty value of '${value}'`, function(done) {
+        const instance = new Tenant(value);
+        expect(`${instance}`).to.equal(`${value}`);
+        done();
+      });
+    });
+    tenants.forEach((value) => {
+      it(`should return a string value of '${value}'`, function(done) {
+        const instance = new Tenant(value);
+        expect(`${instance}`).to.equal(`${value}`);
+        done();
+      });
+    });
+  });
 });

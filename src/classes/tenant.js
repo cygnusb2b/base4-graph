@@ -30,6 +30,10 @@ class Tenant {
   check() {
     if (!this.isValid()) throw new Error(`You must provide a valid tenant key. The provided key '${this.key}' was not found.`);
   }
+
+  toString() {
+    return `${this.key}`;
+  }
 }
 
 module.exports = Tenant;
