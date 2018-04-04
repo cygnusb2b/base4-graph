@@ -1,13 +1,32 @@
 const { MongoClient } = require('mongodb');
 
 let mongo;
-const dsn = process.env.MONGO_DSN;
+let connected = false;
+let promise;
 
-module.exports = {
+const { MONGO_DSN } = process.env;
+
+const DB = {
+  async close(force) {
+    if (promise) {
+      await promise;
+      await mongo.close(force);
+    } else if (connected) {
+      await mongo.close(force);
+    }
+  },
   async connect() {
-    if (mongo) return mongo;
-    mongo = await MongoClient.connect(dsn);
-    process.stdout.write(`Connected to MongoDB DSN ${dsn}\n`);
+    if (connected) return mongo;
+    if (promise) {
+      mongo = await promise;
+      connected = true;
+      promise = undefined;
+      return mongo;
+    }
+    promise = MongoClient.connect(MONGO_DSN);
+    mongo = await promise;
+    connected = true;
+    promise = undefined;
     return mongo;
   },
   async db(name) {
@@ -19,3 +38,7 @@ module.exports = {
     return db.collection(name);
   },
 };
+
+DB.connect().then(() => process.stdout.write(`Successful MongoDB connection to '${MONGO_DSN}'\n`));
+
+module.exports = DB;
