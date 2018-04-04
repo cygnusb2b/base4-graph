@@ -16,6 +16,7 @@ services:
     environment:
       NODE_ENV: development
       PORT: ${BASE4_GRAPH_PORT-8937}
+      HOSTNAME: ${BASE4_GRAPH_HOSTNAME-localhost}
       MONGO_DSN: ${BASE4_GRAPH_DSN-mongodb://mongo:27017}
   mongo:
     image: mongo:3.4

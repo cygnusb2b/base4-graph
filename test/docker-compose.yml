@@ -1,0 +1,32 @@
+version: '3'
+services:
+  test:
+    image: node:8
+    depends_on:
+      - mongo
+    tty: true
+    working_dir: /app
+    volumes:
+      - ../:/app:cached
+      - node_modules:/app/node_modules
+    restart: on-failure
+    entrypoint: yarn run test:run
+    environment:
+      NODE_ENV: test
+      PORT: 8100
+      HOSTNAME: localhost
+      MONGO_DSN: mongodb://mongo:27017/base4graph
+  mongo:
+    image: mongo:3.4
+    volumes:
+      - mongodb:/data/db
+volumes:
+  node_modules:
+    labels:
+      io.as3.appname: "base4-graph"
+      io.as3.env: "test"
+  mongodb:
+    labels:
+      io.as3.appname: "base4-graph"
+      io.as3.discard: "true"
+      io.as3.env: "test"
