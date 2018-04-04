@@ -10,6 +10,7 @@ module.exports = {
      *
      */
     taxonomy: async (root, { input }, { tenant }) => {
+      tenant.check();
       const { id } = input;
 
       const collection = await DB.collection(`${tenant}_platform`, 'Taxonomy');
