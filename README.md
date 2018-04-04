@@ -1,4 +1,5 @@
 # Base4 Graph Server
+A simplified GraphQL server for the Base4/Platform database. Can be used for experimenting with Base data in new contexts.
 
 ## Development
 Docker (with compose) and Yarn are required to develop this project. To begin, clone the repository and then run `yarn start`. The server is now accessible on `localhost:8937`.
@@ -23,3 +24,8 @@ You must send a tenant context when making requests. This can be done by setting
 GET http://localhost:8937/graph?query={ping}
 X-Tenant-Key: cygnus_ofcr
 ```
+
+You can also dictate which mutation/revision values to return by sending the `X-Mutation-Type` header. If not set, the default value is `Website`. Possible options are `Website`, `Magazine`, or `Email`.
+
+## Testing
+Tests can be run via `yarn test`. Coverage via `yarn coverage`.
