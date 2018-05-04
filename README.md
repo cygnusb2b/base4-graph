@@ -28,4 +28,4 @@ X-Tenant-Key: cygnus_ofcr
 You can also dictate which mutation/revision values to return by sending the `X-Mutation-Type` header. If not set, the default value is `Website`. Possible options are `Website`, `Magazine`, or `Email`.
 
 ## Testing
-Tests can be run via `yarn test`. Coverage via `yarn coverage`.
+Tests can be run via `yarn test`. Coverage via `yarn coverage`. :)
