@@ -1,5 +1,6 @@
 type Query {
   story(input: ModelIdInput!): Story!
+  allStories(input: AllStoryInput!): [Story]
 }
 
 type Story {
@@ -27,4 +28,10 @@ type Story {
   contributors: [Contact]
   photographers: [Contact]
   company: Company
+}
+
+input AllStoryInput {
+  limit: Int = 10
+  type: String
+  status: Int! = 1
 }

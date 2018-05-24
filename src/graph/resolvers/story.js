@@ -12,6 +12,7 @@ const {
 } = require('../../utils');
 
 const { isArray } = Array;
+const contentTypes = ['Article', 'Blog', 'MediaGallery', 'News', 'Video', 'PressRelease', 'Webinar', 'Podcast'];
 
 module.exports = {
   /**
@@ -24,13 +25,30 @@ module.exports = {
     story: async (root, { input }, { tenant }) => {
       tenant.check();
       const { id } = input;
-      const types = ['Article', 'Blog', 'MediaGallery', 'News', 'Video', 'PressRelease', 'Webinar', 'Podcast'];
 
       const collection = await DB.collection(`${tenant}_platform`, 'Content');
-      const story = await collection.findOne({ _id: id, type: { $in: types } });
+      const story = await collection.findOne({ _id: id, type: { $in: contentTypes } });
 
       if (!story) throw new Error(`No story found for ID ${id}`);
       return story;
+    },
+
+    allStories: async (root, { input }, { tenant }) => {
+      tenant.check();
+
+      const { limit, type, status } = input;
+      if (type && !contentTypes.includes(type)) {
+        throw new Error('Invalid content type.');
+      }
+      const types = type ? [type] : contentTypes;
+
+      const collection = await DB.collection(`${tenant}_platform`, 'Content');
+      const cursor = await collection.find({
+        status,
+        type: { $in: types },
+      }).limit(limit || 10).sort({ published: -1 });
+      const stories = await cursor.toArray();
+      return stories;
     },
   },
 
