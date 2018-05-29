@@ -9,7 +9,8 @@ module.exports = {
     /**
      *
      */
-    websiteSection: async (root, { input }, { tenant }) => {
+    websiteSection: async (root, { input }, { tenant, auth }) => {
+      auth.check();
       tenant.check();
       const { id } = input;
 

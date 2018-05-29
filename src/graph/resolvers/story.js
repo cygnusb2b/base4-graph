@@ -22,7 +22,8 @@ module.exports = {
     /**
      *
      */
-    story: async (root, { input }, { tenant }) => {
+    story: async (root, { input }, { tenant, auth }) => {
+      auth.check();
       tenant.check();
       const { id } = input;
 
@@ -33,7 +34,8 @@ module.exports = {
       return story;
     },
 
-    allStories: async (root, { input }, { tenant }) => {
+    allStories: async (root, { input }, { tenant, auth }) => {
+      auth.check();
       tenant.check();
 
       const { limit, type, status } = input;
