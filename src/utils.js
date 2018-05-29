@@ -120,6 +120,14 @@ const getPrimaryImage = async (tenant, imageId) => {
   return image;
 };
 
+const getApiKey = async (key) => {
+  if (!key) return null;
+  const collection = await DB.collection('platform', 'GraphKeys');
+  const doc = await collection.findOne({ key });
+  if (!doc) return null;
+  return doc.key;
+};
+
 module.exports = {
   isObject,
   extractMutationValue,
@@ -131,4 +139,5 @@ module.exports = {
   getTaxonomies,
   getImages,
   getPrimaryImage,
+  getApiKey,
 };
