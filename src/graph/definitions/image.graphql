@@ -1,8 +1,8 @@
 type Image {
   id: String!
-  src: String
-  filePath: String
-  fileName: String
+  path: String!
+  filePath: String!
+  fileName: String!
   credit: String
   caption: String
   source: ImageSource
