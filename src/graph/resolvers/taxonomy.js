@@ -9,7 +9,8 @@ module.exports = {
     /**
      *
      */
-    taxonomy: async (root, { input }, { tenant }) => {
+    taxonomy: async (root, { input }, { tenant, auth }) => {
+      auth.check();
       tenant.check();
       const { id } = input;
 
