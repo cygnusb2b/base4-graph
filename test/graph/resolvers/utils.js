@@ -1,10 +1,12 @@
 const { graphql } = require('graphql');
 const Tenant = require('../../../src/classes/tenant');
 const schema = require('../../../src/graph/schema');
+const Credentials = require('../../../src/auth/credentials');
 
 const buildContext = async ({ tenantKey } = {}) => {
   const tenant = new Tenant(tenantKey);
-  return { auth: {}, tenant };
+  const auth = new Credentials({ key: '1234' });
+  return { auth, tenant };
 };
 
 module.exports = {
