@@ -39,6 +39,10 @@ const DB = {
   },
 };
 
-DB.connect().then(() => process.stdout.write(`Successful MongoDB connection to '${MONGO_DSN}'\n`));
+DB.connect().then(() => process.stdout.write(`Successful MongoDB connection to '${MONGO_DSN}'\n`)).catch((err) => {
+  setImmediate(() => {
+    throw err;
+  });
+});
 
 module.exports = DB;
