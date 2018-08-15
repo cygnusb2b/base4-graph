@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "main": "src/index.js",
   "repository": "https://github.com/cygnusb2b/base4-graph.git",
-  "author": "AS3",
+  "author": "Jacob Bare <jacob@limit0.io>",
   "license": "MIT",
   "private": true,
   "scripts": {
