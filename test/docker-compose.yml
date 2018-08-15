@@ -10,23 +10,17 @@ services:
       - ../:/app:cached
       - node_modules:/app/node_modules
     restart: on-failure
-    entrypoint: yarn run test:run
+    entrypoint: yarn test:run
     environment:
       NODE_ENV: test
       PORT: 8100
-      HOSTNAME: localhost
       MONGO_DSN: mongodb://mongo:27017/base4graph
   mongo:
     image: mongo:3.6
     volumes:
       - mongodb:/data/db
 volumes:
-  node_modules:
-    labels:
-      io.as3.appname: "base4-graph"
-      io.as3.env: "test"
+  node_modules: {}
   mongodb:
     labels:
-      io.as3.appname: "base4-graph"
-      io.as3.discard: "true"
-      io.as3.env: "test"
+      base4.graph.discard: "true"
