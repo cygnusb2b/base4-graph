@@ -9,7 +9,6 @@ services:
     volumes:
       - ../:/app:cached
       - node_modules:/app/node_modules
-    restart: on-failure
     entrypoint: yarn test:run
     environment:
       NODE_ENV: test
