@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "repository": "https://github.com/cygnusb2b/base4-graph.git",
   "author": "AS3",
-  "license": "UNLICENSED",
+  "license": "MIT",
   "private": true,
   "scripts": {
     "pretest": "yarn run posttest && $npm_package_docker_test_install",
