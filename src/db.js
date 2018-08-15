@@ -1,10 +1,11 @@
 const { MongoClient } = require('mongodb');
+const env = require('./env');
 
 let mongo;
 let connected = false;
 let promise;
 
-const { MONGO_DSN } = process.env;
+const { MONGO_DSN } = env;
 
 const DB = {
   async close(force) {

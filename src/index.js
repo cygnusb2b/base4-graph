@@ -1,12 +1,12 @@
-require('dotenv').config();
 require('./db');
+const env = require('./env');
 const app = require('./app');
 const pkg = require('../package.json');
 
-const port = process.env.PORT;
+const { PORT } = env;
 
-const server = app.listen(port, () => {
-  process.stdout.write(`Express app '${pkg.name}' listening on ${port}\n`);
+const server = app.listen(PORT, () => {
+  process.stdout.write(`Express app '${pkg.name} v${pkg.version}' listening on ${PORT}\n`);
 });
 
 module.exports = server;
