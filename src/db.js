@@ -24,7 +24,9 @@ const DB = {
       promise = undefined;
       return mongo;
     }
-    promise = MongoClient.connect(MONGO_DSN);
+    promise = MongoClient.connect(MONGO_DSN, {
+      useNewUrlParser: true,
+    });
     mongo = await promise;
     connected = true;
     promise = undefined;
