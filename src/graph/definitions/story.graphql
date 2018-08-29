@@ -17,7 +17,7 @@ type Story {
   createdAt: Date
   updatedAt: Date
   publishedAt: Date
-  primarySite: WebsiteProduct
+  primarySite: WebsiteProductSite
   primarySection: WebsiteSection
   taxonomies: [Taxonomy]
   primaryImage: Image

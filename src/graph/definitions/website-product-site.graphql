@@ -1,4 +1,4 @@
-type WebsiteProduct {
+type WebsiteProductSite {
   id: String!
   name: String
   description: String

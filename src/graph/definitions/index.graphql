@@ -7,7 +7,7 @@
 # import Query.* from 'website-section.graphql'
 # import * from 'user.graphql'
 # import * from 'contact.graphql'
-# import * from 'website-product.graphql'
+# import * from 'website-product-site.graphql'
 # import * from 'company.graphql'
 
 scalar Date
