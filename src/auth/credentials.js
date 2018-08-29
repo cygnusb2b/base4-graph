@@ -1,3 +1,5 @@
+const { AuthenticationError } = require('apollo-server-express');
+
 class Credentials {
   constructor({ key, err } = {}) {
     this.key = key;
@@ -17,7 +19,7 @@ class Credentials {
   }
 
   check() {
-    if (!this.isValid()) throw new Error('You must be logged-in to access this resource.');
+    if (!this.isValid()) throw new AuthenticationError('You must be logged-in to access this resource.');
   }
 }
 
