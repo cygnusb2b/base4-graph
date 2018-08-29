@@ -49,7 +49,6 @@ class Client {
       this.promise = MongoClient.connect(this.dsn, this.options);
     }
     const client = await this.promise;
-    process.stdout.write(`💾 Successful MongoDB connection to ${this.dsn}\n`);
     return client;
   }
 }
