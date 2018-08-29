@@ -1,3 +1,4 @@
+const { ApolloError, UserInputError } = require('apollo-server-express');
 const Tenant = require('../classes/tenant');
 const isObject = require('../utils/is-object');
 
@@ -35,6 +36,18 @@ class Base4 {
     this.tenant.check();
   }
 
+  async findById(namespace, resource, id, opts) {
+    if (!id) return null;
+    const collection = await this.collection(namespace, resource);
+    return collection.findOne({ _id: id }, opts);
+  }
+
+  async strictFindById(namespace, resource, id, opts) {
+    const doc = await this.findById(namespace, resource, id, opts);
+    if (!doc) throw new ApolloError(`No ${namespace} ${resource} record found for ID ${id}`, 'RECORD_NOT_FOUND');
+    return doc;
+  }
+
   /**
    *
    * @param {string} namespace The collection namespace, e.g. `platform`.
@@ -43,9 +56,9 @@ class Base4 {
    */
   collection(namespace, resource) {
     if (!namespaces.includes(namespace)) {
-      throw new Error(`The Base4 collection namespace '${namespace}' is invalid.`);
+      throw new UserInputError(`The provided Base4 collection namespace '${namespace}' is invalid.`);
     }
-    return this.db.collection(`${this.tenant.key}_${resource}`, resource);
+    return this.db.collection(`${this.tenant.key}_${namespace}`, resource);
   }
 
   /**
@@ -85,7 +98,15 @@ class Base4 {
     const ids = Base4.extractRefIds(refs);
     if (!ids.length) return [];
     const collection = await this.collection(namespace, resource);
-    return collection.find({ _id: { $in: ids } });
+    const cursor = await collection.find({ _id: { $in: ids } });
+    return cursor.toArray();
+  }
+
+  async inverse(namespace, resource, field, id) {
+    if (!id) return [];
+    const collection = await this.collection(namespace, resource);
+    const cursor = await collection.find({ [field]: id });
+    return cursor.toArray();
   }
 
   /**
