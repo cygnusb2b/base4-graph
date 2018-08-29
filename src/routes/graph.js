@@ -1,7 +1,6 @@
 const { Router } = require('express');
-const bodyParser = require('body-parser');
+const { ApolloServer } = require('apollo-server-express');
 const passport = require('passport');
-const { graphqlExpress } = require('apollo-server-express');
 const Tenant = require('../classes/tenant');
 const Credentials = require('../auth/credentials');
 const schema = require('../graph/schema');
@@ -14,6 +13,7 @@ const authenticate = (req, res, next) => {
     next();
   })(req, res, next);
 };
+router.use(authenticate);
 
 const mutations = [
   'Website',
@@ -21,19 +21,17 @@ const mutations = [
   'Email',
 ];
 
-router.use(
-  authenticate,
-  bodyParser.json(),
-  graphqlExpress((req) => {
+const server = new ApolloServer({
+  schema,
+  playground: false,
+  context: ({ req }) => {
     const { auth } = req;
     const tenant = new Tenant(req.get('X-Tenant-Key'));
     let mutation = req.get('X-Mutation-Type');
     if (!mutations.includes(mutation)) mutation = 'Website';
-    return {
-      schema,
-      context: { auth, tenant, mutation },
-    };
-  }),
-);
+    return { auth, tenant, mutation };
+  },
+});
+server.applyMiddleware({ app: router, path: '/' });
 
 module.exports = router;
