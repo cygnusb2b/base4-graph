@@ -41,7 +41,6 @@
   "dependencies": {
     "apollo-server-express": "^2.0.4",
     "bluebird": "^3.5.1",
-    "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "deep-assign": "^2.0.0",
     "envalid": "^4.1.4",
