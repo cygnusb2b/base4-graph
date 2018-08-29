@@ -15,14 +15,14 @@ module.exports = deepAssign(story, websiteSection, taxonomy, user, contact, comp
    */
   Date: DateType,
 
-  /**
-   *
-   */
-  Image: {
-    id: doc => doc._id,
-    approvedWeb: doc => extractMutationValue(doc, 'Website', 'approved'),
-    path: doc => `${doc.filePath}/${doc.fileName}`,
-  },
+    /**
+     *
+     */
+    AssetImage: {
+      id: doc => doc._id,
+      approvedWeb: doc => extractMutationValue(doc, 'Website', 'approved'),
+      path: doc => `${doc.filePath}/${doc.fileName}`,
+    },
 
   /**
    *

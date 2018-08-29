@@ -1,6 +1,6 @@
 # import * from 'company.graphql'
 # import * from 'contact.graphql'
-# import * from 'image.graphql'
+# import * from 'asset-image.graphql'
 # import * from 'story.graphql'
 # import * from 'taxonomy.graphql'
 # import * from 'user.graphql'

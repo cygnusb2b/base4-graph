@@ -1,4 +1,4 @@
-type Image {
+type AssetImage {
   id: String!
   path: String!
   filePath: String!

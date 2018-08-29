@@ -10,8 +10,8 @@ type Company {
   createdAt: Date
   updatedAt: Date
   taxonomies: [Taxonomy]
-  logo: Image
-  images: [Image]
+  logo: AssetImage
+  images: [AssetImage]
   createdBy: User
   updatedBy: User
 }

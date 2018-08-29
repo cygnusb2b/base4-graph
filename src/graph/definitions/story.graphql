@@ -20,8 +20,8 @@ type Story {
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
   taxonomies: [Taxonomy]
-  primaryImage: Image
-  images: [Image]
+  primaryImage: AssetImage
+  images: [AssetImage]
   createdBy: User
   updatedBy: User
   authors: [Contact]
