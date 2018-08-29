@@ -1,0 +1,13 @@
+type Query {
+  platformTaxonomy(input: ModelIdInput!): PlatformTaxonomy!
+}
+
+type PlatformTaxonomy {
+  id: Int!
+  name: String
+  fullName: String
+  type: String
+  parent: PlatformTaxonomy
+  status: Int
+  children: [PlatformTaxonomy]
+}

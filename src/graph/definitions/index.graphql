@@ -1,18 +1,7 @@
-# import * from 'company.graphql'
-# import * from 'contact.graphql'
-# import * from 'asset-image.graphql'
-# import * from 'story.graphql'
-# import * from 'taxonomy.graphql'
-# import * from 'user.graphql'
-# import * from 'website-product-site.graphql'
-# import * from 'website-schedule.graphql'
-# import * from 'website-section.graphql'
-# import Query.* from 'story.graphql'
-# import Query.* from 'taxonomy.graphql'
-# import Query.* from 'website-section.graphql'
+# import Query.*, * from 'platform/index.graphql'
+# import Query.*, * from 'website/index.graphql'
 
 scalar Date
-scalar Cursor
 
 type Query {
   ping: String!
