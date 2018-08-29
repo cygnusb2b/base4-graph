@@ -10,3 +10,7 @@ type Query {
 input ModelIdInput {
   id: Int!
 }
+
+input ModelStringIdInput {
+  id: String!
+}

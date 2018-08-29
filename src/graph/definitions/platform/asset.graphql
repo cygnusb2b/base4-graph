@@ -1,0 +1,38 @@
+type Query {
+  platformAssetImage(input: ModelStringIdInput!): PlatformAssetImage!
+}
+
+
+type PlatformAssetImage {
+  # from platform.model::Asset
+  id: String!
+  name: String
+
+  # from platform.model::Asset\Image
+  filePath: String
+  fileName: String
+  source: PlatformAssetImageSource
+  caption: String
+  credit: String
+  cropDimensions: PlatformAssetImageCrop
+
+  # from platform.model::Asset\Image mutations
+  approvedWeb: Boolean # must resolve
+  approvedMagazine: Boolean # must resolve
+}
+
+type PlatformAssetImageSource {
+  location: String
+  name: String
+  width: Int
+  height: Int
+  processed: Boolean
+}
+
+type PlatformAssetImageCrop {
+  x1: Int
+  x2: Int
+  y1: Int
+  y2: Int
+  aspectRatio: String
+}
