@@ -1,6 +1,6 @@
 const { ApolloError, UserInputError } = require('apollo-server-express');
-const Tenant = require('../classes/tenant');
-const isObject = require('../utils/is-object');
+const Tenant = require('./classes/tenant');
+const isObject = require('./utils/is-object');
 
 const { isArray } = Array;
 
