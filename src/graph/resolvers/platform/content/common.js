@@ -17,4 +17,6 @@ module.exports = {
     const primarySection = extractMutationValue(doc, 'Website', 'primarySection');
     return base4.reference('website', 'Section', primarySection);
   },
+  createdBy: (doc, _, { base4 }) => base4.reference('platform', 'User', doc.createdBy),
+  updatedBy: (doc, _, { base4 }) => base4.reference('platform', 'User', doc.updatedBy),
 };
