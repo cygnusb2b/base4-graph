@@ -8,6 +8,7 @@
 # import * from 'user.graphql'
 # import * from 'contact.graphql'
 # import * from 'website-product-site.graphql'
+# import * from 'website-schedule.graphql'
 # import * from 'company.graphql'
 
 scalar Date
