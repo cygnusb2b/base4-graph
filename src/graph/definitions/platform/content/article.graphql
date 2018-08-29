@@ -1,0 +1,33 @@
+type PlatformContentArticle implements PlatformContent {
+  # fields from the GraphQL Content interface
+  id: Int!
+  type: String!
+  status: Int
+  name: String
+  shortName: String
+  fullName: String
+  teaser: String
+  body: String
+  created: Date
+  updated: Date
+  published: Date
+  unpublished: Date
+  createdBy: PlatformSecurityUser
+  updatedBy: PlatformSecurityUser
+  taxonomy: [PlatformTaxonomy]
+  relatedTo: [PlatformContent]
+  primaryImage: PlatformAssetImage
+  images: [PlatformAssetImage]
+  websiteSchedules: [WebsiteSchedule]
+  primarySite: WebsiteProductSite
+  primarySection: WebsiteSection
+  seoTitle: String
+  alias: String
+  redirects: [String]
+  slug: String
+
+  # fields directly on model::Content\Article
+  sidebars: [PlatformContentStubSidebar]
+
+  # fields from trait::Content\Authorable
+}
