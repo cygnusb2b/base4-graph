@@ -1,4 +1,7 @@
 const Tenant = require('../classes/tenant');
+const isObject = require('../utils/is-object');
+
+const { isArray } = Array;
 
 class Base4 {
   /**
@@ -20,6 +23,55 @@ class Base4 {
    */
   getPlatformCollection(name) {
     return this.db.collection(`${this.tenant.key}_platform`, name);
+  }
+
+  /**
+   * Extracts a mutation value from a document for the provided type and field.
+   *
+   * @param {object} doc The MongoDB document to extract from.
+   * @param {string} type The mutation type, e.g. `Website`.
+   * @param {string} field The field key of the mutation.
+   */
+  static extractMutationValue(doc, type, field) {
+    const { mutations } = doc;
+    if (!isObject(mutations)) return null;
+    const keyValues = mutations[type];
+    if (!isObject(keyValues)) return null;
+    return keyValues[field];
+  }
+
+  /**
+   * Fills a mutation value from a document for the provided type and field.
+   * If a mutation value is found, it will use it, otherwise it will
+   * fallback to the "standard" field on the document.
+   *
+   * @param {object} doc
+   * @param {string} type
+   * @param {string} field
+   */
+  static fillMutation(doc, type, field) {
+    const value = Base4.extractMutationValue(doc, type, field);
+    return value || doc[field];
+  }
+
+  /**
+   * Gets an array of Mongo IDs from an array of DBRefs.
+   *
+   * @param {?array} refs
+   */
+  static getIdsFromRefMany(refs) {
+    if (!isArray(refs) || !refs.length) return [];
+    return refs.map(ref => ref.oid).filter(id => id);
+  }
+
+  /**
+   * Returns the Mongo ID from a DBRef.
+   *
+   * @param {?object} ref
+   */
+  static getIdFromRefOne(ref) {
+    if (!isObject(ref)) return null;
+    return ref.oid || null;
   }
 }
 
