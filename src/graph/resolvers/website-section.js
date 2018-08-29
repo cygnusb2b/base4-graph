@@ -1,4 +1,4 @@
-const DB = require('../../db');
+const DB = require('../../connections/base4');
 const { getIdFromRefOne } = require('../../utils');
 
 module.exports = {
