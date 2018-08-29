@@ -3,6 +3,25 @@ const isObject = require('../utils/is-object');
 
 const { isArray } = Array;
 
+/**
+ * The Base4 collection namespaces.
+ *
+ * These are used to calculcate the MongoDB
+ * database names.
+ *
+ * @type {array}
+ */
+const namespaces = [
+  'magazine',
+  'platform',
+  'website',
+];
+
+/**
+ * The Base4 instance, instantiated per tenant.
+ *
+ * @class
+ */
 class Base4 {
   /**
    *
@@ -18,11 +37,76 @@ class Base4 {
 
   /**
    *
-   * @param {string} name The platform collecton name, e.g. `Content`.
+   * @param {string} namespace The collection namespace, e.g. `platform`.
+   * @param {string} resource The resource name, e.g. `Content`.
    * @returns {Promise}
    */
-  getPlatformCollection(name) {
-    return this.db.collection(`${this.tenant.key}_platform`, name);
+  collection(namespace, resource) {
+    if (!namespaces.includes(namespace)) {
+      throw new Error(`The Base4 collection namespace '${namespace}' is invalid.`);
+    }
+    return this.db.collection(`${this.tenant.key}_${resource}`, resource);
+  }
+
+  /**
+   * Returns a reference-one document for the provided namespace, resource, and ref/id.
+   *
+   * For example, to retrieve the `createdBy` document referenced on a `Content` document,
+   * run the following:
+   *
+   * `referenceOne('platform', 'User', content.createdBy);`
+   *
+   * @param {string} namespace The reference's namespace, e.g. `platform`.
+   * @param {string} resource The reference's resource name, e.g. `Content`.
+   * @param {*} ref The reference. Either an ID or a complex DBRef.
+   * @returns {Promise<null|object>}
+   */
+  async reference(namespace, resource, ref) {
+    const id = Base4.extractRefId(ref);
+    if (!id) return null;
+    const collection = await this.collection(namespace, resource);
+    return collection.findOne({ _id: id });
+  }
+
+  /**
+   * Returns an array of reference-many documents for the provided namespace, resource, and ref/id.
+   *
+   * For example, to retrieve the `taxonomies` documents referenced on a `Content` document,
+   * run the following:
+   *
+   * `referenceMany('platform', 'Taxonomy', content.taxonomies);`
+   *
+   * @param {string} namespace The reference's namespace, e.g. `platform`.
+   * @param {string} resource The reference's resource name, e.g. `Content`.
+   * @param {*} ref The reference. Either an ID or a complex DBRef.
+   * @returns {Promise<null|object>}
+   */
+  async references(namespace, resource, refs) {
+    const ids = Base4.extractRefIds(refs);
+    if (!ids.length) return [];
+    const collection = await this.collection(namespace, resource);
+    return collection.find({ _id: { $in: ids } });
+  }
+
+  /**
+   * Gets a Mongo ID from either a complex (DBRef) or simple (ObjectID) reference.
+   *
+   * @param {?array} refs
+   */
+  static extractRefId(ref) {
+    const id = isObject(ref) && ref.oid ? ref.oid : ref;
+    return id || null;
+  }
+
+  /**
+   * Gets an array of Mongo IDs from an array
+   * of either complex (DBRef) or simple (ObjectID) references.
+   *
+   * @param {?array} refs
+   */
+  static extractRefIds(refs) {
+    if (!isArray(refs) || !refs.length) return [];
+    return refs.map(ref => Base4.extractRefId(ref)).filter(id => id);
   }
 
   /**
@@ -52,26 +136,6 @@ class Base4 {
   static fillMutation(doc, type, field) {
     const value = Base4.extractMutationValue(doc, type, field);
     return value || doc[field];
-  }
-
-  /**
-   * Gets an array of Mongo IDs from an array of DBRefs.
-   *
-   * @param {?array} refs
-   */
-  static getIdsFromRefMany(refs) {
-    if (!isArray(refs) || !refs.length) return [];
-    return refs.map(ref => ref.oid).filter(id => id);
-  }
-
-  /**
-   * Returns the Mongo ID from a DBRef.
-   *
-   * @param {?object} ref
-   */
-  static getIdFromRefOne(ref) {
-    if (!isObject(ref)) return null;
-    return ref.oid || null;
   }
 }
 
