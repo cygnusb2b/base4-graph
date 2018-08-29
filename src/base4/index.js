@@ -72,13 +72,14 @@ class Base4 {
    * @param {string} namespace The reference's namespace, e.g. `platform`.
    * @param {string} resource The reference's resource name, e.g. `Content`.
    * @param {*} ref The reference. Either an ID or a complex DBRef.
+   * @param {?object} criteria Additional query criteria to add.
    * @returns {Promise<null|object>}
    */
-  async reference(namespace, resource, ref) {
+  async reference(namespace, resource, ref, criteria) {
     const id = Base4.extractRefId(ref);
     if (!id) return null;
     const collection = await this.collection(namespace, resource);
-    return collection.findOne({ _id: id });
+    return collection.findOne({ ...criteria, _id: id });
   }
 
   /**
@@ -92,20 +93,21 @@ class Base4 {
    * @param {string} namespace The reference's namespace, e.g. `platform`.
    * @param {string} resource The reference's resource name, e.g. `Content`.
    * @param {*} ref The reference. Either an ID or a complex DBRef.
+   * @param {?object} criteria Additional query criteria to add.
    * @returns {Promise<null|object>}
    */
-  async references(namespace, resource, refs) {
+  async references(namespace, resource, refs, criteria) {
     const ids = Base4.extractRefIds(refs);
     if (!ids.length) return [];
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ _id: { $in: ids } });
+    const cursor = await collection.find({ ...criteria, _id: { $in: ids } });
     return cursor.toArray();
   }
 
-  async inverse(namespace, resource, field, id) {
+  async inverse(namespace, resource, field, id, criteria) {
     if (!id) return [];
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ [field]: id });
+    const cursor = await collection.find({ ...criteria, [field]: id });
     return cursor.toArray();
   }
 
