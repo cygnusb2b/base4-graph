@@ -1,3 +1,19 @@
-type WebsiteSchedule {
-  id: Int!
+type WebsiteSchedule implements PlatformSchedule {
+  # fields required by the PlatformSchedule GraphQL interface
+  id: String!
+  content: PlatformContent
+  status: Int
+
+  # fields directly on website.model::Schedule
+  product: WebsiteProductSite
+  section: WebsiteSection
+  option: WebsiteOption
+  startDate: Date
+  endDate: Date
+  published: Date
+  expires: Date
+  contentStatus: Int
+  categories: [PlatformTaxonomy] # add args?
+  hasPrimaryImage: Boolean
+  primarySection: WebsiteSection
 }

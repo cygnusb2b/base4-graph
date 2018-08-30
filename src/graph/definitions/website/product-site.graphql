@@ -1,7 +1,19 @@
-type WebsiteProductSite {
+type WebsiteProductSite implements PlatformProduct {
+  # fields required by the PlatformProduct GraphQL interface
   id: String!
+  type: String!
   name: String
+  fullName: String
+  tagLine: String
   description: String
-  url: String
+  logo: String
   status: Int
+
+  # fields directly on website.model::Product\Site
+  sections: [WebsiteSection] # add args?
+  # pages: [WebsitePage] # add args? @todo Add this model
+  options: [WebsiteOption] # add args?
+  url: String
+  socialFollow: [PlatformEntityStubSocial]
+  redirects: [String] # @todo must fallback if empty
 }

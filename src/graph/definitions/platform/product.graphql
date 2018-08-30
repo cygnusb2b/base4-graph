@@ -1,0 +1,12 @@
+interface PlatformProduct {
+  id: String!
+  type: String!
+  name: String
+  fullName: String # @todo should be calculated in resolver
+  tagLine: String
+  description: String
+  logo: String
+
+  # fields from platform.trait::StatusEnabled
+  status: Int
+}

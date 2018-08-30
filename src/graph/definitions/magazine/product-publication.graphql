@@ -1,0 +1,21 @@
+type MagazineProductPublication implements PlatformProduct {
+  # fields required by the PlatformProduct GraphQL interface
+  id: String!
+  type: String!
+  name: String
+  fullName: String
+  tagLine: String
+  description: String
+  logo: String
+  status: Int
+
+  # fields directly on magazine.model::Product\Publication
+  issues: [MagazineIssue] # add args?
+  sections: [MagazineSection] # add args?
+  coverImage: PlatformAssetImage
+  subscribeUrl: String
+  renewalUrl: String
+  reprintsUrl: String
+  einquiryUrl: String
+  socialLinks: [PlatformEntityStubSocial]
+}
