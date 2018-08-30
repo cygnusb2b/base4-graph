@@ -1,0 +1,12 @@
+interface PlatformSection {
+  id: Int!
+  name: String
+  description: String
+  fullName: String # @todo calculate in resolvers PER type
+
+  # fields from trait.platform::StatusEnabled
+  status: Int
+
+  # fields from trait.platform::Sequenceable
+  sequence: Int
+}

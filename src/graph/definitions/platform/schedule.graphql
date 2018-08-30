@@ -1,0 +1,7 @@
+interface PlatformSchedule {
+  id: String!
+  content: PlatformContent
+
+  # fields from trait.platform::StatusEnabled
+  status: Int
+}
