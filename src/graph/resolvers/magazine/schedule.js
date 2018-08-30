@@ -6,7 +6,7 @@ module.exports = {
    */
   MagazineSchedule: {
     ...scheduleResolvers,
-    product: (schedule, _, { base4 }) => base4.reference('platform', 'Product', schedule.product),
+    product: (schedule, _, { base4 }) => base4.reference('platform', 'Product', schedule.product, { type: 'Publicatiton' }),
     section: (schedule, _, { base4 }) => base4.reference('magazine', 'Section', schedule.section),
     issue: (schedule, _, { base4 }) => base4.reference('magazine', 'Issue', schedule.issue),
   },
