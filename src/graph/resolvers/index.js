@@ -1,4 +1,5 @@
 const deepAssign = require('deep-assign');
+const GraphQLJSON = require('graphql-type-json');
 const { DateType } = require('../custom-types');
 
 const platform = require('./platform');
@@ -12,6 +13,7 @@ module.exports = deepAssign(
      *
      */
     Date: DateType,
+    JSON: GraphQLJSON,
 
     /**
      *
