@@ -12,7 +12,7 @@ type EmailSection implements PlatformSection {
   sequence: Int
 
   # fields directly on email.model::Section
-  deployment: EmailProductDeployment
+  deployment: EmailProductNewsletter
 
   # fields from trait.platform::Content\SeoFields
   seoTitle: String

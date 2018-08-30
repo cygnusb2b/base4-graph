@@ -2,8 +2,6 @@ type Query {
   emailProductNewsletter(input: ModelStringIdInput!): EmailProductNewsletter!
 }
 
-union EmailProductDeployment = EmailProductNewsletter | EmailProductThirdParty
-
 type EmailProductNewsletter implements PlatformProduct {
   # fields required by the PlatformProduct GraphQL interface
   id: String!
@@ -15,7 +13,7 @@ type EmailProductNewsletter implements PlatformProduct {
   logo: String
   status: Int
 
-  # fields from email.model::Product\Deployment
+  # fields required by the EmailProductDeployment GraphQL interface
   provider: EmailProductStubProvider
   sourceProvider: EmailProductStubHtmlSourceProvider
   defaultTesters: [EmailCampaignTestRecipient]! # add args?
@@ -28,25 +26,6 @@ type EmailProductNewsletter implements PlatformProduct {
   alias: String
   usesDeploymentDates: Boolean
   teaser: String
-}
-
-type EmailProductThirdParty implements PlatformProduct {
-  # fields required by the PlatformProduct GraphQL interface
-  id: String!
-  type: String!
-  name: String
-  fullName: String
-  tagLine: String
-  description: String
-  logo: String
-  status: Int
-
-  # fields from email.model::Product\Deployment
-  provider: EmailProductStubProvider
-  sourceProvider: EmailProductStubHtmlSourceProvider
-  defaultTesters: [EmailCampaignTestRecipient] # add args?
-  defaultFromName: String
-  defaultSubjectLine: String
 }
 
 type EmailProductStubProvider {

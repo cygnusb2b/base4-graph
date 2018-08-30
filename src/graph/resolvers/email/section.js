@@ -1,9 +1,6 @@
 const coreResolvers = require('../core');
 
-const deploymentTypes = [
-  'Newsletter',
-  'ThirdParty',
-];
+const { isArray } = Array;
 
 module.exports = {
   /**
@@ -11,7 +8,8 @@ module.exports = {
    */
   EmailSection: {
     ...coreResolvers,
-    deployment: (section, _, { base4 }) => base4.reference('platform', 'Product', section.deployment, { type: { $in: deploymentTypes } }),
+    deployment: (section, _, { base4 }) => base4.reference('platform', 'Product', section.deployment, { type: 'Newsletter' }),
+    redirects: ({ redirects }) => (isArray(redirects) ? redirects : []),
   },
 
   /**
