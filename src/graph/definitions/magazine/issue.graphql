@@ -1,3 +1,18 @@
 type MagazineIssue {
+  # fields directly on platform.model::Issue
   id: Int!
+  name: String
+  description: String
+  mailDate: Date
+  digitalEditionUrl: String
+  dedication: String
+  coverDescription: String
+  credit: String
+  publication: MagazineProductPublication
+  sections: [MagazineSection] # add args?
+  coverImage: PlatformAssetImage
+  redirects: [String] # @todo add fallback
+
+  #fields from trait.platform::StatusEnabled
+  status: Int
 }
