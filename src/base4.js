@@ -106,10 +106,10 @@ class Base4 {
     return cursor.toArray();
   }
 
-  async inverse(namespace, resource, field, id, criteria) {
+  async inverse(namespace, resource, field, id, criteria, sort = {}) {
     if (!id) return [];
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, [field]: id });
+    const cursor = await collection.find({ ...criteria, [field]: id }).sort(sort);
     return cursor.toArray();
   }
 

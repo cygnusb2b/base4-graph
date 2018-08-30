@@ -10,6 +10,17 @@ type Query {
   ping: String!
 }
 
+enum SortOrder {
+  asc
+  desc
+}
+
+enum ReferenceStatus {
+  all
+  active
+  deleted
+}
+
 input ModelIdInput {
   id: Int!
 }

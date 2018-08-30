@@ -1,4 +1,6 @@
 const coreResolvers = require('../core');
+const formatSort = require('../../../utils/convert-graph-sort');
+const formatStatus = require('../../../utils/format-graph-status');
 
 const { isArray } = Array;
 
@@ -10,7 +12,7 @@ module.exports = {
     ...coreResolvers,
     site: (section, _, { base4 }) => base4.reference('platform', 'Product', section.site, { type: 'Site' }),
     parent: (section, _, { base4 }) => base4.reference('website', 'Section', section.parent),
-    children: (section, _, { base4 }) => base4.inverse('website', 'Section', 'parent.$id', section._id),
+    children: (section, { sort, status }, { base4 }) => base4.inverse('website', 'Section', 'parent.$id', section._id, { ...formatStatus(status) }, formatSort(sort)),
     logo: (section, _, { base4 }) => base4.reference('platform', 'Asset', section.logo, { type: 'Image' }),
     redirects: ({ redirects }) => (isArray(redirects) ? redirects : []),
   },
