@@ -1,3 +1,7 @@
+type Query {
+  magazineIssue(input: ModelIdInput!): MagazineIssue!
+}
+
 type MagazineIssue {
   # fields directly on platform.model::Issue
   id: Int!
@@ -9,9 +13,9 @@ type MagazineIssue {
   coverDescription: String
   credit: String
   publication: MagazineProductPublication
-  sections: [MagazineSection] # add args?
+  sections: [MagazineSection]! # add args?
   coverImage: PlatformAssetImage
-  redirects: [String] # @todo add fallback
+  redirects: [String]!
 
   #fields from trait.platform::StatusEnabled
   status: Int
