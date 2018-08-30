@@ -16,36 +16,45 @@ type PlatformContentStubLocation {
 }
 
 interface PlatformContent {
+  # fields directly on platform.model::Content
   id: Int!
   type: String!
-  status: Int
-
   name: String
   shortName: String
   fullName: String # should be calculated in resolvers
-  teaser: String
-  body: String
-
+  hash: String
   created: Date
   updated: Date
+  touched: Date
   published: Date
   unpublished: Date
-
   createdBy: PlatformSecurityUser
   updatedBy: PlatformSecurityUser
 
+  # fields from platform.trait::StatusEnabled
+  status: Int
+
+  # fields from platform.trait::Content\BodyFields
+  teaser: String
+  body: String
+  notes: String
+
+  # fields from platform.trait::Taggable
   taxonomy: [PlatformTaxonomy] # add args?
+
+  # fields from platform.trait::ContentRelateable
   relatedTo: [PlatformContent] # add args?
 
+  # fields from platform.trait::MediaRelatable
   primaryImage: PlatformAssetImage
   images: [PlatformAssetImage] # add args?
 
-  # from mutations + model::Content
-  websiteSchedules: [WebsiteSchedule] # add args? was mutations.Website.schedules
+  # fields from platform.model::Content mutations
+  schedules(mutation: String = "Website"): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
 
-  # from mutations + trait::Content\SeoFields
+  # fields from trait::Content\SeoFields
   seoTitle: String
   alias: String
   redirects: [String]

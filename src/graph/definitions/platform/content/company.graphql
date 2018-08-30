@@ -1,24 +1,27 @@
 type PlatformContentCompany implements PlatformContent & PlatformContentContactable & PlatformContentAddressable {
-  # fields from the GraphQL Content interface
+  # fields required by the PlatfomContent GraphQL interface
   id: Int!
   type: String!
-  status: Int
   name: String
   shortName: String
   fullName: String
-  teaser: String
-  body: String
+  hash: String
   created: Date
   updated: Date
+  touched: Date
   published: Date
   unpublished: Date
   createdBy: PlatformSecurityUser
   updatedBy: PlatformSecurityUser
-  taxonomy: [PlatformTaxonomy]
-  relatedTo: [PlatformContent]
+  status: Int
+  teaser: String
+  body: String
+  notes: String
+  taxonomy: [PlatformTaxonomy] # add args?
+  relatedTo: [PlatformContent] # add args?
   primaryImage: PlatformAssetImage
-  images: [PlatformAssetImage]
-  websiteSchedules: [WebsiteSchedule]
+  images: [PlatformAssetImage] # add args?
+  schedules(mutation: String = "Website"): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
   seoTitle: String
