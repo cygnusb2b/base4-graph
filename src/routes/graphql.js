@@ -4,7 +4,7 @@ const passport = require('passport');
 const Base4 = require('../base4');
 const db = require('../connections/base4');
 const Credentials = require('../auth/credentials');
-const schema = require('../graph/schema');
+const schema = require('../graphql/schema');
 
 const router = Router();
 
