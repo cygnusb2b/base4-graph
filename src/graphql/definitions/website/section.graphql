@@ -12,8 +12,8 @@ type WebsiteSection implements PlatformSection {
   sequence: Int
 
   # fields directly on website.model::Section
-  site: WebsiteProductSite
-  parent: WebsiteSection
+  site(input: WebsiteSectionSiteInput = {}): WebsiteProductSite
+  parent(input: WebsiteSectionParentInput = {}): WebsiteSection
   children(input: WebsiteSectionChildrenInput = {}): [WebsiteSection]! # add args?
   logo: PlatformAssetImage
 
@@ -34,6 +34,14 @@ enum WebsiteSectionSortField {
 input WebsiteSectionChildrenInput {
   status: ReferenceStatus = active
   sort: [WebsiteSectionSortInput] = [{}]
+}
+
+input WebsiteSectionSiteInput {
+  status: ReferenceStatus = active
+}
+
+input WebsiteSectionParentInput {
+  status: ReferenceStatus = active
 }
 
 input WebsiteSectionSortInput {

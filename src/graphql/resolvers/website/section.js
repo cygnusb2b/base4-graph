@@ -17,16 +17,26 @@ module.exports = {
     /**
      *
      */
-    site: ({ site }, _, { base4 }) => base4.referenceOne({
-      model: 'platform.Product',
-      ref: site,
-      criteria: { type: 'Site' },
-    }),
+    site: ({ site }, { input }, { base4 }) => {
+      const { status } = input;
+      return base4.referenceOne({
+        model: 'platform.Product',
+        ref: site,
+        criteria: { ...formatStatus(status), type: 'Site' },
+      });
+    },
 
     /**
      *
      */
-    parent: ({ parent }, _, { base4 }) => base4.referenceOne({ model: 'website.Section', ref: parent }),
+    parent: ({ parent }, { input }, { base4 }) => {
+      const { status } = input;
+      return base4.referenceOne({
+        model: 'website.Section',
+        ref: parent,
+        criteria: { ...formatStatus(status) },
+      });
+    },
 
     /**
      *
