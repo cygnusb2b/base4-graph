@@ -1,3 +1,10 @@
 type WebsiteOption {
+  # fields directly from website.model::Option
   id: Int!
+  name: String
+  description: String
+  site: WebsiteProductSite
+
+  # fields from platform.trait::StatusEnabled
+  status: Int
 }
