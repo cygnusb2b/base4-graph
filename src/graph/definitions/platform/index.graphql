@@ -1,5 +1,6 @@
 # import * from 'asset.graphql'
 # import * from 'content/index.graphql'
+# import * from 'entity.graphql'
 # import * from 'security.graphql'
 # import * from 'taxonomy.graphql'
 # import Query.* from 'asset.graphql'

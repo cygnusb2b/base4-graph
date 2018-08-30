@@ -1,0 +1,69 @@
+type PlatformContentCompany implements PlatformContent & PlatformContentContactable & PlatformContentAddressable {
+  # fields from the GraphQL Content interface
+  id: Int!
+  type: String!
+  status: Int
+  name: String
+  shortName: String
+  fullName: String
+  teaser: String
+  body: String
+  created: Date
+  updated: Date
+  published: Date
+  unpublished: Date
+  createdBy: PlatformSecurityUser
+  updatedBy: PlatformSecurityUser
+  taxonomy: [PlatformTaxonomy]
+  relatedTo: [PlatformContent]
+  primaryImage: PlatformAssetImage
+  images: [PlatformAssetImage]
+  websiteSchedules: [WebsiteSchedule]
+  primarySite: WebsiteProductSite
+  primarySection: WebsiteSection
+  seoTitle: String
+  alias: String
+  redirects: [String]
+  slug: String
+
+  # fields directly on platform.model::Content\Company
+  companyType: String
+  parentCompany: PlatformContentCompany
+  childCompanies: [PlatformContentCompany] # graphql specific
+  brandsCarried: PlatformContentCompany
+  statesServed: [String]
+  listingContacts: [PlatformContentContact] # add args?
+  publicContacts: [PlatformContentContact] # add args?
+  salesContacts: [PlatformContentContact] # add args?
+  marketingContacts: [PlatformContentContact] # add args?
+  companyCompetitors: [PlatformContentCompany] # add args?
+  socialLinks: [PlatformEntityStubSocial]
+
+  # fields directly on platform.model::Content\Company from mutations
+  leadsDelivery: Boolean
+  enableRmi: Boolean
+  featuredCategories: [PlatformTaxonomy] # add args?
+  primaryCategory: PlatformTaxonomy
+
+  # fields from platform.trait::Content\Contactable
+  phone: String
+  tollfree: String
+  fax: String
+  website: String
+  email: String
+  firstName: String
+  lastName: String
+  company: PlatformContentCompany
+  title: String
+  mobile: String
+  publicEmail: String
+
+  # fields from platform.trait::Content\Addressable
+  address1: String
+  address2: String
+  city: String
+  state: String
+  zip: String
+  country: String
+  location: PlatformContentStubLocation
+}

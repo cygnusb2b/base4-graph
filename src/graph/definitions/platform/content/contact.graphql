@@ -1,58 +1,35 @@
-# import * from 'article.graphql'
-# import * from 'company.graphql'
-# import * from 'contact.graphql'
-
-type Query {
-  platformContent(input: ModelIdInput!): PlatformContent!
-}
-
-type PlatformContentStubSidebar {
-  body: String
-}
-
-type PlatformContentStubLocation {
-  latitude: Float
-  longitude: Float
-}
-
-interface PlatformContent {
+type PlatformContentContact implements PlatformContent & PlatformContentContactable & PlatformContentAddressable {
+  # fields from the GraphQL Content interface
   id: Int!
   type: String!
   status: Int
-
   name: String
   shortName: String
-  fullName: String # should be calculated in resolvers
+  fullName: String
   teaser: String
   body: String
-
   created: Date
   updated: Date
   published: Date
   unpublished: Date
-
   createdBy: PlatformSecurityUser
   updatedBy: PlatformSecurityUser
-
-  taxonomy: [PlatformTaxonomy] # add args?
-  relatedTo: [PlatformContent] # add args?
-
+  taxonomy: [PlatformTaxonomy]
+  relatedTo: [PlatformContent]
   primaryImage: PlatformAssetImage
-  images: [PlatformAssetImage] # add args?
-
-  # from mutations + model::Content
-  websiteSchedules: [WebsiteSchedule] # add args? was mutations.Website.schedules
+  images: [PlatformAssetImage]
+  websiteSchedules: [WebsiteSchedule]
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
-
-  # from mutations + trait::Content\SeoFields
   seoTitle: String
   alias: String
   redirects: [String]
   slug: String
-}
 
-interface PlatformContentContactable {
+  # fields directly on platform.model::Content\Contact
+  socialLinks: [PlatformEntityStubSocial]
+
+  # fields from platform.trait::Content\Contactable
   phone: String
   tollfree: String
   fax: String
@@ -64,9 +41,8 @@ interface PlatformContentContactable {
   title: String
   mobile: String
   publicEmail: String
-}
 
-interface PlatformContentAddressable {
+  # fields from platform.trait::Content\Addressable
   address1: String
   address2: String
   city: String
