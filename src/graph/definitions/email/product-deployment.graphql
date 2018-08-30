@@ -1,0 +1,30 @@
+type EmailProductNewsletter implements PlatformProduct {
+  # fields required by the PlatformProduct GraphQL interface
+  id: String!
+  type: String!
+  name: String
+  fullName: String
+  tagLine: String
+  description: String
+  logo: String
+  status: Int
+
+  # fields from email.model::Product\Deployment
+  provider: EmailProductStubProvider
+  sourceProvider: EmailProductStubHtmlSourceProvider
+  defaultTesters: [EmailCampaignTestRecipient] # add args?
+  defaultFromName: String
+  defaultSubjectLine: String
+}
+
+type EmailProductStubProvider {
+  type: String
+  providerId: String
+  attributes: JSON
+}
+
+type EmailProductStubHtmlSourceProvider {
+  handlerKey: String
+  host: String
+  path: String
+}
