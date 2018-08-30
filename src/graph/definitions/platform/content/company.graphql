@@ -21,7 +21,7 @@ type PlatformContentCompany implements PlatformContent & PlatformContentContacta
   relatedTo: [PlatformContent] # add args?
   primaryImage: PlatformAssetImage
   images: [PlatformAssetImage] # add args?
-  schedules(mutation: String = "Website"): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
+  schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
   seoTitle: String

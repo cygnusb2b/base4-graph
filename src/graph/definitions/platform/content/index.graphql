@@ -15,6 +15,12 @@ type PlatformContentStubLocation {
   longitude: Float
 }
 
+enum PlatformContentMutation {
+  Website
+  Magazine
+  Email
+}
+
 interface PlatformContent {
   # fields directly on platform.model::Content
   id: Int!
@@ -50,7 +56,7 @@ interface PlatformContent {
   images: [PlatformAssetImage] # add args?
 
   # fields from platform.model::Content mutations
-  schedules(mutation: String = "Website"): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
+  schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
 
