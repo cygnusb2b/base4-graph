@@ -1,19 +1,17 @@
+type Query {
+  emailSchedule(input: ModelStringIdInput!): EmailSchedule!
+}
+
 type EmailSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
   id: String!
   content: PlatformContent
   status: Int
 
-  # fields directly on website.model::Schedule
-  product: WebsiteProductSite
-  section: WebsiteSection
-  option: WebsiteOption
-  startDate: Date
-  endDate: Date
-  published: Date
-  expires: Date
+  # fields directly on email.model::Schedule
+  product: EmailProductNewsletter
+  section: EmailSection
+  deploymentDate: Date
+  sequence: Int
   contentStatus: Int
-  categories: [PlatformTaxonomy] # add args?
-  hasPrimaryImage: Boolean
-  primarySection: WebsiteSection
 }
