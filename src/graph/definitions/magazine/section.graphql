@@ -1,3 +1,7 @@
+type Query {
+  magazineSection(input: ModelIdInput!): MagazineSection!
+}
+
 type MagazineSection implements PlatformSection {
   # fields required by the PlatformSection GraphQL interface
   id: Int!
