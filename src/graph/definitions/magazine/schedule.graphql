@@ -1,0 +1,13 @@
+type MagazineSchedule implements PlatformSchedule {
+  # fields required by the PlatformSchedule GraphQL interface
+  id: String!
+  content: PlatformContent
+  status: Int
+
+  # fields directly on magazine.model::Schedule
+  product: MagazineProductPublication
+  issue: MagazineIssue
+  section: MagazineSection
+  published: Date
+  expires: Date
+}
