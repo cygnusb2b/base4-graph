@@ -14,6 +14,7 @@ const { isArray } = Array;
  * @type {array}
  */
 const namespaces = [
+  'email',
   'magazine',
   'platform',
   'website',
