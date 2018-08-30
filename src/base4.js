@@ -150,12 +150,13 @@ class Base4 {
     refs,
     criteria,
     sort = {},
+    first,
   }) {
     const ids = Base4.extractRefIds(refs);
     if (!ids.length) return [];
     const { namespace, resource } = Base4.parseModelName(model);
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, _id: { $in: ids } }).sort(sort);
+    const cursor = await collection.find({ ...criteria, _id: { $in: ids } }).sort(sort).limit(first || 0);
     return cursor.toArray();
   }
 
@@ -175,11 +176,12 @@ class Base4 {
     id,
     criteria,
     sort = {},
+    first,
   }) {
     if (!id) return [];
     const { namespace, resource } = Base4.parseModelName(model);
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, [field]: id }).sort(sort);
+    const cursor = await collection.find({ ...criteria, [field]: id }).sort(sort).limit(first || 0);
     return cursor.toArray();
   }
 

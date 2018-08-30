@@ -21,6 +21,11 @@ enum ReferenceStatus {
   deleted
 }
 
+input PaginationInput {
+  first: Int = 25
+  after: String # @todo Create a cursor type that supports Int + String IDs
+}
+
 input ModelIdInput {
   id: Int!
 }
