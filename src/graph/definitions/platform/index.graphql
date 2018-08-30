@@ -1,7 +1,6 @@
 # import * from 'asset.graphql'
 # import * from 'content/index.graphql'
 # import * from 'entity.graphql'
-# import * from 'product.graphql'
 # import * from 'security.graphql'
 # import * from 'taxonomy.graphql'
 # import Query.* from 'asset.graphql'
@@ -16,4 +15,30 @@ interface PlatformSchedule {
 
   # fields from trait.platform::StatusEnabled
   status: Int
+}
+
+interface PlatformProduct {
+  id: String!
+  type: String!
+  name: String
+  fullName: String # @todo should be calculated in resolver PER type
+  tagLine: String
+  description: String
+  logo: String
+
+  # fields from platform.trait::StatusEnabled
+  status: Int
+}
+
+interface PlatformSection {
+  id: Int!
+  name: String
+  description: String
+  fullName: String # @todo calculate in resolvers PER type
+
+  # fields from trait.platform::StatusEnabled
+  status: Int
+
+  # fields from trait.platform::Sequenceable
+  sequence: Int
 }

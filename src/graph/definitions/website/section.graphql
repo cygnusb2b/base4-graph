@@ -2,11 +2,25 @@ type Query {
   websiteSection(input: ModelIdInput!): WebsiteSection!
 }
 
-type WebsiteSection {
+type WebsiteSection implements PlatformSection {
+  # fields required by the PlatformSection GraphQL interface
   id: Int!
   name: String
+  description: String
   fullName: String
-  alias: String
+  status: Int
+  sequence: Int
+
+  # fields directly on website.model::Section
+  site: WebsiteProductSite
   parent: WebsiteSection
-  children: [WebsiteSection]
+  children: [WebsiteSection] # add args?
+  options: [WebsiteOption] # add args?
+  logo: PlatformAssetImage
+
+  # fields from trait.platform::Content\SeoFields
+  seoTitle: String
+  alias: String
+  redirects: [String]
+  slug: String
 }

@@ -1,15 +1,13 @@
-type MagazineSection {
-  # fields directly on magazine.model::Section
+type MagazineSection implements PlatformSection {
+  # fields required by the PlatformSection GraphQL interface
   id: Int!
   name: String
   description: String
+  fullName: String
+  status: Int
+  sequence: Int
+
+  # fields directly on magazine.model::Section
   publication: MagazineProductPublication
   issue: MagazineIssue
-  fullName: String # @todo calculate in resolvers
-
-  #fields from trait.platform::StatusEnabled
-  status: Int
-
-  #fields from trait.platform::Sequenceable
-  sequence: Int
 }

@@ -60,7 +60,7 @@ interface PlatformContent {
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
 
-  # fields from trait::Content\SeoFields
+  # fields from platform.trait::Content\SeoFields
   seoTitle: String
   alias: String
   redirects: [String]

@@ -1,16 +1,18 @@
-type EmailSection {
-  # fields directly on email.model::Section
+type EmailSection implements PlatformSection {
+  # fields required by the PlatformSection GraphQL interface
   id: Int!
   name: String
   description: String
-  deployment: EmailProductDeployment
-  fullName: String # @todo calculate in resolvers
-
-  # fields from trait.platform::StatusEnabled
+  fullName: String
   status: Int
-
-  # fields from trait.platform::Sequenceable
   sequence: Int
 
+  # fields directly on email.model::Section
+  deployment: EmailProductDeployment
+
   # fields from trait.platform::Content\SeoFields
+  seoTitle: String
+  alias: String
+  redirects: [String]
+  slug: String
 }
