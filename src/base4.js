@@ -71,6 +71,7 @@ class Base4 {
    *
    * `referenceOne('platform', 'User', content.createdBy);`
    *
+   * @deprecated
    * @param {string} namespace The reference's namespace, e.g. `platform`.
    * @param {string} resource The reference's resource name, e.g. `Content`.
    * @param {*} ref The reference. Either an ID or a complex DBRef.
@@ -85,6 +86,28 @@ class Base4 {
   }
 
   /**
+   * Returns a reference-one document for the provided model name and ref/id.
+   *
+   * For example, to retrieve the `createdBy` document referenced on a `Content` document,
+   * run the following:
+   *
+   * `referenceOne({ model: 'platform.User', ref: content.createdBy });`
+   *
+   * @param {object} params The function parameters.
+   * @param {string} params.model The reference's model name, e.g. `platform.Content`.
+   * @param {*} params.ref The reference. Either an ID or a complex DBRef.
+   * @param {?object} params.criteria Additional query criteria to add.
+   * @returns {Promise<null|object>}
+   */
+  async referenceOne({ model, ref, criteria }) {
+    const id = Base4.extractRefId(ref);
+    if (!id) return null;
+    const { namespace, resource } = Base4.parseModelName(model);
+    const collection = await this.collection(namespace, resource);
+    return collection.findOne({ ...criteria, _id: id });
+  }
+
+  /**
    * Returns an array of reference-many documents for the provided namespace, resource, and ref/id.
    *
    * For example, to retrieve the `taxonomies` documents referenced on a `Content` document,
@@ -92,6 +115,7 @@ class Base4 {
    *
    * `referenceMany('platform', 'Taxonomy', content.taxonomies);`
    *
+   * @deprecated
    * @param {string} namespace The reference's namespace, e.g. `platform`.
    * @param {string} resource The reference's resource name, e.g. `Content`.
    * @param {*} ref The reference. Either an ID or a complex DBRef.
@@ -106,11 +130,70 @@ class Base4 {
     return cursor.toArray();
   }
 
+  /**
+   * Returns an array of reference-many documents for the provided model name and ref/id.
+   *
+   * For example, to retrieve the `taxonomy` documents referenced on a `Content` document,
+   * run the following:
+   *
+   * `referenceMany({ model: 'platform.Taxonomy', refs: content.taxonomy });`
+   *
+   * @param {object} params The function parameters.
+   * @param {string} params.model The reference's model name, e.g. `platform.Content`.
+   * @param {array} params.ref The reference. Either an array of IDs or a complex DBRefs.
+   * @param {?object} params.criteria Additional query criteria to add.
+   * @param {?object} params.sort Sort criteria to add, in MongoDB sort format.
+   * @returns {Promise<object[]>}
+   */
+  async referenceMany({
+    model,
+    refs,
+    criteria,
+    sort = {},
+  }) {
+    const ids = Base4.extractRefIds(refs);
+    if (!ids.length) return [];
+    const { namespace, resource } = Base4.parseModelName(model);
+    const collection = await this.collection(namespace, resource);
+    const cursor = await collection.find({ ...criteria, _id: { $in: ids } }).sort(sort);
+    return cursor.toArray();
+  }
+
+  /**
+   * @deprecated
+   */
   async inverse(namespace, resource, field, id, criteria, sort = {}) {
     if (!id) return [];
     const collection = await this.collection(namespace, resource);
     const cursor = await collection.find({ ...criteria, [field]: id }).sort(sort);
     return cursor.toArray();
+  }
+
+  async inverseMany({
+    model,
+    field,
+    id,
+    criteria,
+    sort = {},
+  }) {
+    if (!id) return [];
+    const { namespace, resource } = Base4.parseModelName(model);
+    const collection = await this.collection(namespace, resource);
+    const cursor = await collection.find({ ...criteria, [field]: id }).sort(sort);
+    return cursor.toArray();
+  }
+
+  /**
+   * Parses a model name into its namespace and resource parts.
+   *
+   * For example, `platform.Content` becomes `{ namespace: 'platform', resource: 'Content' }`
+   *
+   * @param {string} name
+   * @returns {object}
+   */
+  static parseModelName(name) {
+    const [namespace, resource] = name.split('.');
+    return { namespace, resource };
   }
 
   /**
