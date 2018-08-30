@@ -1,5 +1,3 @@
-const { ObjectID } = require('mongodb');
-
 module.exports = {
   /**
    *
@@ -11,7 +9,7 @@ module.exports = {
     platformSecurityUser: async (root, { input }, { auth, base4 }) => {
       auth.check();
       const { id } = input;
-      return base4.strictFindById('platform', 'User', ObjectID(id));
+      return base4.strictFindById('platform', 'User', id);
     },
   },
 

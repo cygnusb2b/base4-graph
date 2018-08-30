@@ -37,14 +37,14 @@ class Base4 {
     this.tenant.check();
   }
 
-  async findById(namespace, resource, id, opts) {
+  async findById(namespace, resource, id, criteria) {
     if (!id) return null;
     const collection = await this.collection(namespace, resource);
-    return collection.findOne({ _id: Base4.coerceID(id) }, opts);
+    return collection.findOne({ ...criteria, _id: Base4.coerceID(id) });
   }
 
-  async strictFindById(namespace, resource, id, opts) {
-    const doc = await this.findById(namespace, resource, id, opts);
+  async strictFindById(namespace, resource, id, criteria) {
+    const doc = await this.findById(namespace, resource, id, criteria);
     if (!doc) throw new ApolloError(`No ${namespace} ${resource} record found for ID ${id}`, 'RECORD_NOT_FOUND');
     return doc;
   }
