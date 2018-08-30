@@ -1,3 +1,7 @@
+type Query {
+  emailProductNewsletter(input: ModelStringIdInput!): EmailProductNewsletter!
+}
+
 union EmailProductDeployment = EmailProductNewsletter | EmailProductThirdParty
 
 type EmailProductNewsletter implements PlatformProduct {
@@ -14,13 +18,13 @@ type EmailProductNewsletter implements PlatformProduct {
   # fields from email.model::Product\Deployment
   provider: EmailProductStubProvider
   sourceProvider: EmailProductStubHtmlSourceProvider
-  defaultTesters: [EmailCampaignTestRecipient] # add args?
+  defaultTesters: [EmailCampaignTestRecipient]! # add args?
   defaultFromName: String
   defaultSubjectLine: String
 
   # fields directly on email.model::Product\Newsletter
   parent: EmailProductNewsletter
-  sections: [EmailSection] # add args?
+  sections: [EmailSection]! # add args?
   alias: String
   usesDeploymentDates: Boolean
   teaser: String
