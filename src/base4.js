@@ -156,7 +156,9 @@ class Base4 {
     if (!ids.length) return [];
     const { namespace, resource } = Base4.parseModelName(model);
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, _id: { $in: ids } }).sort(sort).limit(first || 0);
+    const cursor = await collection.find({ ...criteria, _id: { $in: ids } })
+      .sort(sort)
+      .limit(first || 0);
     return cursor.toArray();
   }
 
