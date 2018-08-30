@@ -1,4 +1,4 @@
-# import * from 'campaign.graphql'
-# import * from 'product-deployment.graphql'
-# import * from 'schedule.graphql'
-# import * from 'section.graphql'
+# import Query.*, * from 'campaign.graphql'
+# import Query.*, * from 'product-deployment.graphql'
+# import Query.*, * from 'schedule.graphql'
+# import Query.*, * from 'section.graphql'

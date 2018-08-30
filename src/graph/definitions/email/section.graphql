@@ -1,3 +1,7 @@
+type Query {
+  emailSection(input: ModelIdInput!): EmailSection!
+}
+
 type EmailSection implements PlatformSection {
   # fields required by the PlatformSection GraphQL interface
   id: Int!
