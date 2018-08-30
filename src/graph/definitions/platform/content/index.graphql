@@ -75,3 +75,9 @@ interface PlatformContentAddressable {
   country: String
   location: PlatformContentStubLocation
 }
+
+interface PlatformContentAuthorable {
+  authors: [PlatformContentContact] # add args?
+  contributors: [PlatformContentContact] # add args?
+  photographers: [PlatformContentContact] # add args?
+}

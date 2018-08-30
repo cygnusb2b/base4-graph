@@ -1,4 +1,4 @@
-type PlatformContentArticle implements PlatformContent {
+type PlatformContentArticle implements PlatformContent & PlatformContentAuthorable {
   # fields from the GraphQL Content interface
   id: Int!
   type: String!
@@ -26,8 +26,14 @@ type PlatformContentArticle implements PlatformContent {
   redirects: [String]
   slug: String
 
-  # fields directly on model::Content\Article
+  # fields directly on platform.model::Content\Article
   sidebars: [PlatformContentStubSidebar]
 
-  # fields from trait::Content\Authorable
+  # fields directly on platform.model::Content\Article mutations
+  deck: String
+
+  # fields from platform.trait::Content\Authorable
+  authors: [PlatformContentContact] # add args?
+  contributors: [PlatformContentContact] # add args?
+  photographers: [PlatformContentContact] # add args?
 }
