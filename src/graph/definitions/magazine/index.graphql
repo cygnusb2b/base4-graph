@@ -1,4 +1,4 @@
-# import * from 'issue.graphql'
-# import * from 'product-publication.graphql'
-# import * from 'schedule.graphql'
-# import * from 'section.graphql'
+# import Query.*, * from 'issue.graphql'
+# import Query.*, * from 'product-publication.graphql'
+# import Query.*, * from 'schedule.graphql'
+# import Query.*, * from 'section.graphql'
