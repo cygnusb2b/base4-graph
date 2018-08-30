@@ -1,4 +1,17 @@
+const coreResolvers = require('../core');
+
 module.exports = {
+  /**
+   *
+   */
+  WebsiteSection: {
+    ...coreResolvers,
+    site: (section, _, { base4 }) => base4.reference('platform', 'Product', section.site, { type: 'Site' }),
+    parent: (section, _, { base4 }) => base4.reference('website', 'Section', section.parent),
+    children: (section, _, { base4 }) => base4.inverse('website', 'Section', 'parent.$id', section._id),
+    logo: (section, _, { base4 }) => base4.reference('platform', 'Asset', section.logo),
+  },
+
   /**
    *
    */
@@ -11,25 +24,5 @@ module.exports = {
       const { id } = input;
       return base4.strictFindById('website', 'Section', id);
     },
-  },
-
-  /**
-   *
-   */
-  WebsiteSection: {
-    /**
-     *
-     */
-    id: doc => doc._id,
-
-    /**
-     *
-     */
-    parent: (doc, _, { base4 }) => base4.reference('website', 'Section', doc.parent),
-
-    /**
-     *
-     */
-    children: async (doc, _, { base4 }) => base4.inverse('website', 'Section', 'parent.$id', doc._id),
   },
 };

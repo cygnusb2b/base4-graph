@@ -15,7 +15,6 @@ type WebsiteSection implements PlatformSection {
   site: WebsiteProductSite
   parent: WebsiteSection
   children: [WebsiteSection] # add args?
-  options: [WebsiteOption] # add args?
   logo: PlatformAssetImage
 
   # fields from trait.platform::Content\SeoFields

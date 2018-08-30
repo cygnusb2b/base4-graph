@@ -2,7 +2,7 @@ interface PlatformProduct {
   id: String!
   type: String!
   name: String
-  fullName: String # @todo should be calculated in resolver PER type
+  fullName: String
   tagLine: String
   description: String
   logo: String

@@ -2,7 +2,7 @@ interface PlatformSection {
   id: Int!
   name: String
   description: String
-  fullName: String # @todo calculate in resolvers PER type
+  fullName: String
 
   # fields from trait.platform::StatusEnabled
   status: Int
