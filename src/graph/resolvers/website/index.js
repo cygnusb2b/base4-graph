@@ -1,13 +1,13 @@
 const deepAssign = require('deep-assign');
 
 const option = require('./option');
-const productSite = require('./product-site');
+const product = require('./product');
 const schedule = require('./schedule');
 const section = require('./section');
 
 module.exports = deepAssign(
   option,
-  productSite,
+  product,
   schedule,
   section,
 );
