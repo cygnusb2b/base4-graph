@@ -1,4 +1,5 @@
 const { ApolloError, UserInputError } = require('apollo-server-express');
+const { ObjectID } = require('mongodb');
 const Tenant = require('./classes/tenant');
 const isObject = require('./utils/is-object');
 
@@ -39,7 +40,7 @@ class Base4 {
   async findById(namespace, resource, id, opts) {
     if (!id) return null;
     const collection = await this.collection(namespace, resource);
-    return collection.findOne({ _id: id }, opts);
+    return collection.findOne({ _id: Base4.coerceID(id) }, opts);
   }
 
   async strictFindById(namespace, resource, id, opts) {
@@ -130,6 +131,21 @@ class Base4 {
   static extractRefIds(refs) {
     if (!isArray(refs) || !refs.length) return [];
     return refs.map(ref => Base4.extractRefId(ref)).filter(id => id);
+  }
+
+  /**
+   * Coerces a string ID to either a MongoDB ObjectID or an integer.
+   *
+   * If the `id` value is not a string, or does not match the requirements for
+   * the above, the `id` value will be returned as-is.
+   *
+   * @param {*} id
+   */
+  static coerceID(id) {
+    if (typeof id !== 'string') return id;
+    if (/^[a-f0-9]{24}$/.test(id)) return new ObjectID(id);
+    if (/^\d+$/.test(id)) return Number(id);
+    return id;
   }
 
   /**
