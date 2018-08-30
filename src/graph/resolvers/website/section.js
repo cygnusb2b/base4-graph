@@ -1,5 +1,7 @@
 const coreResolvers = require('../core');
 
+const { isArray } = Array;
+
 module.exports = {
   /**
    *
@@ -10,6 +12,10 @@ module.exports = {
     parent: (section, _, { base4 }) => base4.reference('website', 'Section', section.parent),
     children: (section, _, { base4 }) => base4.inverse('website', 'Section', 'parent.$id', section._id),
     logo: (section, _, { base4 }) => base4.reference('platform', 'Asset', section.logo),
+    redirects: (section) => {
+      const { redirects } = section;
+      return isArray(redirects) ? redirects : [];
+    },
   },
 
   /**

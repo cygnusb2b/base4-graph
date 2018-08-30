@@ -1,3 +1,7 @@
+type Query {
+  websiteOption(input: ModelIdInput!): WebsiteOption!
+}
+
 type WebsiteOption {
   # fields directly from website.model::Option
   id: Int!

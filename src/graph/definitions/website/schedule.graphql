@@ -1,3 +1,7 @@
+type Query {
+  websiteSchedule(input: ModelStringIdInput!): WebsiteSchedule!
+}
+
 type WebsiteSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
   id: String!
@@ -13,7 +17,7 @@ type WebsiteSchedule implements PlatformSchedule {
   published: Date
   expires: Date
   contentStatus: Int
-  categories: [PlatformTaxonomy] # add args?
+  categories: [PlatformTaxonomy]! # add args?
   hasPrimaryImage: Boolean
   primarySection: WebsiteSection
 }

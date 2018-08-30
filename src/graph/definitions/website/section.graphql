@@ -14,12 +14,12 @@ type WebsiteSection implements PlatformSection {
   # fields directly on website.model::Section
   site: WebsiteProductSite
   parent: WebsiteSection
-  children: [WebsiteSection] # add args?
+  children: [WebsiteSection]! # add args?
   logo: PlatformAssetImage
 
   # fields from trait.platform::Content\SeoFields
   seoTitle: String
   alias: String
-  redirects: [String]
+  redirects: [String]!
   slug: String
 }
