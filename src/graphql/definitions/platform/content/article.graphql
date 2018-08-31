@@ -20,7 +20,7 @@ type PlatformContentArticle implements PlatformContent & PlatformContentAuthorab
   taxonomy: [PlatformTaxonomy] # add args?
   relatedTo: [PlatformContent] # add args?
   primaryImage: PlatformAssetImage
-  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection
+  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection @refMany(model: "platform.Asset", criteria: { type: "Image" })
   schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection

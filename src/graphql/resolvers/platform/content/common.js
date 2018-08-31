@@ -7,19 +7,6 @@ module.exports = {
   seoTitle: doc => extractMutationValue(doc, 'Website', 'seoTitle') || doc.name,
   redirects: doc => extractMutationValue(doc, 'Website', 'redirects') || [],
   primaryImage: (doc, _, { base4 }) => base4.reference('platform', 'Asset', doc.primaryImage),
-  /**
-   *
-   */
-  images: ({ images }, { input }, { base4 }) => {
-    const { sort, pagination } = input;
-    return base4.referenceMany({
-      model: 'platform.Asset',
-      refs: images,
-      criteria: { type: 'Image' },
-      sort,
-      pagination,
-    });
-  },
   taxonomy: (doc, _, { base4 }) => base4.references('platform', 'Taxonomy', doc.taxonomy),
   primarySite: async (doc, _, { base4 }) => {
     const primarySite = extractMutationValue(doc, 'Website', 'primarySite');
