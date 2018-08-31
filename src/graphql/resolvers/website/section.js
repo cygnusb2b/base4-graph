@@ -1,6 +1,5 @@
 const coreResolvers = require('../core');
 const paginationResolvers = require('../../../pagination/resolvers');
-const formatStatus = require('../../../utils/format-graph-status');
 
 const { isArray } = Array;
 
@@ -18,21 +17,6 @@ module.exports = {
      *
      */
     ...coreResolvers,
-
-    /**
-     *
-     */
-    children: ({ _id }, { input }, { base4 }) => {
-      const { sort, status, pagination } = input;
-      return base4.inverseMany({
-        model: 'website.Section',
-        field: 'parent.$id',
-        id: _id,
-        criteria: { ...formatStatus(status) },
-        sort,
-        pagination,
-      });
-    },
 
     /**
      *

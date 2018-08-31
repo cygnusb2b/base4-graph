@@ -14,8 +14,8 @@ type WebsiteSection implements PlatformSection {
   # fields directly on website.model::Section
   site(input: WebsiteSectionSiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
   parent(input: WebsiteSectionParentInput = {}): WebsiteSection @refOne(model: "website.Section")
-  children(input: WebsiteSectionChildrenInput = {}): WebsiteSectionConnection!
-  logo: PlatformAssetImage
+  children(input: WebsiteSectionChildrenInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "parent.$id")
+  logo: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
 
   # fields from trait.platform::Content\SeoFields
   seoTitle: String
