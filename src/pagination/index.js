@@ -161,7 +161,6 @@ class Pagination {
       const { field, order } = this.sort;
 
       const filter = deepMerge({}, this.criteria, mergeOptions);
-      console.info(filter);
       const limits = {};
       const ors = [];
 
@@ -192,7 +191,6 @@ class Pagination {
           }
         }
       }
-      console.info(filter);
       return filter;
     };
 
