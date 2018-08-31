@@ -4,6 +4,7 @@ const objectPath = require('object-path');
 const Limit = require('./limit');
 const Sort = require('./sort');
 
+const { isArray } = Array;
 const mergeOptions = { isMergeableObject: isPlainObject };
 
 class Pagination {
@@ -160,6 +161,7 @@ class Pagination {
       const { field, order } = this.sort;
 
       const filter = deepMerge({}, this.criteria, mergeOptions);
+      console.info(filter);
       const limits = {};
       const ors = [];
 
@@ -169,7 +171,13 @@ class Pagination {
         if (field === '_id') {
           // Sort by ID only.
           doc = await this.findCursorModel(this.after, { _id: 1 });
-          filter._id = { [op]: doc._id };
+          if (isArray(filter.$and)) {
+            filter.$and.push({ _id: { [op]: doc._id } });
+          } else if (filter._id) {
+            filter.$and = [{ _id: { [op]: doc._id } }];
+          } else {
+            filter._id = { [op]: doc._id };
+          }
         } else {
           doc = await this.findCursorModel(this.after, { [field]: 1 });
           limits[op] = objectPath.get(doc, field);
@@ -177,9 +185,14 @@ class Pagination {
             [field]: objectPath.get(doc, field),
             _id: { [op]: doc._id },
           });
-          filter.$or = [{ [field]: limits }, ...ors];
+          if (isArray(filter.$or)) {
+            filter.$or = filter.$or.concat([{ [field]: limits }, ...ors]);
+          } else {
+            filter.$or = [{ [field]: limits }, ...ors];
+          }
         }
       }
+      console.info(filter);
       return filter;
     };
 
