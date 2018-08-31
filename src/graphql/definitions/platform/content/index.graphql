@@ -53,7 +53,8 @@ interface PlatformContent {
 
   # fields from platform.trait::MediaRelatable
   primaryImage: PlatformAssetImage
-  images: [PlatformAssetImage] # add args?
+  # @refMany(model: "platform.Asset", criteria: { type: "Image" })
+  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection
 
   # fields from platform.model::Content mutations
   schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
@@ -95,4 +96,9 @@ interface PlatformContentAuthorable {
   authors: [PlatformContentContact] # add args?
   contributors: [PlatformContentContact] # add args?
   photographers: [PlatformContentContact] # add args?
+}
+
+input PlatformContentImagesInput {
+  sort: PlatformAssetImageSortInput = {}
+  pagination: PaginationInput = {}
 }

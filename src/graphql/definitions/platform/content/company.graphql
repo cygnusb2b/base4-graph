@@ -20,7 +20,7 @@ type PlatformContentCompany implements PlatformContent & PlatformContentContacta
   taxonomy: [PlatformTaxonomy] # add args?
   relatedTo: [PlatformContent] # add args?
   primaryImage: PlatformAssetImage
-  images: [PlatformAssetImage] # add args?
+  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection
   schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
