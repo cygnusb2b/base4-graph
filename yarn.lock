@@ -101,6 +101,12 @@
     lodash "^4.17.5"
     to-fast-properties "^2.0.0"
 
+"@limit0/graphql-custom-types@^1.0.1":
+  version "1.0.1"
+  resolved "https://registry.yarnpkg.com/@limit0/graphql-custom-types/-/graphql-custom-types-1.0.1.tgz#6ec74695eb1de6bf3b2824233f391bd256c7de9c"
+  dependencies:
+    base64-url "^2.2.0"
+
 "@protobufjs/aspromise@^1.1.1", "@protobufjs/aspromise@^1.1.2":
   version "1.1.2"
   resolved "https://registry.yarnpkg.com/@protobufjs/aspromise/-/aspromise-1.1.2.tgz#9b8b0cc663d669a7d8f6f5d0893a14d348f30fbf"
@@ -526,6 +532,10 @@ backo2@^1.0.2:
 balanced-match@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/balanced-match/-/balanced-match-1.0.0.tgz#89b4d199ab2bee49de164ea02b89ce462d71b767"
+
+base64-url@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/base64-url/-/base64-url-2.2.0.tgz#4bbd6a825df1be522d39e566a721ede51144041a"
 
 base@^0.11.1:
   version "0.11.2"
