@@ -20,7 +20,7 @@ type WebsiteSection implements PlatformSection {
   # fields from trait.platform::Content\SeoFields
   seoTitle: String
   alias: String
-  redirects: [String]!
+  redirects: [String]! @fillArray
   slug: String
 }
 

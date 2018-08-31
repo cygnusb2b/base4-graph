@@ -1,8 +1,6 @@
 const coreResolvers = require('../core');
 const paginationResolvers = require('../../../pagination/resolvers');
 
-const { isArray } = Array;
-
 module.exports = {
   /**
    *
@@ -17,11 +15,6 @@ module.exports = {
      *
      */
     ...coreResolvers,
-
-    /**
-     *
-     */
-    redirects: ({ redirects }) => (isArray(redirects) ? redirects : []),
   },
 
   /**
