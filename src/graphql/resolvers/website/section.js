@@ -22,18 +22,6 @@ module.exports = {
     /**
      *
      */
-    site: ({ site }, { input }, { base4 }) => {
-      const { status } = input;
-      return base4.referenceOne({
-        model: 'platform.Product',
-        ref: site,
-        criteria: { ...formatStatus(status), type: 'Site' },
-      });
-    },
-
-    /**
-     *
-     */
     children: ({ _id }, { input }, { base4 }) => {
       const { sort, status, pagination } = input;
       return base4.inverseMany({
@@ -45,15 +33,6 @@ module.exports = {
         pagination,
       });
     },
-
-    /**
-     *
-     */
-    logo: ({ logo }, _, { base4 }) => base4.referenceOne({
-      model: 'platform.Asset',
-      ref: logo,
-      criteria: { type: 'Image' },
-    }),
 
     /**
      *
