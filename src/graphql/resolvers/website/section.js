@@ -34,18 +34,6 @@ module.exports = {
     /**
      *
      */
-    parent: ({ parent }, { input }, { base4 }) => {
-      const { status } = input;
-      return base4.referenceOne({
-        model: 'website.Section',
-        ref: parent,
-        criteria: { ...formatStatus(status) },
-      });
-    },
-
-    /**
-     *
-     */
     children: ({ _id }, { input }, { base4 }) => {
       const { sort, status, pagination } = input;
       return base4.inverseMany({

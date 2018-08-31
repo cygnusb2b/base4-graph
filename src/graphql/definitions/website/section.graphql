@@ -13,7 +13,7 @@ type WebsiteSection implements PlatformSection {
 
   # fields directly on website.model::Section
   site(input: WebsiteSectionSiteInput = {}): WebsiteProductSite
-  parent(input: WebsiteSectionParentInput = {}): WebsiteSection
+  parent(input: WebsiteSectionParentInput = {}): WebsiteSection @refOne(model: "website.Section")
   children(input: WebsiteSectionChildrenInput = {}): WebsiteSectionConnection!
   logo: PlatformAssetImage
 
