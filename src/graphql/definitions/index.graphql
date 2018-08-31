@@ -28,7 +28,7 @@ enum ReferenceStatus {
 }
 
 input PaginationInput {
-  first: Int = 25
+  first: Int = 10
   after: Cursor
 }
 
