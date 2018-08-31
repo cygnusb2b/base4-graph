@@ -9,6 +9,7 @@ scalar JSON
 
 directive @refMany(model: String!, localField: String, foreignField: String = "_id", criteria: JSON) on FIELD_DEFINITION
 directive @refOne(model: String!, localField: String, foreignField: String = "_id", criteria: JSON) on FIELD_DEFINITION
+directive @fillArray(localField: String) on FIELD_DEFINITION
 
 type Query {
   ping: String!
