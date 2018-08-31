@@ -1,6 +1,7 @@
 const { ApolloError, UserInputError } = require('apollo-server-express');
 const { ObjectID } = require('mongodb');
 const Tenant = require('./classes/tenant');
+const Pagination = require('./pagination');
 const isObject = require('./utils/is-object');
 
 const { isArray } = Array;
@@ -150,16 +151,19 @@ class Base4 {
     refs,
     criteria,
     sort = {},
-    first,
+    pagination = {},
   }) {
     const ids = Base4.extractRefIds(refs);
     if (!ids.length) return [];
     const { namespace, resource } = Base4.parseModelName(model);
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, _id: { $in: ids } })
-      .sort(sort)
-      .limit(first || 0);
-    return cursor.toArray();
+    const { first, after } = pagination;
+
+    return new Pagination(collection, {
+      sort,
+      pagination: { first, after: Base4.coerceID(after) },
+      criteria: { ...criteria, _id: { $in: ids } },
+    });
   }
 
   /**
@@ -178,13 +182,18 @@ class Base4 {
     id,
     criteria,
     sort = {},
-    first,
+    pagination = {},
   }) {
     if (!id) return [];
     const { namespace, resource } = Base4.parseModelName(model);
     const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, [field]: id }).sort(sort).limit(first || 0);
-    return cursor.toArray();
+    const { first, after } = pagination;
+
+    return new Pagination(collection, {
+      sort,
+      pagination: { first, after: Base4.coerceID(after) },
+      criteria: { ...criteria, [field]: id },
+    });
   }
 
   /**

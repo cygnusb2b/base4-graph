@@ -1,7 +1,8 @@
 const deepMerge = require('deepmerge');
 const isPlainObject = require('is-plain-object');
-const Sort = require('./sort');
+const objectPath = require('object-path');
 const Limit = require('./limit');
+const Sort = require('./sort');
 
 const mergeOptions = { isMergeableObject: isPlainObject };
 
@@ -9,22 +10,22 @@ class Pagination {
   /**
    * Constructor.
    *
-   * @param {Model} Model The Mongoose model to query against.
+   * @param {Collection} collection The MongoDB collection to query against.
    * @param {object} params The criteria, pagination, and sort params.
    * @param {object} params.criteria Query criteria to apply to the paginated query.
    * @param {object} params.pagination The pagination parameters.
    * @param {number} params.pagination.first The number of documents to return.
    *                                         Will default the the limit classes default.
-   * @param {string} params.pagination.after The ID to start querying from.
-   *                                         Should not be an obfuscated cursor value.
-   * @param {object} params.sort The sort parameters
+   * @param {*} params.pagination.after The ID to start querying from.
+   *                                    Should not be an obfuscated cursor value.
+   * @param {array} params.sort The sort parameters
    * @param {string} params.sort.field The sort field name.
    * @param {string} params.sort.order The sort order. Either 1/-1 or asc/desc.
    * @param {?object} params.projection The field projection (fields to return).
    * @param {object} options Additional sort, limit and criteria merge options.
    *                         See the corresponding classes.
    */
-  constructor(Model, {
+  constructor(collection, {
     criteria = {},
     pagination = {},
     sort = {},
@@ -32,15 +33,11 @@ class Pagination {
   } = {}, options = {}) {
     this.promises = {};
 
-    // Set the Model to use for querying.
-    this.Model = Model;
-
-    // Sets the options for deep merging criteria object.
-    // If not set, will only merge plain objects, per `is-plain-object`.
-    this.mergeOptions = options.mergeOptions || mergeOptions;
+    // Set the collecton to use for querying.
+    this.collection = collection;
 
     // Set/merge any query criteria.
-    this.criteria = deepMerge({}, criteria, this.mergeOptions);
+    this.criteria = deepMerge({}, criteria, mergeOptions);
 
     // Set the limit and after cursor.
     const { first, after } = pagination;
@@ -62,7 +59,7 @@ class Pagination {
    * @return {Promise}
    */
   getTotalCount() {
-    const run = () => this.Model.count(this.criteria);
+    const run = () => this.collection.countDocuments(this.criteria);
     if (!this.promises.count) {
       this.promises.count = run();
     }
@@ -77,12 +74,17 @@ class Pagination {
   getEdges() {
     const run = async () => {
       const criteria = await this.getQueryCriteria();
-      const docs = await this.Model.find(criteria, this.projection)
+      const opts = {};
+      if (this.projection) {
+        opts.projection = this.projection;
+      }
+
+      const cursor = await this.collection.find(criteria, opts)
         .sort(this.sort.value)
         .limit(this.first.value)
-        .collation(this.sort.collation)
-        .comment(this.createComment('getEdges'));
-      return docs.map(doc => ({ node: doc, cursor: doc.id }));
+        .collation(this.sort.collation);
+      const docs = await cursor.toArray();
+      return docs.map(doc => ({ node: doc, cursor: doc._id }));
     };
     if (!this.promises.edge) {
       this.promises.edge = run();
@@ -116,14 +118,13 @@ class Pagination {
   async hasNextPage() {
     const run = async () => {
       const criteria = await this.getQueryCriteria();
-      const count = await this.Model.find(criteria)
-        .select({ _id: 1 })
+      const count = await this.collection.find(criteria)
+        .project({ _id: 1 })
         .skip(this.first.value)
         .limit(1)
         .sort(this.sort.value)
         .collation(this.sort.collation)
-        .comment(this.createComment('hasNextPage'))
-        .count();
+        .count(true);
       return Boolean(count);
     };
     if (!this.promises.nextPage) {
@@ -135,14 +136,12 @@ class Pagination {
   /**
    * @private
    * @param {string} id
-   * @param {object} fields
+   * @param {object} projection
    * @return {Promise}
    */
-  findCursorModel(id, fields) {
+  findCursorModel(id, projection) {
     const run = async () => {
-      const doc = await this.Model.findOne({ _id: id })
-        .select(fields)
-        .comment(this.createComment('findCursorModel'));
+      const doc = await this.collection.findOne({ _id: id }, { projection });
       if (!doc) throw new Error(`No record found for ID '${id}'`);
       return doc;
     };
@@ -160,7 +159,7 @@ class Pagination {
     const run = async () => {
       const { field, order } = this.sort;
 
-      const filter = deepMerge({}, this.criteria, this.mergeOptions);
+      const filter = deepMerge({}, this.criteria, mergeOptions);
       const limits = {};
       const ors = [];
 
@@ -170,13 +169,13 @@ class Pagination {
         if (field === '_id') {
           // Sort by ID only.
           doc = await this.findCursorModel(this.after, { _id: 1 });
-          filter._id = { [op]: doc.id };
+          filter._id = { [op]: doc._id };
         } else {
           doc = await this.findCursorModel(this.after, { [field]: 1 });
-          limits[op] = doc.get(field);
+          limits[op] = objectPath.get(doc, field);
           ors.push({
-            [field]: doc.get(field),
-            _id: { [op]: doc.id },
+            [field]: objectPath.get(doc, field),
+            _id: { [op]: doc._id },
           });
           filter.$or = [{ [field]: limits }, ...ors];
         }
@@ -188,15 +187,6 @@ class Pagination {
       this.promises.criteria = run();
     }
     return this.promises.criteria;
-  }
-
-  /**
-   * @private
-   * @param {string} method
-   * @return {string}
-   */
-  createComment(method) {
-    return `Pagination: ${this.Model.modelName} - ${method}`;
   }
 }
 

@@ -22,11 +22,10 @@ class Sort {
    *
    * @param {object} [options={}]
    * @param {object} collation The MongoDB sort collation options.
-   * @param {string} [createdField=createdAt] A field that signifies the model's created date.
-   *                                          Defaults to `createdAt` as this is the default
-   *                                          used by Mongoose when using `timestamps: true`.
+   * @param {string} [createdField=created] A field that signifies the model's created date.
+   *                                          Defaults to `created` as this is the default
    */
-  set options({ collation, createdField = 'createdAt' } = {}) {
+  set options({ collation, createdField = 'created' } = {}) {
     this.opts = { createdField };
     this.collation = collation;
   }

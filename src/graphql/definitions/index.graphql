@@ -3,11 +3,17 @@
 # import Query.*, * from 'platform/index.graphql'
 # import Query.*, * from 'website/index.graphql'
 
+scalar Cursor
 scalar Date
 scalar JSON
 
 type Query {
   ping: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: Cursor
 }
 
 enum SortOrder {
@@ -23,7 +29,7 @@ enum ReferenceStatus {
 
 input PaginationInput {
   first: Int = 25
-  after: String # @todo Create a cursor type that supports Int + String IDs
+  after: Cursor
 }
 
 input ModelIdInput {

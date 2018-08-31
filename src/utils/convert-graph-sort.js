@@ -7,10 +7,12 @@ const order = (v) => {
   return -1;
 };
 
+const field = v => (v === 'id' ? '_id' : v);
+
 module.exports = (sort) => {
   if (isArray(sort)) {
-    return sort.reduce((o, s) => ({ ...o, [s.field]: order(s.order) }), {});
+    return sort.reduce((o, s) => ({ ...o, [field(s.field)]: order(s.order) }), {});
   }
-  if (isObject(sort)) return { [sort.field]: order(sort.order) };
+  if (isObject(sort)) return { [field(sort.field)]: order(sort.order) };
   return {};
 };

@@ -14,7 +14,7 @@ type WebsiteSection implements PlatformSection {
   # fields directly on website.model::Section
   site(input: WebsiteSectionSiteInput = {}): WebsiteProductSite
   parent(input: WebsiteSectionParentInput = {}): WebsiteSection
-  children(input: WebsiteSectionChildrenInput = {}): [WebsiteSection]! # add args?
+  children(input: WebsiteSectionChildrenInput = {}): WebsiteSectionConnection!
   logo: PlatformAssetImage
 
   # fields from trait.platform::Content\SeoFields
@@ -22,6 +22,17 @@ type WebsiteSection implements PlatformSection {
   alias: String
   redirects: [String]!
   slug: String
+}
+
+type WebsiteSectionConnection {
+  totalCount: Int!
+  edges: [WebsiteSectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type WebsiteSectionEdge {
+  node: WebsiteSection!
+  cursor: Cursor!
 }
 
 enum WebsiteSectionSortField {
@@ -33,7 +44,7 @@ enum WebsiteSectionSortField {
 
 input WebsiteSectionChildrenInput {
   status: ReferenceStatus = active
-  sort: [WebsiteSectionSortInput] = [{}]
+  sort: WebsiteSectionSortInput = {}
   pagination: PaginationInput = {}
 }
 

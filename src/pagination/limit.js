@@ -17,9 +17,9 @@ class Limit {
    *
    * @param {object} [options={}]
    * @param {number} [options.def=10] The default limit value, if not specified.
-   * @param {number} [options.max=200] The maximum limit (page size).
+   * @param {number} [options.max=1000] The maximum limit (page size).
    */
-  set options({ def = 10, max = 200 } = {}) {
+  set options({ def = 10, max = 1000 } = {}) {
     this.opts = { def, max };
   }
 
@@ -42,13 +42,12 @@ class Limit {
    */
   set value(value) {
     const { def, max } = this.opts;
-    const limit = parseInt(value, 10);
-    if (!limit || limit < 1) {
+    if (typeof value !== 'number' || value < 0) {
       this.v = def;
-    } else if (limit > max) {
+    } else if (value > max) {
       this.v = max;
     } else {
-      this.v = limit;
+      this.v = value;
     }
   }
 
