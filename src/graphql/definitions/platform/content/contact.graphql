@@ -1,4 +1,4 @@
-type PlatformContentContact implements PlatformContent & PlatformContentContactable & PlatformContentAddressable {
+type PlatformContentContact implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
   type: String!
@@ -30,7 +30,7 @@ type PlatformContentContact implements PlatformContent & PlatformContentContacta
   slug: String @value(localField: "mutations.Website.slug")
 
   # fields directly on platform.model::Content\Contact
-  socialLinks: [PlatformEntityStubSocial]
+  socialLinks: [PlatformEntityStubSocial]! @arrayValue
 
   # fields from platform.trait::Content\Contactable
   phone: String
@@ -53,4 +53,32 @@ type PlatformContentContact implements PlatformContent & PlatformContentContacta
   zip: String
   country: String
   location: PlatformContentStubLocation
+}
+
+type PlatformContentContactConnection {
+  totalCount: Int!
+  edges: [PlatformContentContactEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentContactEdge {
+  node: PlatformContentContact!
+  cursor: Cursor!
+}
+
+enum PlatformContentContactSortField {
+  id
+  name
+  fullName
+  created
+  updated
+  published
+  touched
+  lastName
+  firstName
+}
+
+input PlatformContentContactSortInput {
+  field: PlatformContentContactSortField = name
+  order: SortOrder = asc
 }

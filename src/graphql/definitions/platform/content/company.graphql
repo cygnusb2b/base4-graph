@@ -1,4 +1,4 @@
-type PlatformContentCompany implements PlatformContent & PlatformContentContactable & PlatformContentAddressable {
+type PlatformContentCompany implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
   type: String!

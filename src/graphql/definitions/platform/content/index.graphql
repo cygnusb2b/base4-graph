@@ -67,36 +67,6 @@ interface PlatformContent {
   slug: String @value(localField: "mutations.Website.slug")
 }
 
-interface PlatformContentContactable {
-  phone: String
-  tollfree: String
-  fax: String
-  website: String
-  email: String
-  firstName: String
-  lastName: String
-  company: PlatformContentCompany
-  title: String
-  mobile: String
-  publicEmail: String
-}
-
-interface PlatformContentAddressable {
-  address1: String
-  address2: String
-  city: String
-  state: String
-  zip: String
-  country: String
-  location: PlatformContentStubLocation
-}
-
-interface PlatformContentAuthorable {
-  authors: [PlatformContentContact] # add args?
-  contributors: [PlatformContentContact] # add args?
-  photographers: [PlatformContentContact] # add args?
-}
-
 input PlatformContentImagesInput {
   sort: PlatformAssetImageSortInput = {}
   pagination: PaginationInput = {}
@@ -105,6 +75,12 @@ input PlatformContentImagesInput {
 input PlatformContentTaxonomyInput {
   status: ReferenceStatus = active
   sort: PlatformTaxonomySortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input PlatformContentAuthorableInput {
+  status: ReferenceStatus = active
+  sort: PlatformContentContactSortInput = {}
   pagination: PaginationInput = {}
 }
 

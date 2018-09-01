@@ -1,4 +1,4 @@
-type PlatformContentArticle implements PlatformContent & PlatformContentAuthorable {
+type PlatformContentArticle implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
   type: String!
@@ -36,7 +36,7 @@ type PlatformContentArticle implements PlatformContent & PlatformContentAuthorab
   deck: String
 
   # fields from platform.trait::Content\Authorable
-  authors: [PlatformContentContact] # add args?
-  contributors: [PlatformContentContact] # add args?
-  photographers: [PlatformContentContact] # add args?
+  authors(input: PlatformContentAuthorableInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  contributors(input: PlatformContentAuthorableInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  photographers(input: PlatformContentAuthorableInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
 }

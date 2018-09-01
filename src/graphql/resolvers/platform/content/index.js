@@ -1,6 +1,9 @@
 const deepAssign = require('deep-assign');
 
+const contact = require('./contact');
+
 module.exports = deepAssign(
+  contact,
   {
     /**
      *
