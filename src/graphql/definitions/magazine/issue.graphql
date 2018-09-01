@@ -21,6 +21,23 @@ type MagazineIssue {
   status: Int
 }
 
+type MagazineIssueConnection {
+  totalCount: Int!
+  edges: [MagazineIssueEdge]!
+  pageInfo: PageInfo!
+}
+
+type MagazineIssueEdge {
+  node: MagazineIssue!
+  cursor: Cursor!
+}
+
+enum MagazineIssueSortField {
+  id
+  name
+  mailDate
+}
+
 input MagazineIssuePublicationInput {
   status: ReferenceStatus = active
 }
@@ -29,4 +46,9 @@ input MagazineIssueSectionsInput {
   status: ReferenceStatus = active
   sort: MagazineSectionSortInput = {}
   pagination: PaginationInput = {}
+}
+
+input MagazineIssueSortInput {
+  field: MagazineIssueSortField = name
+  order: SortOrder = asc
 }

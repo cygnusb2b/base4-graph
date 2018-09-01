@@ -14,12 +14,24 @@ type MagazineProductPublication implements PlatformProduct {
   status: Int
 
   # fields directly on magazine.model::Product\Publication
-  issues: [MagazineIssue]! # add args?
-  sections: [MagazineSection]! # add args?
-  coverImage: PlatformAssetImage
+  issues(input: MagazineProductPublicationIssuesInput = {}): MagazineIssueConnection! @refMany(model: "magazine.Issue", localField: "_id", foreignField: "publication.$id")
+  sections(input: MagazineProductPublicationSectionsInput = {}): MagazineSectionConnection! @refMany(model: "magazine.Section", localField: "_id", foreignField: "publication.$id")
+  coverImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
   subscribeUrl: String
   renewalUrl: String
   reprintsUrl: String
   einquiryUrl: String
-  socialLinks: [PlatformEntityStubSocial]!
+  socialLinks: [PlatformEntityStubSocial]! @arrayValue
+}
+
+input MagazineProductPublicationIssuesInput {
+  status: ReferenceStatus = active
+  sort: MagazineIssueSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input MagazineProductPublicationSectionsInput {
+  status: ReferenceStatus = active
+  sort: MagazineSectionSortInput = {}
+  pagination: PaginationInput = {}
 }
