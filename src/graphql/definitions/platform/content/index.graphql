@@ -4,6 +4,7 @@
 # import * from 'company.graphql'
 # import * from 'contact.graphql'
 # import * from 'event.graphql'
+# import * from 'job.graphql'
 
 type Query {
   platformContent(input: ModelIdInput!): PlatformContent!
