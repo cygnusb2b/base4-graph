@@ -1,5 +1,6 @@
 const { ApolloError, UserInputError } = require('apollo-server-express');
 const { ObjectID } = require('mongodb');
+const objectPath = require('object-path');
 const Tenant = require('./classes/tenant');
 const Pagination = require('./pagination');
 const isObject = require('./utils/is-object');
@@ -87,25 +88,41 @@ class Base4 {
   }
 
   /**
-   * Returns a reference-one document for the provided model name and ref/id.
+   * Returns a reference-one document for the provided document, model name and ref fields.
    *
    * For example, to retrieve the `createdBy` document referenced on a `Content` document,
    * run the following:
    *
-   * `referenceOne({ model: 'platform.User', ref: content.createdBy });`
+   * ```
+   * referenceOne({
+   *  doc: content,
+   *  relatedModel: 'platform.User',
+   *  localField: 'createdBy',
+   *  foreignField: '_id',
+   * });
+   * ```
    *
    * @param {object} params The function parameters.
-   * @param {string} params.model The reference's model name, e.g. `platform.Content`.
-   * @param {*} params.ref The reference. Either an ID or a complex DBRef.
+   * @param {object} params.doc The document to pull the reference data from.
+   * @param {string} params.relatedModel The reference's model name, e.g. `platform.Content`.
+   * @param {string} params.localField The local document field to retreive the ref value from.
+   * @param {string} params.foreignField The foreign/reference document field to query against.
    * @param {?object} params.criteria Additional query criteria to add.
    * @returns {Promise<null|object>}
    */
-  async referenceOne({ model, ref, criteria }) {
+  async referenceOne({
+    doc,
+    relatedModel,
+    localField,
+    foreignField,
+    criteria,
+  }) {
+    const ref = objectPath.get(doc, localField);
     const id = Base4.extractRefId(ref);
     if (!id) return null;
-    const { namespace, resource } = Base4.parseModelName(model);
+    const { namespace, resource } = Base4.parseModelName(relatedModel);
     const collection = await this.collection(namespace, resource);
-    return collection.findOne({ ...criteria, _id: id });
+    return collection.findOne({ ...criteria, [foreignField]: id });
   }
 
   /**

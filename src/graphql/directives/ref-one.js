@@ -1,5 +1,4 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
-const Base4 = require('../../base4');
 const formatStatus = require('../../utils/format-graph-status');
 
 class RefOneDirective extends SchemaDirectiveVisitor {
@@ -17,22 +16,18 @@ class RefOneDirective extends SchemaDirectiveVisitor {
         criteria,
       } = this.args;
 
-      const ref = doc[localField || field.name];
-      const id = Base4.extractRefId(ref);
-      if (!id) return null;
-
-      let query = {
-        ...criteria,
-        [foreignField]: id,
-      };
-
+      let query = { ...criteria };
       if (input) {
         const { status } = input;
         if (status) query = { ...query, ...formatStatus(status) };
       }
-      const { namespace, resource } = Base4.parseModelName(model);
-      const collection = await base4.collection(namespace, resource);
-      return collection.findOne(query);
+      return base4.referenceOne({
+        doc,
+        foreignField,
+        relatedModel: model,
+        localField: localField || field.name,
+        criteria: query,
+      });
     };
   }
 }
