@@ -34,8 +34,8 @@ interface PlatformContent {
   touched: Date
   published: Date
   unpublished: Date
-  createdBy: PlatformSecurityUser
-  updatedBy: PlatformSecurityUser
+  createdBy: PlatformSecurityUser @refOne(model: "platform.User")
+  updatedBy: PlatformSecurityUser @refOne(model: "platform.User")
 
   # fields from platform.trait::StatusEnabled
   status: Int
@@ -57,8 +57,8 @@ interface PlatformContent {
 
   # fields from platform.model::Content mutations
   schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
-  primarySite: WebsiteProductSite
-  primarySection: WebsiteSection
+  primarySite(input: PlatformContentPrimarySiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
+  primarySection(input: PlatformContentPrimarySectionInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
 
   # fields from platform.trait::Content\SeoFields
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
@@ -100,4 +100,12 @@ interface PlatformContentAuthorable {
 input PlatformContentImagesInput {
   sort: PlatformAssetImageSortInput = {}
   pagination: PaginationInput = {}
+}
+
+input PlatformContentPrimarySiteInput {
+  status: ReferenceStatus = active
+}
+
+input PlatformContentPrimarySectionInput {
+  status: ReferenceStatus = active
 }

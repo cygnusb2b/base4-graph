@@ -11,8 +11,8 @@ type PlatformContentCompany implements PlatformContent & PlatformContentContacta
   touched: Date
   published: Date
   unpublished: Date
-  createdBy: PlatformSecurityUser
-  updatedBy: PlatformSecurityUser
+  createdBy: PlatformSecurityUser @refOne(model: "platform.User")
+  updatedBy: PlatformSecurityUser @refOne(model: "platform.User")
   status: Int
   teaser: String
   body: String
@@ -22,8 +22,8 @@ type PlatformContentCompany implements PlatformContent & PlatformContentContacta
   primaryImage: PlatformAssetImage
   images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection @refMany(model: "platform.Asset", criteria: { type: "Image" })
   schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
-  primarySite: WebsiteProductSite
-  primarySection: WebsiteSection
+  primarySite(input: PlatformContentPrimarySiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
+  primarySection(input: PlatformContentPrimarySectionInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
