@@ -12,11 +12,21 @@ type MagazineIssue {
   dedication: String
   coverDescription: String
   credit: String
-  publication: MagazineProductPublication
-  sections: [MagazineSection]! # add args?
-  coverImage: PlatformAssetImage
-  redirects: [String]!
+  publication(input: MagazineIssuePublicationInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
+  sections(input: MagazineIssueSectionsInput = {}): MagazineSectionConnection! @refMany(model: "magazine.Section", localField: "_id", foreignField: "issue.$id")
+  coverImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
+  redirects: [String]! @arrayValue
 
   #fields from trait.platform::StatusEnabled
   status: Int
+}
+
+input MagazineIssuePublicationInput {
+  status: ReferenceStatus = active
+}
+
+input MagazineIssueSectionsInput {
+  status: ReferenceStatus = active
+  sort: MagazineSectionSortInput = {}
+  pagination: PaginationInput = {}
 }

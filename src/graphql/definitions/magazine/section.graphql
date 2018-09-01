@@ -16,10 +16,33 @@ type MagazineSection implements PlatformSection {
   issue(input: MagazineSectionIssueInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
 }
 
+type MagazineSectionConnection {
+  totalCount: Int!
+  edges: [MagazineSectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type MagazineSectionEdge {
+  node: MagazineSection!
+  cursor: Cursor!
+}
+
+enum MagazineSectionSortField {
+  id
+  name
+  fullName
+  sequence
+}
+
 input MagazineSectionPublicationInput {
   status: ReferenceStatus = active
 }
 
 input MagazineSectionIssueInput {
   status: ReferenceStatus = active
+}
+
+input MagazineSectionSortInput {
+  field: MagazineSectionSortField = name
+  order: SortOrder = asc
 }
