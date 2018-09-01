@@ -4,7 +4,7 @@ type PlatformContentCompany implements PlatformContent {
   type: PlatformContentType!
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
   shortName: String
-  fullName: String
+  fullName: String # should be calculated in resolvers
   hash: String
   created: Date
   updated: Date
@@ -17,13 +17,13 @@ type PlatformContentCompany implements PlatformContent {
   teaser(input: PlatformContentMutationInput = {}): String @mutatedValue
   body(input: PlatformContentMutationInput = {}): String @mutatedValue
   notes: String
-  taxonomy(input: PlatformContentTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
+  taxonomy(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
   relatedTo: [PlatformContent] # add args?
   primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
-  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
+  images(input: RelatedPlatformAssetImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
   schedules: PlatformContentSchedules! @passThru
-  primarySite(input: PlatformContentPrimarySiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
-  primarySection(input: PlatformContentPrimarySectionInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+  primarySite(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
+  primarySection(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
@@ -31,22 +31,21 @@ type PlatformContentCompany implements PlatformContent {
 
   # fields directly on platform.model::Content\Company
   companyType: String
-  parentCompany: PlatformContentCompany
-  childCompanies: [PlatformContentCompany] # graphql specific
-  brandsCarried: PlatformContentCompany
-  statesServed: [String]
-  listingContacts: [PlatformContentContact] # add args?
-  publicContacts: [PlatformContentContact] # add args?
-  salesContacts: [PlatformContentContact] # add args?
-  marketingContacts: [PlatformContentContact] # add args?
-  companyCompetitors: [PlatformContentCompany] # add args?
-  socialLinks: [PlatformEntityStubSocial]
+  parentCompany(input: ReferenceActiveStatusInput = {}): PlatformContentCompany @refOne(model: "platform.Content")
+  brandsCarried(input: RelatedPlatformContentInput = {}): PlatformContentCompanyConnection! @refMany(model: "platform.Content")
+  statesServed: [String]! @arrayValue
+  listingContacts(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  publicContacts(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  salesContacts(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  marketingContacts(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  companyCompetitors(input: RelatedPlatformContentInput = {}): PlatformContentCompanyConnection! @refMany(model: "platform.Content")
+  socialLinks: [PlatformEntityStubSocial]! @arrayValue
 
   # fields directly on platform.model::Content\Company from mutations
-  leadsDelivery: Boolean
-  enableRmi: Boolean
-  featuredCategories: [PlatformTaxonomy] # add args?
-  primaryCategory: PlatformTaxonomy
+  leadsDelivery: Boolean @value(localField: "mutations.Website.leadsDelivery")
+  enableRmi: Boolean @value(localField: "mutations.Website.enableRmi")
+  featuredCategories(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy", localField: "mutations.Website.featuredCategories")
+  primaryCategory(input: ReferenceActiveStatusInput = {}): PlatformTaxonomy @refOne(model: "platform.Taxonomy", localField: "mutations.Website.primaryCategory")
 
   # fields from platform.trait::Content\Contactable
   phone: String
@@ -56,7 +55,7 @@ type PlatformContentCompany implements PlatformContent {
   email: String
   firstName: String
   lastName: String
-  company: PlatformContentCompany
+  company(input: ReferenceActiveStatusInput = {}): PlatformContentCompany @refOne(model: "platform.Content")
   title: String
   mobile: String
   publicEmail: String
@@ -69,4 +68,15 @@ type PlatformContentCompany implements PlatformContent {
   zip: String
   country: String
   location: PlatformContentStubLocation
+}
+
+type PlatformContentCompanyConnection {
+  totalCount: Int!
+  edges: [PlatformContentCompanyEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentCompanyEdge {
+  node: PlatformContentCompany!
+  cursor: Cursor!
 }

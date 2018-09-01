@@ -4,7 +4,7 @@ type PlatformContentContact implements PlatformContent {
   type: PlatformContentType!
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
   shortName: String
-  fullName: String
+  fullName: String # should be calculated in resolvers
   hash: String
   created: Date
   updated: Date
@@ -17,13 +17,13 @@ type PlatformContentContact implements PlatformContent {
   teaser(input: PlatformContentMutationInput = {}): String @mutatedValue
   body(input: PlatformContentMutationInput = {}): String @mutatedValue
   notes: String
-  taxonomy(input: PlatformContentTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
+  taxonomy(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
   relatedTo: [PlatformContent] # add args?
   primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
-  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
+  images(input: RelatedPlatformAssetImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
   schedules: PlatformContentSchedules! @passThru
-  primarySite(input: PlatformContentPrimarySiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
-  primarySection(input: PlatformContentPrimarySectionInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+  primarySite(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
+  primarySection(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
@@ -64,21 +64,4 @@ type PlatformContentContactConnection {
 type PlatformContentContactEdge {
   node: PlatformContentContact!
   cursor: Cursor!
-}
-
-enum PlatformContentContactSortField {
-  id
-  name
-  fullName
-  created
-  updated
-  published
-  touched
-  lastName
-  firstName
-}
-
-input PlatformContentContactSortInput {
-  field: PlatformContentContactSortField = name
-  order: SortOrder = asc
 }

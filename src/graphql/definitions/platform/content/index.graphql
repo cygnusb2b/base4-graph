@@ -16,9 +16,9 @@ type PlatformContentStubLocation {
 }
 
 type PlatformContentSchedules {
-  website(input: PlatformContentWebsiteSchedulesInput = {}): WebsiteScheduleConnection! @refMany(model: "website.Schedule", localField: "_id", foreignField: "content.$id")
-  magazine(input: PlatformContentMagazineSchedulesInput = {}): MagazineScheduleConnection! @refMany(model: "magazine.Schedule", localField: "_id", foreignField: "content.$id")
-  email(input: PlatformContentEmailSchedulesInput = {}): EmailScheduleConnection! @refMany(model: "email.Schedule", localField: "_id", foreignField: "content.$id")
+  website(input: RelatedWebsiteSchedulesInput = {}): WebsiteScheduleConnection! @refMany(model: "website.Schedule", localField: "_id", foreignField: "content.$id")
+  magazine(input: RelatedMagazineSchedulesInput = {}): MagazineScheduleConnection! @refMany(model: "magazine.Schedule", localField: "_id", foreignField: "content.$id")
+  email(input: RelatedEmailSchedulesInput = {}): EmailScheduleConnection! @refMany(model: "email.Schedule", localField: "_id", foreignField: "content.$id")
 }
 
 enum PlatformContentMutation {
@@ -80,19 +80,19 @@ interface PlatformContent {
   notes: String
 
   # fields from platform.trait::Taggable
-  taxonomy(input: PlatformContentTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
+  taxonomy(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
 
   # fields from platform.trait::ContentRelateable
   relatedTo: [PlatformContent] # add args?
 
   # fields from platform.trait::MediaRelatable
   primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
-  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
+  images(input: RelatedPlatformAssetImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
 
   # fields from platform.model::Content mutations
   schedules: PlatformContentSchedules! @passThru
-  primarySite(input: PlatformContentPrimarySiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
-  primarySection(input: PlatformContentPrimarySectionInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+  primarySite(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
+  primarySection(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
 
   # fields from platform.trait::Content\SeoFields
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
@@ -101,49 +101,27 @@ interface PlatformContent {
   slug: String @value(localField: "mutations.Website.slug")
 }
 
-input PlatformContentWebsiteSchedulesInput {
-  status: ReferenceStatus = active
-  sort: WebsiteScheduleSortInput = {}
-  pagination: PaginationInput = {}
+enum PlatformContentSortField {
+  id
+  name
+  fullName
+  created
+  updated
+  published
+  touched
 }
 
-input PlatformContentMagazineSchedulesInput {
-  status: ReferenceStatus = active
-  sort: MagazineScheduleSortInput = {}
-  pagination: PaginationInput = {}
-}
-
-input PlatformContentEmailSchedulesInput {
-  status: ReferenceStatus = active
-  sort: EmailScheduleSortInput = {}
-  pagination: PaginationInput = {}
+input PlatformContentSortInput {
+  field: PlatformContentSortField = name
+  order: SortOrder = asc
 }
 
 input PlatformContentMutationInput {
   mutation: PlatformContentMutation = Website
 }
 
-input PlatformContentImagesInput {
-  sort: PlatformAssetImageSortInput = {}
+input RelatedPlatformContentInput {
+  status: ReferenceStatus = active
+  sort: PlatformContentSortInput = {}
   pagination: PaginationInput = {}
-}
-
-input PlatformContentTaxonomyInput {
-  status: ReferenceStatus = active
-  sort: PlatformTaxonomySortInput = {}
-  pagination: PaginationInput = {}
-}
-
-input PlatformContentAuthorableInput {
-  status: ReferenceStatus = active
-  sort: PlatformContentContactSortInput = {}
-  pagination: PaginationInput = {}
-}
-
-input PlatformContentPrimarySiteInput {
-  status: ReferenceStatus = active
-}
-
-input PlatformContentPrimarySectionInput {
-  status: ReferenceStatus = active
 }

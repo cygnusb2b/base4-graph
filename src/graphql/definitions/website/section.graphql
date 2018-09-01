@@ -13,9 +13,9 @@ type WebsiteSection implements PlatformSection {
   sequence: Int
 
   # fields directly on website.model::Section
-  site(input: WebsiteSectionSiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
-  parent(input: WebsiteSectionParentInput = {}): WebsiteSection @refOne(model: "website.Section")
-  children(input: WebsiteSectionChildrenInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "parent.$id")
+  site(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
+  parent(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
+  children(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "parent.$id")
   logo: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
 
   # fields from trait.platform::Content\SeoFields
@@ -51,18 +51,10 @@ input WebsiteSectionsQueryInput {
   pagination: PaginationInput = {}
 }
 
-input WebsiteSectionChildrenInput {
+input RelatedWebsiteSectionsInput {
   status: ReferenceStatus = active
   sort: WebsiteSectionSortInput = {}
   pagination: PaginationInput = {}
-}
-
-input WebsiteSectionSiteInput {
-  status: ReferenceStatus = active
-}
-
-input WebsiteSectionParentInput {
-  status: ReferenceStatus = active
 }
 
 input WebsiteSectionSortInput {

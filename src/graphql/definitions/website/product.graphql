@@ -15,15 +15,15 @@ type WebsiteProductSite implements PlatformProduct {
   status: Int
 
   # fields directly on website.model::Product\Site
-  sections(input: WebsiteProductSiteSectionsInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "site.$id")
+  sections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "site.$id")
   # pages: [WebsitePage] # add args? @todo Add this model
-  options(input: WebsiteProductSiteOptionsInput = {}): WebsiteOptionConnection! @refMany(model: "website.Option", localField: "_id", foreignField: "site.$id")
+  options(input: RelatedWebsiteOptionsInput = {}): WebsiteOptionConnection! @refMany(model: "website.Option", localField: "_id", foreignField: "site.$id")
   url: String
   socialFollow: [PlatformEntityStubSocial]! @arrayValue
   redirects: [String]! @arrayValue
 
   # fields that are new to GraphQL
-  rootSections(input: WebsiteProductSiteSectionsInput = {}): WebsiteSectionConnection!
+  rootSections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection!
 }
 
 type WebsiteProductSiteConnection {
@@ -46,18 +46,6 @@ enum WebsiteProductSiteSortField {
 input WebsiteProductSitesQueryInput {
   status: ReferenceStatus = active
   sort: WebsiteProductSiteSortInput = { field: id, order: desc }
-  pagination: PaginationInput = {}
-}
-
-input WebsiteProductSiteSectionsInput {
-  status: ReferenceStatus = active
-  sort: WebsiteSectionSortInput = {}
-  pagination: PaginationInput = {}
-}
-
-input WebsiteProductSiteOptionsInput {
-  status: ReferenceStatus = active
-  sort: WebsiteOptionSortInput = {}
   pagination: PaginationInput = {}
 }
 

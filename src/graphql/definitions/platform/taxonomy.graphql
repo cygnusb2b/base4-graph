@@ -11,8 +11,8 @@ type PlatformTaxonomy {
   status: Int
   redirects: [String]! @arrayValue
   sequence: Int
-  parent(input: PlatformTaxonomyParentInput = {}): PlatformTaxonomy @refOne(model: "platform.Taxonomy")
-  children(input: PlatformTaxonomyChildrenInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy", localField: "_id", foreignField: "parent.$id")
+  parent(input: ReferenceActiveStatusInput = {}): PlatformTaxonomy @refOne(model: "platform.Taxonomy")
+  children(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy", localField: "_id", foreignField: "parent.$id")
 }
 
 type PlatformTaxonomyConnection {
@@ -38,12 +38,8 @@ input PlatformTaxonomySortInput {
   order: SortOrder = asc
 }
 
-input PlatformTaxonomyChildrenInput {
+input RelatedPlatformTaxonomyInput {
   status: ReferenceStatus = active
   sort: PlatformTaxonomySortInput = {}
   pagination: PaginationInput = {}
-}
-
-input PlatformTaxonomyParentInput {
-  status: ReferenceStatus = active
 }

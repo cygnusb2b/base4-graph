@@ -53,3 +53,9 @@ input MagazineScheduleSortInput {
   field: MagazineScheduleSortField = published
   order: SortOrder = desc
 }
+
+input RelatedMagazineSchedulesInput {
+  status: ReferenceStatus = active
+  sort: MagazineScheduleSortInput = {}
+  pagination: PaginationInput = {}
+}

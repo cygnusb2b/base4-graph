@@ -5,19 +5,19 @@ type Query {
 type WebsiteSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
   id: String! @value(localField: "_id")
-  content(input: WebsiteScheduleContentInput =  {}): PlatformContent @refOne(model: "platform.Content")
+  content(input: ReferenceAllStatusInput =  {}): PlatformContent @refOne(model: "platform.Content")
   status: Int
 
   # fields directly on website.model::Schedule
-  product(input: WebsiteScheduleProductInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
-  section(input: WebsiteScheduleSectionInput = {}): WebsiteSection @refOne(model: "website.Section")
-  option(input: WebsiteScheduleOptionInput = {}): WebsiteOption @refOne(model: "website.Option")
+  product(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
+  section(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
+  option(input: ReferenceActiveStatusInput = {}): WebsiteOption @refOne(model: "website.Option")
   startDate: Date
   endDate: Date
   published: Date
   expires: Date
   contentStatus: Int
-  categories(input: WebsiteScheduleTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
+  categories(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
   hasPrimaryImage: Boolean
   primarySection: WebsiteSection @refOne(model: "website.Section")
 }
@@ -41,29 +41,13 @@ enum WebsiteScheduleSortField {
   expires
 }
 
-input WebsiteScheduleTaxonomyInput {
-  status: ReferenceStatus = active
-  sort: PlatformTaxonomySortInput = {}
-  pagination: PaginationInput = {}
-}
-
-input WebsiteScheduleContentInput {
-  status: ReferenceStatus = all
-}
-
-input WebsiteScheduleProductInput {
-  status: ReferenceStatus = active
-}
-
-input WebsiteScheduleSectionInput {
-  status: ReferenceStatus = active
-}
-
-input WebsiteScheduleOptionInput {
-  status: ReferenceStatus = active
-}
-
 input WebsiteScheduleSortInput {
   field: WebsiteScheduleSortField = startDate
   order: SortOrder = desc
+}
+
+input RelatedWebsiteSchedulesInput {
+  status: ReferenceStatus = active
+  sort: WebsiteScheduleSortInput = {}
+  pagination: PaginationInput = {}
 }

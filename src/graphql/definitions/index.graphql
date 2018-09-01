@@ -46,3 +46,11 @@ input ModelIdInput {
 input ModelStringIdInput {
   id: String!
 }
+
+input ReferenceActiveStatusInput {
+  status: ReferenceStatus = active
+}
+
+input ReferenceAllStatusInput {
+  status: ReferenceStatus = all
+}

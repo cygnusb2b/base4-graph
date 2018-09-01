@@ -49,3 +49,9 @@ input EmailScheduleSortInput {
   field: EmailScheduleSortField = deploymentDate
   order: SortOrder = desc
 }
+
+input RelatedEmailSchedulesInput {
+  status: ReferenceStatus = active
+  sort: EmailScheduleSortInput = {}
+  pagination: PaginationInput = {}
+}
