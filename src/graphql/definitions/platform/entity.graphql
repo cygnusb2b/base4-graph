@@ -1,5 +1,0 @@
-type PlatformEntityStubSocial {
-  provider: String
-  url: String
-  label: String
-}

@@ -1,6 +1,6 @@
 # import * from 'asset.graphql'
 # import * from 'content/index.graphql'
-# import * from 'entity.graphql'
+# import * from 'entity/index.graphql'
 # import * from 'product.graphql'
 # import * from 'schedule.graphql'
 # import * from 'section.graphql'
