@@ -6,7 +6,7 @@ const {
   RefOneDirective,
   RefManyDirective,
   ArrayValueDirective,
-  MutateDirective,
+  ValueDirective,
 } = require('./directives');
 
 const typeDefs = importSchema(join(__dirname, 'definitions/index.graphql'));
@@ -18,6 +18,6 @@ module.exports = makeExecutableSchema({
     refOne: RefOneDirective,
     refMany: RefManyDirective,
     arrayValue: ArrayValueDirective,
-    mutate: MutateDirective,
+    value: ValueDirective,
   },
 });

@@ -25,9 +25,9 @@ type PlatformContentArticle implements PlatformContent & PlatformContentAuthorab
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
   seoTitle: String
-  alias: String
+  alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]
-  slug: String
+  slug: String @value(localField: "mutations.Website.slug")
 
   # fields directly on platform.model::Content\Article
   sidebars: [PlatformContentStubSidebar]

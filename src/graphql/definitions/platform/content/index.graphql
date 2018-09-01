@@ -62,9 +62,9 @@ interface PlatformContent {
 
   # fields from platform.trait::Content\SeoFields
   seoTitle: String
-  alias: String
+  alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]
-  slug: String
+  slug: String @value(localField: "mutations.Website.slug")
 }
 
 interface PlatformContentContactable {
