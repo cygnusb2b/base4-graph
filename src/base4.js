@@ -149,38 +149,58 @@ class Base4 {
   }
 
   /**
-   * Returns an array of reference-many documents for the provided model name and ref/id.
+   * Returns an array of reference-many documents for the
+   * provided document, model name and ref fields.
    *
    * For example, to retrieve the `taxonomy` documents referenced on a `Content` document,
    * run the following:
    *
-   * `referenceMany({ model: 'platform.Taxonomy', refs: content.taxonomy });`
+   * ```
+   * referenceMany({
+   *  doc: content,
+   *  relatedModel: 'platform.Taxonomy',
+   *  localField: 'taxonomy',
+   *  foreignField: '_id',
+   * });
+   * ```
    *
    * @param {object} params The function parameters.
-   * @param {string} params.model The reference's model name, e.g. `platform.Content`.
-   * @param {array} params.ref The reference. Either an array of IDs or a complex DBRefs.
+   * @param {object} params.doc The document to pull the reference data from.
+   * @param {string} params.relatedModel The reference's model name, e.g. `platform.Content`.
+   * @param {string} params.localField The local document field to retreive the ref values from.
+   * @param {string} params.foreignField The foreign/reference document field to query against.
    * @param {?object} params.criteria Additional query criteria to add.
    * @param {?object} params.sort Sort criteria to add, in MongoDB sort format.
    * @returns {Promise<object[]>}
    */
   async referenceMany({
-    model,
-    refs,
+    doc,
+    relatedModel,
+    localField,
+    foreignField,
     criteria,
     sort = {},
     pagination = {},
   }) {
-    const ids = Base4.extractRefIds(refs);
-    if (!ids.length) return [];
-    const { namespace, resource } = Base4.parseModelName(model);
-    const collection = await this.collection(namespace, resource);
-    const { first, after } = pagination;
+    const refs = objectPath.get(doc, localField);
+    if (!refs) return [];
+    const ids = Base4.extractRefIds(isArray(refs) ? refs : [refs]);
+    if (!ids) return [];
 
-    return new Pagination(collection, {
-      sort,
-      pagination: { first, after: Base4.coerceID(after) },
-      criteria: { ...criteria, _id: { $in: ids } },
-    });
+    const query = { ...criteria, [foreignField]: { $in: ids } };
+    const { namespace, resource } = Base4.parseModelName(relatedModel);
+    const collection = await this.collection(namespace, resource);
+
+    if (pagination) {
+      const { first, after } = pagination;
+      return new Pagination(collection, {
+        sort,
+        pagination: { first, after: Base4.coerceID(after) },
+        criteria: query,
+      });
+    }
+    if (sort) return collection.find(query).sort(sort);
+    return collection.find(query);
   }
 
   /**

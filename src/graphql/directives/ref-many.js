@@ -1,6 +1,4 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
-const Base4 = require('../../base4');
-const Pagination = require('../../pagination');
 const formatStatus = require('../../utils/format-graph-status');
 
 class RefManyDirective extends SchemaDirectiveVisitor {
@@ -18,36 +16,22 @@ class RefManyDirective extends SchemaDirectiveVisitor {
         criteria,
       } = this.args;
 
-      const refs = localField === '_id' ? [doc._id] : doc[localField || field.name];
-      const ids = Base4.extractRefIds(refs);
-      if (!ids) return [];
-
-      let query = {
-        ...criteria,
-        [foreignField]: { $in: ids },
+      const args = {
+        doc,
+        foreignField,
+        relatedModel: model,
+        localField: localField || field.name,
+        criteria: { ...criteria },
       };
 
-      const { namespace, resource } = Base4.parseModelName(model);
-      const collection = await base4.collection(namespace, resource);
-
       if (input) {
-        const {
-          status,
-          pagination,
-          sort,
-        } = input;
-        if (status) query = { ...query, ...formatStatus(status) };
-        if (pagination) {
-          const { first, after } = pagination;
-          return new Pagination(collection, {
-            sort,
-            pagination: { first, after: Base4.coerceID(after) },
-            criteria: query,
-          });
-        }
-        if (sort) return collection.find(query).sort(sort);
+        const { status } = input;
+        if (status) args.criteria = { ...args.criteria, ...formatStatus(status) };
+        const { pagination, sort } = input;
+        args.pagination = pagination;
+        args.sort = sort;
       }
-      return collection.find(query);
+      return base4.referenceMany(args);
     };
   }
 }
