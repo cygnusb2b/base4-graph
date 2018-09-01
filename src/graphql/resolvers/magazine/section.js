@@ -2,14 +2,6 @@ module.exports = {
   /**
    *
    */
-  MagazineSection: {
-    publication: (section, _, { base4 }) => base4.reference('platform', 'Product', section.publication, { type: 'Publication' }),
-    issue: (section, _, { base4 }) => base4.reference('magazine', 'Issue', section.issue),
-  },
-
-  /**
-   *
-   */
   Query: {
     /**
      *

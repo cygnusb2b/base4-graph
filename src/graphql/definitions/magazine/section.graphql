@@ -12,6 +12,14 @@ type MagazineSection implements PlatformSection {
   sequence: Int
 
   # fields directly on magazine.model::Section
-  publication: MagazineProductPublication
-  issue: MagazineIssue
+  publication(input: MagazineSectionPublicationInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
+  issue(input: MagazineSectionIssueInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
+}
+
+input MagazineSectionPublicationInput {
+  status: ReferenceStatus = active
+}
+
+input MagazineSectionIssueInput {
+  status: ReferenceStatus = active
 }
