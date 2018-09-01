@@ -2,7 +2,12 @@ const { join } = require('path');
 const { makeExecutableSchema } = require('graphql-tools');
 const { importSchema } = require('graphql-import');
 const resolvers = require('./resolvers');
-const { RefOneDirective, RefManyDirective, FillArrayDirective } = require('./directives');
+const {
+  RefOneDirective,
+  RefManyDirective,
+  FillArrayDirective,
+  MutateDirective,
+} = require('./directives');
 
 const typeDefs = importSchema(join(__dirname, 'definitions/index.graphql'));
 
@@ -13,5 +18,6 @@ module.exports = makeExecutableSchema({
     refOne: RefOneDirective,
     refMany: RefManyDirective,
     fillArray: FillArrayDirective,
+    mutate: MutateDirective,
   },
 });
