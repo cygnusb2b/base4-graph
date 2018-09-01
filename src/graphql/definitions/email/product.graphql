@@ -21,8 +21,8 @@ type EmailProductNewsletter implements PlatformProduct {
   defaultSubjectLine: String
 
   # fields directly on email.model::Product\Newsletter
-  parent(input: EmailProductNewsletterParentInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
-  sections(input: EmailProductNewsletterSectionsInput = {}): EmailSectionConnection! @refMany(model: "email.Section", localField: "_id", foreignField: "deployment.$id")
+  parent(input: ReferenceActiveStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  sections(input: RelatedEmailSectionsInput = {}): EmailSectionConnection! @refMany(model: "email.Section", localField: "_id", foreignField: "deployment.$id")
   alias: String
   usesDeploymentDates: Boolean
   teaser: String
@@ -38,14 +38,4 @@ type EmailProductStubHtmlSourceProvider {
   handlerKey: String
   host: String
   path: String
-}
-
-input EmailProductNewsletterParentInput {
-  status: ReferenceStatus = all
-}
-
-input EmailProductNewsletterSectionsInput {
-  status: ReferenceStatus = active
-  sort: EmailSectionSortInput = {}
-  pagination: PaginationInput = {}
 }

@@ -5,12 +5,12 @@ type Query {
 type EmailSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
   id: String! @value(localField: "_id")
-  content(input: EmailScheduleContentInput = {}): PlatformContent @refOne(model: "platform.Content")
+  content(input: ReferenceActiveStatusInput = {}): PlatformContent @refOne(model: "platform.Content")
   status: Int
 
   # fields directly on email.model::Schedule
-  product(input: EmailScheduleProductInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
-  section(input: EmailScheduleSectionInput = {}): EmailSection @refOne(model: "email.Section")
+  product(input: ReferenceActiveStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  section(input: ReferenceActiveStatusInput = {}): EmailSection @refOne(model: "email.Section")
   deploymentDate: Date
   sequence: Int
   contentStatus: Int
@@ -31,18 +31,6 @@ enum EmailScheduleSortField {
   id
   deploymentDate
   sequence
-}
-
-input EmailScheduleContentInput {
-  status: ReferenceStatus = all
-}
-
-input EmailScheduleProductInput {
-  status: ReferenceStatus = active
-}
-
-input EmailScheduleSectionInput {
-  status: ReferenceStatus = active
 }
 
 input EmailScheduleSortInput {

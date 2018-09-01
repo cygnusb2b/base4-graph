@@ -12,7 +12,7 @@ type EmailSection implements PlatformSection {
   sequence: Int
 
   # fields directly on email.model::Section
-  deployment(input: EmailSectionDeploymentInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  deployment(input: ReferenceActiveStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
 
   # fields from trait.platform::Content\SeoFields
   seoTitle: String
@@ -39,11 +39,13 @@ enum EmailSectionSortField {
   sequence
 }
 
-input EmailSectionDeploymentInput {
-  status: ReferenceStatus = active
-}
-
 input EmailSectionSortInput {
   field: EmailSectionSortField = name
   order: SortOrder = asc
+}
+
+input RelatedEmailSectionsInput {
+  status: ReferenceStatus = active
+  sort: EmailSectionSortInput = {}
+  pagination: PaginationInput = {}
 }
