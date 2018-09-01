@@ -1,5 +1,6 @@
 type Query {
   websiteSection(input: ModelIdInput!): WebsiteSection!
+  websiteSections(input: WebsiteSectionsQueryInput!): WebsiteSectionConnection!
 }
 
 type WebsiteSection implements PlatformSection {
@@ -40,6 +41,13 @@ enum WebsiteSectionSortField {
   name
   fullName
   sequence
+}
+
+input WebsiteSectionsQueryInput {
+  status: ReferenceStatus = active
+  parentId: Int
+  sort: WebsiteSectionSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
 }
 
 input WebsiteSectionChildrenInput {
