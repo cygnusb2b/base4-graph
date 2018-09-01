@@ -1,3 +1,4 @@
+const { ObjectID } = require('mongodb');
 const paginationResolvers = require('../../../pagination/resolvers');
 const formatStatus = require('../../../utils/format-graph-status');
 
@@ -28,6 +29,7 @@ module.exports = {
       const {
         status,
         parentId,
+        siteId,
         sort,
         pagination,
       } = input;
@@ -38,6 +40,7 @@ module.exports = {
       } else if (parentId) {
         criteria['parent.$id'] = parentId;
       }
+      if (siteId) criteria['site.$id'] = new ObjectID(siteId);
       return base4.paginate('website.Section', { pagination, sort, criteria });
     },
   },

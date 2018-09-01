@@ -46,6 +46,7 @@ enum WebsiteSectionSortField {
 input WebsiteSectionsQueryInput {
   status: ReferenceStatus = active
   parentId: Int
+  siteId: String
   sort: WebsiteSectionSortInput = { field: id, order: desc }
   pagination: PaginationInput = {}
 }
