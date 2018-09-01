@@ -52,7 +52,7 @@ interface PlatformContent {
   relatedTo: [PlatformContent] # add args?
 
   # fields from platform.trait::MediaRelatable
-  primaryImage: PlatformAssetImage
+  primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
   images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection @refMany(model: "platform.Asset", criteria: { type: "Image" })
 
   # fields from platform.model::Content mutations
