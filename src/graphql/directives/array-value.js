@@ -1,8 +1,9 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
+const objectPath = require('object-path');
 
 const { isArray } = Array;
 
-class FillArrayDirective extends SchemaDirectiveVisitor {
+class ArrayValueDirective extends SchemaDirectiveVisitor {
   /**
    *
    * @param {*} field
@@ -11,10 +12,10 @@ class FillArrayDirective extends SchemaDirectiveVisitor {
     // eslint-disable-next-line no-param-reassign
     field.resolve = async (doc) => {
       const { localField } = this.args;
-      const value = doc[localField];
+      const value = objectPath.get(doc, localField || field.name);
       return isArray(value) ? value : [];
     };
   }
 }
 
-module.exports = FillArrayDirective;
+module.exports = ArrayValueDirective;

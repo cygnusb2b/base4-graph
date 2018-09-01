@@ -1,11 +1,11 @@
 const RefOneDirective = require('./ref-one');
 const RefManyDirective = require('./ref-many');
-const FillArrayDirective = require('./fill-array');
+const ArrayValueDirective = require('./array-value');
 const MutateDirective = require('./mutate');
 
 module.exports = {
   RefOneDirective,
   RefManyDirective,
-  FillArrayDirective,
+  ArrayValueDirective,
   MutateDirective,
 };

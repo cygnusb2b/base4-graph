@@ -5,7 +5,7 @@ const resolvers = require('./resolvers');
 const {
   RefOneDirective,
   RefManyDirective,
-  FillArrayDirective,
+  ArrayValueDirective,
   MutateDirective,
 } = require('./directives');
 
@@ -17,7 +17,7 @@ module.exports = makeExecutableSchema({
   schemaDirectives: {
     refOne: RefOneDirective,
     refMany: RefManyDirective,
-    fillArray: FillArrayDirective,
+    arrayValue: ArrayValueDirective,
     mutate: MutateDirective,
   },
 });
