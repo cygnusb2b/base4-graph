@@ -1,4 +1,4 @@
-type PlatformContentArticle implements PlatformContent {
+type PlatformContentMediaGallery implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
   type: PlatformContentType!
@@ -29,14 +29,11 @@ type PlatformContentArticle implements PlatformContent {
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
   slug: String @value(localField: "mutations.Website.slug")
 
-  # fields directly on platform.model::Content\Article
-  sidebars: [PlatformContentStubSidebar]! @arrayValue
-
-  # fields directly on platform.model::Content\Article mutations
-  deck: String @value(localField: "mutations.Magazine.deck")
-
   # fields from platform.trait::Content\Authorable
   authors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
   contributors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
   photographers(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+
+  # fields directly on platform.model::Content\MediaGallery mutations
+  deck: String @value(localField: "mutations.Magazine.deck")
 }
