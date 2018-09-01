@@ -2,7 +2,7 @@ type PlatformContentArticle implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
   type: PlatformContentType!
-  name: String
+  name(input: PlatformContentNameInput = {}): String @mutatedValue
   shortName: String
   fullName: String
   hash: String

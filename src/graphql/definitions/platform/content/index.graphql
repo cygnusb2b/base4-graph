@@ -16,9 +16,9 @@ type PlatformContentStubLocation {
 }
 
 enum PlatformContentMutation {
-  Website
-  Magazine
   Email
+  Magazine
+  Website
 }
 
 enum PlatformContentType {
@@ -53,7 +53,7 @@ interface PlatformContent {
   # fields directly on platform.model::Content
   id: Int! @value(localField: "_id")
   type: PlatformContentType!
-  name: String
+  name(input: PlatformContentNameInput = {}): String @mutatedValue
   shortName: String
   fullName: String # should be calculated in resolvers
   hash: String
@@ -93,6 +93,10 @@ interface PlatformContent {
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
   slug: String @value(localField: "mutations.Website.slug")
+}
+
+input PlatformContentNameInput {
+  mutation: PlatformContentMutation = Website
 }
 
 input PlatformContentImagesInput {
