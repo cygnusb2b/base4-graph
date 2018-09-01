@@ -8,6 +8,7 @@ const {
   ArrayValueDirective,
   ValueDirective,
   MutatedValueDirective,
+  PassThruDirective,
 } = require('./directives');
 
 const typeDefs = importSchema(join(__dirname, 'definitions/index.graphql'));
@@ -21,5 +22,6 @@ module.exports = makeExecutableSchema({
     arrayValue: ArrayValueDirective,
     value: ValueDirective,
     mutatedValue: MutatedValueDirective,
+    passThru: PassThruDirective,
   },
 });
