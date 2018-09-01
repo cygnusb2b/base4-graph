@@ -12,3 +12,24 @@ type WebsiteOption {
   # fields from platform.trait::StatusEnabled
   status: Int
 }
+
+type WebsiteOptionConnection {
+  totalCount: Int!
+  edges: [WebsiteOptionEdge]!
+  pageInfo: PageInfo!
+}
+
+type WebsiteOptionEdge {
+  node: WebsiteOption!
+  cursor: Cursor!
+}
+
+enum WebsiteOptionSortField {
+  id
+  name
+}
+
+input WebsiteOptionSortInput {
+  field: WebsiteOptionSortField = name
+  order: SortOrder = asc
+}

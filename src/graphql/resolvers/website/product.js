@@ -1,6 +1,5 @@
 const productResolvers = require('../platform/product/common');
-
-const { isArray } = Array;
+const formatStatus = require('../../../utils/format-graph-status');
 
 module.exports = {
   /**
@@ -8,16 +7,17 @@ module.exports = {
    */
   WebsiteProductSite: {
     ...productResolvers,
-    sections: (site, _, { base4 }) => base4.inverse('website', 'Section', 'site.$id', site._id),
-    rootSections: (site, _, { base4 }) => base4.inverse('website', 'Section', 'site.$id', site._id, { parent: { $exists: false } }),
-    options: (site, _, { base4 }) => base4.inverse('website', 'Option', 'site.$id', site._id),
-    socialFollow: (site) => {
-      const { socialFollow } = site;
-      return isArray(socialFollow) ? socialFollow : [];
-    },
-    redirects: (site) => {
-      const { redirects } = site;
-      return isArray(redirects) ? redirects : [];
+    rootSections: (doc, { input }, { base4 }) => {
+      const { status, pagination, sort } = input;
+      return base4.referenceMany({
+        doc,
+        relatedModel: 'website.Section',
+        localField: '_id',
+        foreignField: 'site.$id',
+        criteria: { parent: { $exists: false }, ...formatStatus(status) },
+        pagination,
+        sort,
+      });
     },
   },
 

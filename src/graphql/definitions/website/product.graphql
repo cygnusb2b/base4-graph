@@ -14,13 +14,25 @@ type WebsiteProductSite implements PlatformProduct {
   status: Int
 
   # fields directly on website.model::Product\Site
-  sections: [WebsiteSection]! # add args?
+  sections(input: WebsiteProductSiteSectionsInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "site.$id")
   # pages: [WebsitePage] # add args? @todo Add this model
-  options: [WebsiteOption]! # add args?
+  options(input: WebsiteProductSiteOptionsInput = {}): WebsiteOptionConnection! @refMany(model: "website.Option", localField: "_id", foreignField: "site.$id")
   url: String
-  socialFollow: [PlatformEntityStubSocial]!
-  redirects: [String]! # @todo must fallback if empty
+  socialFollow: [PlatformEntityStubSocial]! @arrayValue
+  redirects: [String]! @arrayValue
 
   # fields that are new to GraphQL
-  rootSections: [WebsiteSection]! # add args?
+  rootSections(input: WebsiteProductSiteSectionsInput = {}): WebsiteSectionConnection!
+}
+
+input WebsiteProductSiteSectionsInput {
+  status: ReferenceStatus = active
+  sort: WebsiteSectionSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input WebsiteProductSiteOptionsInput {
+  status: ReferenceStatus = active
+  sort: WebsiteOptionSortInput = {}
+  pagination: PaginationInput = {}
 }
