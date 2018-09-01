@@ -21,10 +21,38 @@ enum PlatformContentMutation {
   Email
 }
 
+enum PlatformContentType {
+  Apparatus
+  Article
+  Blog
+  Collection
+  Company
+  Contact
+  Ebook
+  EngineSpec
+  Event
+  Group
+  InQuarters
+  Infographic
+  Job
+  MediaGallery
+  News
+  Page
+  Photostory
+  PressRelease
+  Product
+  ProductExternal
+  Promotion
+  Review
+  Sponsored
+  TextAd
+  UsedProduct
+}
+
 interface PlatformContent {
   # fields directly on platform.model::Content
   id: Int! @value(localField: "_id")
-  type: String!
+  type: PlatformContentType!
   name: String
   shortName: String
   fullName: String # should be calculated in resolvers
