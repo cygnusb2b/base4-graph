@@ -6,5 +6,8 @@ Generally, `status` should be indexed, where applicable
 status + parent.$id
 site.$id
 
+**website.Schedule**
+status + content.$id
+
 **platform.Product**
 status + site

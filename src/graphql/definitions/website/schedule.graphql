@@ -22,6 +22,25 @@ type WebsiteSchedule implements PlatformSchedule {
   primarySection: WebsiteSection @refOne(model: "website.Section")
 }
 
+type WebsiteScheduleConnection {
+  totalCount: Int!
+  edges: [WebsiteScheduleEdge]!
+  pageInfo: PageInfo!
+}
+
+type WebsiteScheduleEdge {
+  node: WebsiteSchedule!
+  cursor: Cursor!
+}
+
+enum WebsiteScheduleSortField {
+  id
+  startDate
+  endDate
+  published
+  expires
+}
+
 input WebsiteScheduleTaxonomyInput {
   status: ReferenceStatus = active
   sort: PlatformTaxonomySortInput = {}
@@ -42,4 +61,9 @@ input WebsiteScheduleSectionInput {
 
 input WebsiteScheduleOptionInput {
   status: ReferenceStatus = active
+}
+
+input WebsiteScheduleSortInput {
+  field: WebsiteScheduleSortField = startDate
+  order: SortOrder = desc
 }

@@ -15,6 +15,10 @@ type PlatformContentStubLocation {
   longitude: Float
 }
 
+type PlatformContentSchedules {
+  website(input: PlatformContentWebsiteSchedulesInput = {}): WebsiteScheduleConnection! @refMany(model: "website.Schedule", localField: "_id", foreignField: "content.$id")
+}
+
 enum PlatformContentMutation {
   Email
   Magazine
@@ -84,7 +88,7 @@ interface PlatformContent {
   images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
 
   # fields from platform.model::Content mutations
-  schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
+  schedules: PlatformContentSchedules! @passThru
   primarySite(input: PlatformContentPrimarySiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
   primarySection(input: PlatformContentPrimarySectionInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
 
@@ -93,6 +97,12 @@ interface PlatformContent {
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
   slug: String @value(localField: "mutations.Website.slug")
+}
+
+input PlatformContentWebsiteSchedulesInput {
+  status: ReferenceStatus = active
+  sort: WebsiteScheduleSortInput = {}
+  pagination: PaginationInput = {}
 }
 
 input PlatformContentMutationInput {

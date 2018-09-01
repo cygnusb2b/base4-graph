@@ -21,7 +21,7 @@ type PlatformContentCompany implements PlatformContent {
   relatedTo: [PlatformContent] # add args?
   primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
   images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
-  schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
+  schedules: PlatformContentSchedules! @passThru
   primarySite(input: PlatformContentPrimarySiteInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
   primarySection(input: PlatformContentPrimarySectionInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
