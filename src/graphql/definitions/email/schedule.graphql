@@ -16,6 +16,23 @@ type EmailSchedule implements PlatformSchedule {
   contentStatus: Int
 }
 
+type EmailScheduleConnection {
+  totalCount: Int!
+  edges: [EmailScheduleEdge]!
+  pageInfo: PageInfo!
+}
+
+type EmailScheduleEdge {
+  node: EmailSchedule!
+  cursor: Cursor!
+}
+
+enum EmailScheduleSortField {
+  id
+  deploymentDate
+  sequence
+}
+
 input EmailScheduleContentInput {
   status: ReferenceStatus = all
 }
@@ -26,4 +43,9 @@ input EmailScheduleProductInput {
 
 input EmailScheduleSectionInput {
   status: ReferenceStatus = active
+}
+
+input EmailScheduleSortInput {
+  field: EmailScheduleSortField = deploymentDate
+  order: SortOrder = desc
 }
