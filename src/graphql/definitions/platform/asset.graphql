@@ -17,8 +17,8 @@ type PlatformAssetImage {
   cropDimensions: PlatformAssetImageCrop
 
   # from platform.model::Asset\Image mutations
-  approvedWeb: Boolean # must resolve
-  approvedMagazine: Boolean # must resolve
+  approvedWebsite: Boolean @value(localField: "mutations.Website.approved")
+  approvedMagazine: Boolean @value(localField: "mutations.Magazine.approved")
 }
 
 type PlatformAssetImageSource {
