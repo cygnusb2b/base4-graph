@@ -24,9 +24,9 @@ type PlatformContentCompany implements PlatformContent & PlatformContentContacta
   schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
   primarySite: WebsiteProductSite
   primarySection: WebsiteSection
-  seoTitle: String
+  seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
   alias: String @value(localField: "mutations.Website.alias")
-  redirects: [String]
+  redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
   slug: String @value(localField: "mutations.Website.slug")
 
   # fields directly on platform.model::Content\Company

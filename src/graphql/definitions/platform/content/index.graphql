@@ -61,9 +61,9 @@ interface PlatformContent {
   primarySection: WebsiteSection
 
   # fields from platform.trait::Content\SeoFields
-  seoTitle: String
+  seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
   alias: String @value(localField: "mutations.Website.alias")
-  redirects: [String]
+  redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
   slug: String @value(localField: "mutations.Website.slug")
 }
 

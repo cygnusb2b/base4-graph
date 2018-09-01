@@ -9,8 +9,10 @@ class ValueDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) {
     // eslint-disable-next-line no-param-reassign
     field.resolve = async (doc) => {
-      const { localField } = this.args;
-      return objectPath.get(doc, localField || field.name);
+      const { localField, fallbackField } = this.args;
+      const value = objectPath.get(doc, localField || field.name);
+      if (fallbackField && !value) return objectPath.get(doc, fallbackField);
+      return value;
     };
   }
 }
