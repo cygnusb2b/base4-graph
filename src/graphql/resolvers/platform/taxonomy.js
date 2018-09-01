@@ -1,4 +1,11 @@
+const paginationResolvers = require('../../../pagination/resolvers');
+
 module.exports = {
+  /**
+   *
+   */
+  PlatformTaxonomyConnection: paginationResolvers,
+
   /**
    *
    */
@@ -11,20 +18,5 @@ module.exports = {
       const { id } = input;
       return base4.strictFindById('platform', 'Taxonomy', id);
     },
-  },
-
-  /**
-   *
-   */
-  PlatformTaxonomy: {
-    /**
-     *
-     */
-    parent: async (doc, _, { base4 }) => base4.reference('platform', 'Taxonomy', doc.parent),
-
-    /**
-     *
-     */
-    children: async (doc, args, { base4 }) => base4.inverse('platform', 'Taxonomy', 'parent.$id', doc._id),
   },
 };

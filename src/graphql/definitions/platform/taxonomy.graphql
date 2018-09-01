@@ -6,8 +6,44 @@ type PlatformTaxonomy {
   id: Int! @value(localField: "_id")
   name: String
   fullName: String
+  description: String
   type: String
-  parent: PlatformTaxonomy
   status: Int
-  children: [PlatformTaxonomy]
+  redirects: [String]! @arrayValue
+  sequence: Int
+  parent(input: PlatformTaxonomyParentInput = {}): PlatformTaxonomy @refOne(model: "platform.Taxonomy")
+  children(input: PlatformTaxonomyChildrenInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy", localField: "_id", foreignField: "parent.$id")
+}
+
+type PlatformTaxonomyConnection {
+  totalCount: Int!
+  edges: [PlatformTaxonomyEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformTaxonomyEdge {
+  node: PlatformTaxonomy!
+  cursor: Cursor!
+}
+
+enum PlatformTaxonomySortField {
+  id
+  name
+  fullName
+  sequence
+}
+
+input PlatformTaxonomySortInput {
+  field: PlatformTaxonomySortField = name
+  order: SortOrder = asc
+}
+
+input PlatformTaxonomyChildrenInput {
+  status: ReferenceStatus = active
+  sort: PlatformTaxonomySortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input PlatformTaxonomyParentInput {
+  status: ReferenceStatus = active
 }
