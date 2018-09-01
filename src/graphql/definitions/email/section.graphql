@@ -21,6 +21,29 @@ type EmailSection implements PlatformSection {
   slug: String
 }
 
+type EmailSectionConnection {
+  totalCount: Int!
+  edges: [EmailSectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type EmailSectionEdge {
+  node: EmailSection!
+  cursor: Cursor!
+}
+
+enum EmailSectionSortField {
+  id
+  name
+  fullName
+  sequence
+}
+
 input EmailSectionDeploymentInput {
   status: ReferenceStatus = active
+}
+
+input EmailSectionSortInput {
+  field: EmailSectionSortField = name
+  order: SortOrder = asc
 }

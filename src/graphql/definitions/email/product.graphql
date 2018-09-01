@@ -16,13 +16,13 @@ type EmailProductNewsletter implements PlatformProduct {
   # fields required by the EmailProductDeployment GraphQL interface
   provider: EmailProductStubProvider
   sourceProvider: EmailProductStubHtmlSourceProvider
-  defaultTesters: [EmailCampaignTestRecipient]! # add args?
+  defaultTesters: [EmailCampaignTestRecipient]! @arrayValue
   defaultFromName: String
   defaultSubjectLine: String
 
   # fields directly on email.model::Product\Newsletter
-  parent: EmailProductNewsletter
-  sections: [EmailSection]! # add args?
+  parent(input: EmailProductNewsletterParentInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  sections(input: EmailProductNewsletterSectionsInput = {}): EmailSectionConnection! @refMany(model: "email.Section", localField: "_id", foreignField: "deployment.$id")
   alias: String
   usesDeploymentDates: Boolean
   teaser: String
@@ -38,4 +38,14 @@ type EmailProductStubHtmlSourceProvider {
   handlerKey: String
   host: String
   path: String
+}
+
+input EmailProductNewsletterParentInput {
+  status: ReferenceStatus = all
+}
+
+input EmailProductNewsletterSectionsInput {
+  status: ReferenceStatus = active
+  sort: EmailSectionSortInput = {}
+  pagination: PaginationInput = {}
 }
