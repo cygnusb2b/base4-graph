@@ -17,6 +17,7 @@ type PlatformContentStubLocation {
 
 type PlatformContentSchedules {
   website(input: PlatformContentWebsiteSchedulesInput = {}): WebsiteScheduleConnection! @refMany(model: "website.Schedule", localField: "_id", foreignField: "content.$id")
+  magazine(input: PlatformContentMagazineSchedulesInput = {}): MagazineScheduleConnection! @refMany(model: "magazine.Schedule", localField: "_id", foreignField: "content.$id")
 }
 
 enum PlatformContentMutation {
@@ -102,6 +103,12 @@ interface PlatformContent {
 input PlatformContentWebsiteSchedulesInput {
   status: ReferenceStatus = active
   sort: WebsiteScheduleSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input PlatformContentMagazineSchedulesInput {
+  status: ReferenceStatus = active
+  sort: MagazineScheduleSortInput = {}
   pagination: PaginationInput = {}
 }
 

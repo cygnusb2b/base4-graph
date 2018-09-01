@@ -16,6 +16,22 @@ type MagazineSchedule implements PlatformSchedule {
   expires: Date
 }
 
+type MagazineScheduleConnection {
+  totalCount: Int!
+  edges: [MagazineScheduleEdge]!
+  pageInfo: PageInfo!
+}
+
+type MagazineScheduleEdge {
+  node: MagazineSchedule!
+  cursor: Cursor!
+}
+
+enum MagazineScheduleSortField {
+  id
+  published
+  expires
+}
 
 input MagazineScheduleContentInput {
   status: ReferenceStatus = all
@@ -31,4 +47,9 @@ input MagazineScheduleIssueInput {
 
 input MagazineScheduleSectionInput {
   status: ReferenceStatus = active
+}
+
+input MagazineScheduleSortInput {
+  field: MagazineScheduleSortField = published
+  order: SortOrder = desc
 }
