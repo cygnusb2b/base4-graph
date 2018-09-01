@@ -1,7 +1,13 @@
 const productResolvers = require('../platform/product/common');
+const paginationResolvers = require('../../../pagination/resolvers');
 const formatStatus = require('../../../utils/format-graph-status');
 
 module.exports = {
+  /**
+   *
+   */
+  WebsiteProductSiteConnection: paginationResolvers,
+
   /**
    *
    */
@@ -28,10 +34,20 @@ module.exports = {
     /**
      *
      */
-    websiteProductSite: async (_, { input }, { auth, base4 }) => {
+    websiteProductSite: (_, { input }, { auth, base4 }) => {
       auth.check();
       const { id } = input;
       return base4.strictFindById('platform', 'Product', id, { type: 'Site' });
+    },
+
+    /**
+     *
+     */
+    websiteProductSites: (_, { input }, { auth, base4 }) => {
+      auth.check();
+      const { status, sort, pagination } = input;
+      const criteria = { type: 'Site', ...formatStatus(status) };
+      return base4.paginate('platform.Product', { pagination, sort, criteria });
     },
   },
 };

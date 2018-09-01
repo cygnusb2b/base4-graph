@@ -1,5 +1,6 @@
 type Query {
   websiteProductSite(input: ModelStringIdInput!): WebsiteProductSite!
+  websiteProductSites(input: WebsiteProductSitesQueryInput!): WebsiteProductSiteConnection!
 }
 
 type WebsiteProductSite implements PlatformProduct {
@@ -25,6 +26,29 @@ type WebsiteProductSite implements PlatformProduct {
   rootSections(input: WebsiteProductSiteSectionsInput = {}): WebsiteSectionConnection!
 }
 
+type WebsiteProductSiteConnection {
+  totalCount: Int!
+  edges: [WebsiteProductSiteEdge]!
+  pageInfo: PageInfo!
+}
+
+type WebsiteProductSiteEdge {
+  node: WebsiteProductSite!
+  cursor: Cursor!
+}
+
+enum WebsiteProductSiteSortField {
+  id
+  name
+  fullName
+}
+
+input WebsiteProductSitesQueryInput {
+  status: ReferenceStatus = active
+  sort: WebsiteProductSiteSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
 input WebsiteProductSiteSectionsInput {
   status: ReferenceStatus = active
   sort: WebsiteSectionSortInput = {}
@@ -35,4 +59,9 @@ input WebsiteProductSiteOptionsInput {
   status: ReferenceStatus = active
   sort: WebsiteOptionSortInput = {}
   pagination: PaginationInput = {}
+}
+
+input WebsiteProductSiteSortInput {
+  field: WebsiteProductSiteSortField = name
+  order: SortOrder = asc
 }
