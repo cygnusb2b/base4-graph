@@ -2,7 +2,7 @@ type PlatformContentCompany implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
   type: PlatformContentType!
-  name(input: PlatformContentNameInput = {}): String @mutatedValue
+  name(input: PlatformContentMutationInput = {}): String @mutatedValue
   shortName: String
   fullName: String
   hash: String
@@ -14,8 +14,8 @@ type PlatformContentCompany implements PlatformContent {
   createdBy: PlatformSecurityUser @refOne(model: "platform.User")
   updatedBy: PlatformSecurityUser @refOne(model: "platform.User")
   status: Int
-  teaser: String
-  body: String
+  teaser(input: PlatformContentMutationInput = {}): String @mutatedValue
+  body(input: PlatformContentMutationInput = {}): String @mutatedValue
   notes: String
   taxonomy(input: PlatformContentTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
   relatedTo: [PlatformContent] # add args?
