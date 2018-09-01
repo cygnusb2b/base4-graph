@@ -1,9 +1,6 @@
 const deepAssign = require('deep-assign');
 
-const article = require('./article');
-
 module.exports = deepAssign(
-  article,
   {
     /**
      *

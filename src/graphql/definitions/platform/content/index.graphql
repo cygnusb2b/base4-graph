@@ -46,14 +46,14 @@ interface PlatformContent {
   notes: String
 
   # fields from platform.trait::Taggable
-  taxonomy: [PlatformTaxonomy] # add args?
+  taxonomy(input: PlatformContentTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
 
   # fields from platform.trait::ContentRelateable
   relatedTo: [PlatformContent] # add args?
 
   # fields from platform.trait::MediaRelatable
   primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
-  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection @refMany(model: "platform.Asset", criteria: { type: "Image" })
+  images(input: PlatformContentImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
 
   # fields from platform.model::Content mutations
   schedules(mutation: PlatformContentMutation = Website): [WebsiteSchedule] # add sort args? change respose to support multiple mutations
@@ -99,6 +99,12 @@ interface PlatformContentAuthorable {
 
 input PlatformContentImagesInput {
   sort: PlatformAssetImageSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input PlatformContentTaxonomyInput {
+  status: ReferenceStatus = active
+  sort: PlatformTaxonomySortInput = {}
   pagination: PaginationInput = {}
 }
 
