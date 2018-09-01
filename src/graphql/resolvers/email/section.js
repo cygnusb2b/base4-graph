@@ -1,14 +1,4 @@
-const { isArray } = Array;
-
 module.exports = {
-  /**
-   *
-   */
-  EmailSection: {
-    deployment: (section, _, { base4 }) => base4.reference('platform', 'Product', section.deployment, { type: 'Newsletter' }),
-    redirects: ({ redirects }) => (isArray(redirects) ? redirects : []),
-  },
-
   /**
    *
    */

@@ -12,11 +12,15 @@ type EmailSection implements PlatformSection {
   sequence: Int
 
   # fields directly on email.model::Section
-  deployment: EmailProductNewsletter
+  deployment(input: EmailSectionDeploymentInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
 
   # fields from trait.platform::Content\SeoFields
   seoTitle: String
   alias: String
-  redirects: [String]
+  redirects: [String]! @arrayValue
   slug: String
+}
+
+input EmailSectionDeploymentInput {
+  status: ReferenceStatus = active
 }
