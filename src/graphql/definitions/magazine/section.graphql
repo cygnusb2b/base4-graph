@@ -4,7 +4,7 @@ type Query {
 
 type MagazineSection implements PlatformSection {
   # fields required by the PlatformSection GraphQL interface
-  id: Int!
+  id: Int! @value(localField: "_id")
   name: String
   description: String
   fullName: String

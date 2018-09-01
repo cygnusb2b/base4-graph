@@ -11,7 +11,6 @@ module.exports = {
    *
    */
   PlatformAssetImage: {
-    id: doc => doc._id,
     approvedWeb: doc => extractMutationValue(doc, 'Website', 'approved'),
     approvedMagazine: doc => extractMutationValue(doc, 'Magazine', 'approved'),
   },

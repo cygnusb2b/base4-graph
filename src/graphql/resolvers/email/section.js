@@ -1,5 +1,3 @@
-const coreResolvers = require('../core');
-
 const { isArray } = Array;
 
 module.exports = {
@@ -7,7 +5,6 @@ module.exports = {
    *
    */
   EmailSection: {
-    ...coreResolvers,
     deployment: (section, _, { base4 }) => base4.reference('platform', 'Product', section.deployment, { type: 'Newsletter' }),
     redirects: ({ redirects }) => (isArray(redirects) ? redirects : []),
   },

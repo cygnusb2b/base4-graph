@@ -3,7 +3,7 @@ type Query {
 }
 
 type PlatformTaxonomy {
-  id: Int!
+  id: Int! @value(localField: "_id")
   name: String
   fullName: String
   type: String

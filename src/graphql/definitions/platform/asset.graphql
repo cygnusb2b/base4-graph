@@ -4,7 +4,7 @@ type Query {
 
 type PlatformAssetImage {
   # from platform.model::Asset
-  id: String!
+  id: String! @value(localField: "_id")
   name: String
   touched: Date
 

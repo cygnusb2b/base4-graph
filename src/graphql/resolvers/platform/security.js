@@ -12,11 +12,4 @@ module.exports = {
       return base4.strictFindById('platform', 'User', id);
     },
   },
-
-  /**
-   *
-   */
-  PlatformSecurityUser: {
-    id: doc => doc._id,
-  },
 };

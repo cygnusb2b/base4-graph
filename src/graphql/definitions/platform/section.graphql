@@ -1,5 +1,5 @@
 interface PlatformSection {
-  id: Int!
+  id: Int! @value(localField: "_id")
   name: String
   description: String
   fullName: String

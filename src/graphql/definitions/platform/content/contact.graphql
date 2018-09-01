@@ -1,6 +1,6 @@
 type PlatformContentContact implements PlatformContent & PlatformContentContactable & PlatformContentAddressable {
   # fields required by the PlatfomContent GraphQL interface
-  id: Int!
+  id: Int! @value(localField: "_id")
   type: String!
   name: String
   shortName: String

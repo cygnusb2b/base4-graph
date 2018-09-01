@@ -3,7 +3,7 @@ type Query {
 }
 
 type PlatformSecurityUser {
-  id: String!
+  id: String! @value(localField: "_id")
   email: String
   firstName: String
   lastName: String

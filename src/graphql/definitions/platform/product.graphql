@@ -1,5 +1,5 @@
 interface PlatformProduct {
-  id: String!
+  id: String! @value(localField: "_id")
   type: String!
   name: String
   fullName: String

@@ -4,7 +4,7 @@ type Query {
 
 type MagazineIssue {
   # fields directly on platform.model::Issue
-  id: Int!
+  id: Int! @value(localField: "_id")
   name: String
   description: String
   mailDate: Date

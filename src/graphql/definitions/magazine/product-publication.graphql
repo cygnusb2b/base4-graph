@@ -4,7 +4,7 @@ type Query {
 
 type MagazineProductPublication implements PlatformProduct {
   # fields required by the PlatformProduct GraphQL interface
-  id: String!
+  id: String! @value(localField: "_id")
   type: String!
   name: String
   fullName: String

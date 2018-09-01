@@ -1,5 +1,5 @@
 interface PlatformSchedule {
-  id: String!
+  id: String! @value(localField: "_id")
   content: PlatformContent
 
   # fields from trait.platform::StatusEnabled

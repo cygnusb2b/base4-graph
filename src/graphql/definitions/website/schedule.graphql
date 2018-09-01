@@ -4,7 +4,7 @@ type Query {
 
 type WebsiteSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
-  id: String!
+  id: String! @value(localField: "_id")
   content: PlatformContent
   status: Int
 

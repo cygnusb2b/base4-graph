@@ -20,11 +20,6 @@ module.exports = {
     /**
      *
      */
-    id: doc => doc._id,
-
-    /**
-     *
-     */
     parent: async (doc, _, { base4 }) => base4.reference('platform', 'Taxonomy', doc.parent),
 
     /**

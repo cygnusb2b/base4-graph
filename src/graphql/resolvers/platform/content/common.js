@@ -1,7 +1,6 @@
 const { extractMutationValue } = require('../../../../base4');
 
 module.exports = {
-  id: doc => doc._id,
   seoTitle: doc => extractMutationValue(doc, 'Website', 'seoTitle') || doc.name,
   redirects: doc => extractMutationValue(doc, 'Website', 'redirects') || [],
   primaryImage: (doc, _, { base4 }) => base4.reference('platform', 'Asset', doc.primaryImage),

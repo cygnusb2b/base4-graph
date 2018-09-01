@@ -1,4 +1,3 @@
-const coreResolvers = require('../core');
 const paginationResolvers = require('../../../pagination/resolvers');
 
 module.exports = {
@@ -6,16 +5,6 @@ module.exports = {
    *
    */
   WebsiteSectionConnection: paginationResolvers,
-
-  /**
-   *
-   */
-  WebsiteSection: {
-    /**
-     *
-     */
-    ...coreResolvers,
-  },
 
   /**
    *
