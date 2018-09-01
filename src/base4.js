@@ -161,10 +161,7 @@ class Base4 {
     pagination,
   }) {
     const refs = objectPath.get(doc, localField);
-    if (!refs) return [];
     const ids = Base4.extractRefIds(isArray(refs) ? refs : [refs]);
-    if (!ids) return [];
-
     const query = { ...criteria, [foreignField]: { $in: ids } };
     if (pagination) {
       return this.paginate(relatedModel, {
