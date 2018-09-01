@@ -21,7 +21,7 @@ type EmailProductNewsletter implements PlatformProduct {
   defaultSubjectLine: String
 
   # fields directly on email.model::Product\Newsletter
-  parent(input: ReferenceActiveStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  parent(input: ReferenceStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
   sections(input: RelatedEmailSectionsInput = {}): EmailSectionConnection! @refMany(model: "email.Section", localField: "_id", foreignField: "deployment.$id")
   alias: String
   usesDeploymentDates: Boolean

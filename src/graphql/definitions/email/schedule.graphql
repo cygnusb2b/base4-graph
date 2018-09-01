@@ -5,12 +5,12 @@ type Query {
 type EmailSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
   id: String! @value(localField: "_id")
-  content(input: ReferenceActiveStatusInput = {}): PlatformContent @refOne(model: "platform.Content")
+  content(input: ReferenceStatusInput = {}): PlatformContent @refOne(model: "platform.Content")
   status: Int
 
   # fields directly on email.model::Schedule
-  product(input: ReferenceActiveStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
-  section(input: ReferenceActiveStatusInput = {}): EmailSection @refOne(model: "email.Section")
+  product(input: ReferenceStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  section(input: ReferenceStatusInput = {}): EmailSection @refOne(model: "email.Section")
   deploymentDate: Date
   sequence: Int
   contentStatus: Int

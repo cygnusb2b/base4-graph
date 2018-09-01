@@ -91,8 +91,8 @@ interface PlatformContent {
 
   # fields from platform.model::Content mutations
   schedules: PlatformContentSchedules! @passThru
-  primarySite(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
-  primarySection(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+  primarySite(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
+  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
 
   # fields from platform.trait::Content\SeoFields
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")

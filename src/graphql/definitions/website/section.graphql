@@ -13,8 +13,8 @@ type WebsiteSection implements PlatformSection {
   sequence: Int
 
   # fields directly on website.model::Section
-  site(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
-  parent(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
+  site(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
+  parent(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
   children(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "parent.$id")
   logo: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
 

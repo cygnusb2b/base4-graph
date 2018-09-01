@@ -11,7 +11,7 @@ type PlatformTaxonomy {
   status: Int
   redirects: [String]! @arrayValue
   sequence: Int
-  parent(input: ReferenceActiveStatusInput = {}): PlatformTaxonomy @refOne(model: "platform.Taxonomy")
+  parent(input: ReferenceStatusInput = {}): PlatformTaxonomy @refOne(model: "platform.Taxonomy")
   children(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy", localField: "_id", foreignField: "parent.$id")
 }
 

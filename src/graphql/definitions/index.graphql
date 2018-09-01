@@ -47,10 +47,6 @@ input ModelStringIdInput {
   id: String!
 }
 
-input ReferenceActiveStatusInput {
+input ReferenceStatusInput {
   status: ReferenceStatus = active
-}
-
-input ReferenceAllStatusInput {
-  status: ReferenceStatus = all
 }

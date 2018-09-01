@@ -12,7 +12,7 @@ type MagazineIssue {
   dedication: String
   coverDescription: String
   credit: String
-  publication(input: ReferenceActiveStatusInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
+  publication(input: ReferenceStatusInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
   sections(input: RelatedMagazineSectionsInput = {}): MagazineSectionConnection! @refMany(model: "magazine.Section", localField: "_id", foreignField: "issue.$id")
   coverImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
   redirects: [String]! @arrayValue

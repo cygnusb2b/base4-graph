@@ -5,13 +5,13 @@ type Query {
 type WebsiteSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
   id: String! @value(localField: "_id")
-  content(input: ReferenceAllStatusInput =  {}): PlatformContent @refOne(model: "platform.Content")
+  content(input: ReferenceStatusInput =  {}): PlatformContent @refOne(model: "platform.Content")
   status: Int
 
   # fields directly on website.model::Schedule
-  product(input: ReferenceActiveStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
-  section(input: ReferenceActiveStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
-  option(input: ReferenceActiveStatusInput = {}): WebsiteOption @refOne(model: "website.Option")
+  product(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
+  section(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
+  option(input: ReferenceStatusInput = {}): WebsiteOption @refOne(model: "website.Option")
   startDate: Date
   endDate: Date
   published: Date

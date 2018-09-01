@@ -12,7 +12,7 @@ type EmailSection implements PlatformSection {
   sequence: Int
 
   # fields directly on email.model::Section
-  deployment(input: ReferenceActiveStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  deployment(input: ReferenceStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
 
   # fields from trait.platform::Content\SeoFields
   seoTitle: String
