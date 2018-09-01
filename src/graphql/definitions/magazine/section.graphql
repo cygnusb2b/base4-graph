@@ -12,8 +12,8 @@ type MagazineSection implements PlatformSection {
   sequence: Int
 
   # fields directly on magazine.model::Section
-  publication(input: MagazineSectionPublicationInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
-  issue(input: MagazineSectionIssueInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
+  publication(input: ReferenceActiveStatusInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
+  issue(input: ReferenceActiveStatusInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
 }
 
 type MagazineSectionConnection {
@@ -34,15 +34,13 @@ enum MagazineSectionSortField {
   sequence
 }
 
-input MagazineSectionPublicationInput {
-  status: ReferenceStatus = active
-}
-
-input MagazineSectionIssueInput {
-  status: ReferenceStatus = active
-}
-
 input MagazineSectionSortInput {
   field: MagazineSectionSortField = name
   order: SortOrder = asc
+}
+
+input RelatedMagazineSectionsInput {
+  status: ReferenceStatus = active
+  sort: MagazineSectionSortInput = {}
+  pagination: PaginationInput = {}
 }

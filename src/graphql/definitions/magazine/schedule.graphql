@@ -5,13 +5,13 @@ type Query {
 type MagazineSchedule implements PlatformSchedule {
   # fields required by the PlatformSchedule GraphQL interface
   id: String! @value(localField: "_id")
-  content(input: MagazineScheduleContentInput =  {}): PlatformContent @refOne(model: "platform.Content")
+  content(input: ReferenceAllStatusInput =  {}): PlatformContent @refOne(model: "platform.Content")
   status: Int
 
   # fields directly on magazine.model::Schedule
-  product(input: MagazineScheduleProductInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publicatiton" })
-  issue(input: MagazineScheduleIssueInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
-  section(input: MagazineScheduleSectionInput = {}): MagazineSection @refOne(model: "magazine.Section")
+  product(input: ReferenceActiveStatusInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publicatiton" })
+  issue(input: ReferenceActiveStatusInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
+  section(input: ReferenceActiveStatusInput = {}): MagazineSection @refOne(model: "magazine.Section")
   published: Date
   expires: Date
 }
@@ -31,22 +31,6 @@ enum MagazineScheduleSortField {
   id
   published
   expires
-}
-
-input MagazineScheduleContentInput {
-  status: ReferenceStatus = all
-}
-
-input MagazineScheduleProductInput {
-  status: ReferenceStatus = active
-}
-
-input MagazineScheduleIssueInput {
-  status: ReferenceStatus = active
-}
-
-input MagazineScheduleSectionInput {
-  status: ReferenceStatus = active
 }
 
 input MagazineScheduleSortInput {

@@ -12,8 +12,8 @@ type MagazineIssue {
   dedication: String
   coverDescription: String
   credit: String
-  publication(input: MagazineIssuePublicationInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
-  sections(input: MagazineIssueSectionsInput = {}): MagazineSectionConnection! @refMany(model: "magazine.Section", localField: "_id", foreignField: "issue.$id")
+  publication(input: ReferenceActiveStatusInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
+  sections(input: RelatedMagazineSectionsInput = {}): MagazineSectionConnection! @refMany(model: "magazine.Section", localField: "_id", foreignField: "issue.$id")
   coverImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
   redirects: [String]! @arrayValue
 
@@ -38,17 +38,13 @@ enum MagazineIssueSortField {
   mailDate
 }
 
-input MagazineIssuePublicationInput {
-  status: ReferenceStatus = active
-}
-
-input MagazineIssueSectionsInput {
-  status: ReferenceStatus = active
-  sort: MagazineSectionSortInput = {}
-  pagination: PaginationInput = {}
-}
-
 input MagazineIssueSortInput {
   field: MagazineIssueSortField = name
   order: SortOrder = asc
+}
+
+input RelatedMagazineIssuesInput {
+  status: ReferenceStatus = active
+  sort: MagazineIssueSortInput = {}
+  pagination: PaginationInput = {}
 }
