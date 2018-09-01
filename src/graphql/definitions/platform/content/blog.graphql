@@ -4,7 +4,7 @@ type PlatformContentBlog implements PlatformContent {
   type: PlatformContentType!
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
   shortName: String
-  fullName: String # should be calculated in resolvers
+  fullName: String
   hash: String
   created: Date
   updated: Date
