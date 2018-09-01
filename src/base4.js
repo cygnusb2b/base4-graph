@@ -54,6 +54,29 @@ class Base4 {
 
   /**
    *
+   * @param {string} modelName
+   * @param {object} params
+   * @param {?object} params.pagination
+   * @param {?object} params.sort
+   * @param {?object} params.criteria
+   */
+  async paginate(modelName, {
+    pagination = {},
+    sort = {},
+    criteria,
+  }) {
+    const { namespace, resource } = Base4.parseModelName(modelName);
+    const collection = await this.collection(namespace, resource);
+    const { first, after } = pagination;
+    return new Pagination(collection, {
+      sort,
+      pagination: { first, after: Base4.coerceID(after) },
+      criteria,
+    });
+  }
+
+  /**
+   *
    * @param {string} namespace The collection namespace, e.g. `platform`.
    * @param {string} resource The resource name, e.g. `Content`.
    * @returns {Promise}
@@ -134,8 +157,8 @@ class Base4 {
     localField,
     foreignField,
     criteria,
-    sort = {},
-    pagination = {},
+    sort,
+    pagination,
   }) {
     const refs = objectPath.get(doc, localField);
     if (!refs) return [];
@@ -143,17 +166,15 @@ class Base4 {
     if (!ids) return [];
 
     const query = { ...criteria, [foreignField]: { $in: ids } };
-    const { namespace, resource } = Base4.parseModelName(relatedModel);
-    const collection = await this.collection(namespace, resource);
-
     if (pagination) {
-      const { first, after } = pagination;
-      return new Pagination(collection, {
+      return this.paginate(relatedModel, {
+        pagination,
         sort,
-        pagination: { first, after: Base4.coerceID(after) },
         criteria: query,
       });
     }
+    const { namespace, resource } = Base4.parseModelName(relatedModel);
+    const collection = await this.collection(namespace, resource);
     if (sort) return collection.find(query).sort(sort);
     return collection.find(query);
   }
