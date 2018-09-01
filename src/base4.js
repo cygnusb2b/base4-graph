@@ -66,28 +66,6 @@ class Base4 {
   }
 
   /**
-   * Returns a reference-one document for the provided namespace, resource, and ref/id.
-   *
-   * For example, to retrieve the `createdBy` document referenced on a `Content` document,
-   * run the following:
-   *
-   * `referenceOne('platform', 'User', content.createdBy);`
-   *
-   * @deprecated
-   * @param {string} namespace The reference's namespace, e.g. `platform`.
-   * @param {string} resource The reference's resource name, e.g. `Content`.
-   * @param {*} ref The reference. Either an ID or a complex DBRef.
-   * @param {?object} criteria Additional query criteria to add.
-   * @returns {Promise<null|object>}
-   */
-  async reference(namespace, resource, ref, criteria) {
-    const id = Base4.extractRefId(ref);
-    if (!id) return null;
-    const collection = await this.collection(namespace, resource);
-    return collection.findOne({ ...criteria, _id: id });
-  }
-
-  /**
    * Returns a reference-one document for the provided document, model name and ref fields.
    *
    * For example, to retrieve the `createdBy` document referenced on a `Content` document,
@@ -123,29 +101,6 @@ class Base4 {
     const { namespace, resource } = Base4.parseModelName(relatedModel);
     const collection = await this.collection(namespace, resource);
     return collection.findOne({ ...criteria, [foreignField]: id });
-  }
-
-  /**
-   * Returns an array of reference-many documents for the provided namespace, resource, and ref/id.
-   *
-   * For example, to retrieve the `taxonomies` documents referenced on a `Content` document,
-   * run the following:
-   *
-   * `referenceMany('platform', 'Taxonomy', content.taxonomies);`
-   *
-   * @deprecated
-   * @param {string} namespace The reference's namespace, e.g. `platform`.
-   * @param {string} resource The reference's resource name, e.g. `Content`.
-   * @param {*} ref The reference. Either an ID or a complex DBRef.
-   * @param {?object} criteria Additional query criteria to add.
-   * @returns {Promise<null|object>}
-   */
-  async references(namespace, resource, refs, criteria) {
-    const ids = Base4.extractRefIds(refs);
-    if (!ids.length) return [];
-    const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, _id: { $in: ids } });
-    return cursor.toArray();
   }
 
   /**
@@ -201,36 +156,6 @@ class Base4 {
     }
     if (sort) return collection.find(query).sort(sort);
     return collection.find(query);
-  }
-
-  /**
-   * @deprecated
-   */
-  async inverse(namespace, resource, field, id, criteria, sort = {}) {
-    if (!id) return [];
-    const collection = await this.collection(namespace, resource);
-    const cursor = await collection.find({ ...criteria, [field]: id }).sort(sort);
-    return cursor.toArray();
-  }
-
-  async inverseMany({
-    model,
-    field,
-    id,
-    criteria,
-    sort = {},
-    pagination = {},
-  }) {
-    if (!id) return [];
-    const { namespace, resource } = Base4.parseModelName(model);
-    const collection = await this.collection(namespace, resource);
-    const { first, after } = pagination;
-
-    return new Pagination(collection, {
-      sort,
-      pagination: { first, after: Base4.coerceID(after) },
-      criteria: { ...criteria, [field]: id },
-    });
   }
 
   /**
