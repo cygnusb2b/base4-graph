@@ -4,6 +4,7 @@ const ArrayValueDirective = require('./array-value');
 const ValueDirective = require('./value');
 const MutatedValueDirective = require('./mutated-value');
 const PassThruDirective = require('./pass-thru');
+const ContentQueryOneDirective = require('./content-query-one');
 
 module.exports = {
   RefOneDirective,
@@ -12,4 +13,5 @@ module.exports = {
   ValueDirective,
   MutatedValueDirective,
   PassThruDirective,
+  ContentQueryOneDirective,
 };

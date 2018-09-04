@@ -13,6 +13,7 @@ directive @value(localField: String, fallbackField: String) on FIELD_DEFINITION
 directive @mutatedValue(localField: String) on FIELD_DEFINITION
 directive @arrayValue(localField: String) on FIELD_DEFINITION
 directive @passThru(localField: String) on FIELD_DEFINITION
+directive @contentQueryOne(type: PlatformContentType!) on FIELD_DEFINITION
 
 type Query {
   ping: String!
