@@ -10,8 +10,14 @@ class ContentQueryOneDirective extends SchemaDirectiveVisitor {
     field.resolve = async (_, { input }, { base4 }) => {
       const { type } = this.args;
       const { id } = input;
+      const criteria = {};
+      if (type) {
+        criteria.type = type;
+      } else if (input.type) {
+        criteria.type = input.type;
+      }
 
-      return base4.strictFindById('platform', 'Content', id, { type });
+      return base4.strictFindById('platform', 'Content', id, criteria);
     };
   }
 }

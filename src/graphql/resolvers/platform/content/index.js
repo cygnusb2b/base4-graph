@@ -28,16 +28,5 @@ module.exports = deepAssign(
         return `PlatformContent${obj.type}`;
       },
     },
-
-    /**
-     *
-     */
-    Query: {
-      platformContent: async (_, { input }, { auth, base4 }) => {
-        auth.check();
-        const { id } = input;
-        return base4.strictFindById('platform', 'Content', id);
-      },
-    },
   },
 );

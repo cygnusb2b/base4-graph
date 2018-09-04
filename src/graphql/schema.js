@@ -3,13 +3,14 @@ const { makeExecutableSchema } = require('graphql-tools');
 const { importSchema } = require('graphql-import');
 const resolvers = require('./resolvers');
 const {
-  RefOneDirective,
-  RefManyDirective,
   ArrayValueDirective,
-  ValueDirective,
+  ContentQueryAllDirective,
+  ContentQueryOneDirective,
   MutatedValueDirective,
   PassThruDirective,
-  ContentQueryOneDirective,
+  RefManyDirective,
+  RefOneDirective,
+  ValueDirective,
 } = require('./directives');
 
 const typeDefs = importSchema(join(__dirname, 'definitions/index.graphql'));
@@ -18,12 +19,13 @@ module.exports = makeExecutableSchema({
   typeDefs,
   resolvers,
   schemaDirectives: {
-    refOne: RefOneDirective,
-    refMany: RefManyDirective,
     arrayValue: ArrayValueDirective,
-    value: ValueDirective,
+    contentQueryAll: ContentQueryAllDirective,
+    contentQueryOne: ContentQueryOneDirective,
     mutatedValue: MutatedValueDirective,
     passThru: PassThruDirective,
-    contentQueryOne: ContentQueryOneDirective,
+    refMany: RefManyDirective,
+    refOne: RefOneDirective,
+    value: ValueDirective,
   },
 });

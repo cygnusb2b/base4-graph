@@ -28,7 +28,8 @@
 # import * from 'whitepaper.graphql'
 
 type Query {
-  platformContent(input: ModelIdInput!): PlatformContent!
+  platformContent(input: RootPlatformContentQueryOne!): PlatformContent! @contentQueryOne
+  allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
 }
 
 type PlatformContentStubSidebar {
@@ -150,6 +151,17 @@ type PlatformContentEdge {
   cursor: Cursor!
 }
 
+input RootPlatformContentQueryOne {
+  id: Int!
+  type: PlatformContentType
+}
+
+input RootPlatformContentQueryAll {
+  type: PlatformContentType
+  status: ReferenceStatus = all
+  sort: PlatformContentSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
 
 input PlatformContentQueryOne {
   id: Int!

@@ -1,17 +1,19 @@
-const RefOneDirective = require('./ref-one');
-const RefManyDirective = require('./ref-many');
 const ArrayValueDirective = require('./array-value');
-const ValueDirective = require('./value');
+const ContentQueryAllDirective = require('./content-query-all');
+const ContentQueryOneDirective = require('./content-query-one');
 const MutatedValueDirective = require('./mutated-value');
 const PassThruDirective = require('./pass-thru');
-const ContentQueryOneDirective = require('./content-query-one');
+const RefManyDirective = require('./ref-many');
+const RefOneDirective = require('./ref-one');
+const ValueDirective = require('./value');
 
 module.exports = {
-  RefOneDirective,
-  RefManyDirective,
   ArrayValueDirective,
-  ValueDirective,
+  ContentQueryAllDirective,
+  ContentQueryOneDirective,
   MutatedValueDirective,
   PassThruDirective,
-  ContentQueryOneDirective,
+  RefManyDirective,
+  RefOneDirective,
+  ValueDirective,
 };
