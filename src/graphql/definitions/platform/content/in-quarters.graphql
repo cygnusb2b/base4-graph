@@ -55,7 +55,7 @@ type PlatformContentInQuarters implements PlatformContent {
   photographers(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
 }
 
-type PlatformContentInQuartersConnection {
+type PlatformContentInQuartersConnection @paginated {
   totalCount: Int!
   edges: [PlatformContentInQuartersEdge]!
   pageInfo: PageInfo!

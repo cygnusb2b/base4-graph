@@ -51,7 +51,7 @@ type PlatformContentProduct implements PlatformContent {
   company(input: ReferenceStatusInput = {}): PlatformContentCompany @refOne(model: "platform.Content")
 }
 
-type PlatformContentProductConnection {
+type PlatformContentProductConnection @paginated {
   totalCount: Int!
   edges: [PlatformContentProductEdge]!
   pageInfo: PageInfo!

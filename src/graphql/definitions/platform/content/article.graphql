@@ -51,7 +51,7 @@ type PlatformContentArticle implements PlatformContent {
   photographers(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
 }
 
-type PlatformContentArticleConnection {
+type PlatformContentArticleConnection @paginated {
   totalCount: Int!
   edges: [PlatformContentArticleEdge]!
   pageInfo: PageInfo!

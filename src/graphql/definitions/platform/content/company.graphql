@@ -74,7 +74,7 @@ type PlatformContentCompany implements PlatformContent {
   location: PlatformContentStubLocation
 }
 
-type PlatformContentCompanyConnection {
+type PlatformContentCompanyConnection @paginated {
   totalCount: Int!
   edges: [PlatformContentCompanyEdge]!
   pageInfo: PageInfo!

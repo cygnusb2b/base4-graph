@@ -59,7 +59,7 @@ type PlatformContentContact implements PlatformContent {
   location: PlatformContentStubLocation
 }
 
-type PlatformContentContactConnection {
+type PlatformContentContactConnection @paginated {
   totalCount: Int!
   edges: [PlatformContentContactEdge]!
   pageInfo: PageInfo!
