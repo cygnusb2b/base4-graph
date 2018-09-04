@@ -14,6 +14,7 @@
 # import * from 'product-external.graphql'
 # import * from 'product.graphql'
 # import * from 'promotion.graphql'
+# import * from 'review.graphql'
 # import * from 'sponsored.graphql'
 # import * from 'text-ad.graphql'
 
