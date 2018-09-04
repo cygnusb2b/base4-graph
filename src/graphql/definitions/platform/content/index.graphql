@@ -53,6 +53,7 @@ enum PlatformContentType {
   Collection
   Company
   Contact
+  Document
   Ebook
   EngineSpec
   Event
@@ -63,6 +64,7 @@ enum PlatformContentType {
   MediaGallery
   News
   Page
+  Podcast
   PressRelease
   Product
   ProductExternal
@@ -70,6 +72,9 @@ enum PlatformContentType {
   Review
   Sponsored
   TextAd
+  Video
+  Webinar
+  Whitepaper
 }
 
 interface PlatformContent {
