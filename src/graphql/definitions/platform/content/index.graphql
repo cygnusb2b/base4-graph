@@ -23,6 +23,7 @@
 # import * from 'review.graphql'
 # import * from 'sponsored.graphql'
 # import * from 'text-ad.graphql'
+# import * from 'video.graphql'
 
 type Query {
   platformContent(input: ModelIdInput!): PlatformContent!
