@@ -1,0 +1,41 @@
+type Query {
+  emailProductNewsletter(input: ModelStringIdInput!): EmailProductNewsletter!
+}
+
+type EmailProductNewsletter implements PlatformProduct {
+  # fields required by the PlatformProduct GraphQL interface
+  id: String! @value(localField: "_id")
+  type: String!
+  name: String
+  fullName: String
+  tagLine: String
+  description: String
+  logo: String
+  status: Int
+
+  # fields required by the EmailProductDeployment GraphQL interface
+  provider: EmailProductStubProvider
+  sourceProvider: EmailProductStubHtmlSourceProvider
+  defaultTesters: [EmailCampaignTestRecipient]! @arrayValue
+  defaultFromName: String
+  defaultSubjectLine: String
+
+  # fields directly on email.model::Product\Newsletter
+  parent(input: ReferenceStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  sections(input: RelatedEmailSectionsInput = {}): EmailSectionConnection! @refMany(model: "email.Section", localField: "_id", foreignField: "deployment.$id")
+  alias: String
+  usesDeploymentDates: Boolean
+  teaser: String
+}
+
+type EmailProductStubProvider {
+  type: String
+  providerId: String
+  attributes: JSON
+}
+
+type EmailProductStubHtmlSourceProvider {
+  handlerKey: String
+  host: String
+  path: String
+}

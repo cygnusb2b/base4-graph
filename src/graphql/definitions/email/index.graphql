@@ -1,0 +1,4 @@
+# import Query.*, * from 'campaign.graphql'
+# import Query.*, * from 'product.graphql'
+# import Query.*, * from 'schedule.graphql'
+# import Query.*, * from 'section.graphql'

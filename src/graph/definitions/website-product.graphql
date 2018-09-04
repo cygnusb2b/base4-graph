@@ -1,7 +1,0 @@
-type WebsiteProduct {
-  id: String!
-  name: String
-  description: String
-  url: String
-  status: Int
-}

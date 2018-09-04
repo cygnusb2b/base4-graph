@@ -1,0 +1,45 @@
+type Query {
+  magazineSchedule(input: ModelStringIdInput!): MagazineSchedule!
+}
+
+type MagazineSchedule implements PlatformSchedule {
+  # fields required by the PlatformSchedule GraphQL interface
+  id: String! @value(localField: "_id")
+  content(input: ReferenceStatusInput =  {}): PlatformContent @refOne(model: "platform.Content")
+  status: Int
+
+  # fields directly on magazine.model::Schedule
+  product(input: ReferenceStatusInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publicatiton" })
+  issue(input: ReferenceStatusInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
+  section(input: ReferenceStatusInput = {}): MagazineSection @refOne(model: "magazine.Section")
+  published: Date
+  expires: Date
+}
+
+type MagazineScheduleConnection @paginated {
+  totalCount: Int!
+  edges: [MagazineScheduleEdge]!
+  pageInfo: PageInfo!
+}
+
+type MagazineScheduleEdge {
+  node: MagazineSchedule!
+  cursor: Cursor!
+}
+
+enum MagazineScheduleSortField {
+  id
+  published
+  expires
+}
+
+input MagazineScheduleSortInput {
+  field: MagazineScheduleSortField = published
+  order: SortOrder = desc
+}
+
+input RelatedMagazineSchedulesInput {
+  status: ReferenceStatus = active
+  sort: MagazineScheduleSortInput = {}
+  pagination: PaginationInput = {}
+}

@@ -1,0 +1,53 @@
+type Query {
+  websiteSchedule(input: ModelStringIdInput!): WebsiteSchedule!
+}
+
+type WebsiteSchedule implements PlatformSchedule {
+  # fields required by the PlatformSchedule GraphQL interface
+  id: String! @value(localField: "_id")
+  content(input: ReferenceStatusInput =  {}): PlatformContent @refOne(model: "platform.Content")
+  status: Int
+
+  # fields directly on website.model::Schedule
+  product(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
+  section(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
+  option(input: ReferenceStatusInput = {}): WebsiteOption @refOne(model: "website.Option")
+  startDate: Date
+  endDate: Date
+  published: Date
+  expires: Date
+  contentStatus: Int
+  categories(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
+  hasPrimaryImage: Boolean
+  primarySection: WebsiteSection @refOne(model: "website.Section")
+}
+
+type WebsiteScheduleConnection @paginated {
+  totalCount: Int!
+  edges: [WebsiteScheduleEdge]!
+  pageInfo: PageInfo!
+}
+
+type WebsiteScheduleEdge {
+  node: WebsiteSchedule!
+  cursor: Cursor!
+}
+
+enum WebsiteScheduleSortField {
+  id
+  startDate
+  endDate
+  published
+  expires
+}
+
+input WebsiteScheduleSortInput {
+  field: WebsiteScheduleSortField = startDate
+  order: SortOrder = desc
+}
+
+input RelatedWebsiteSchedulesInput {
+  status: ReferenceStatus = active
+  sort: WebsiteScheduleSortInput = {}
+  pagination: PaginationInput = {}
+}

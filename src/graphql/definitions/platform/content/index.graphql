@@ -1,0 +1,209 @@
+# import * from 'apparatus.graphql'
+# import Query.*, * from 'article.graphql'
+# import * from 'blog.graphql'
+# import * from 'collection.graphql'
+# import * from 'company.graphql'
+# import * from 'contact.graphql'
+# import * from 'document.graphql'
+# import * from 'ebook.graphql'
+# import * from 'engine-spec.graphql'
+# import * from 'event.graphql'
+# import * from 'group.graphql'
+# import * from 'infographic.graphql'
+# import * from 'in-quarters.graphql'
+# import * from 'job.graphql'
+# import * from 'media-gallery.graphql'
+# import * from 'news.graphql'
+# import * from 'page.graphql'
+# import * from 'podcast.graphql'
+# import * from 'press-release.graphql'
+# import * from 'product-external.graphql'
+# import * from 'product.graphql'
+# import * from 'promotion.graphql'
+# import * from 'review.graphql'
+# import * from 'sponsored.graphql'
+# import * from 'text-ad.graphql'
+# import * from 'video.graphql'
+# import * from 'webinar.graphql'
+# import * from 'whitepaper.graphql'
+
+type Query {
+  platformContent(input: RootPlatformContentQueryOne!): PlatformContent! @contentQueryOne
+  allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
+  publishedPlatformContent(input: RootPlatformContentQueryPublished = {}): PlatformContentConnection! @contentQueryAll(publishedOnly: true)
+}
+
+type PlatformContentStubSidebar {
+  body: String
+}
+
+type PlatformContentStubLocation {
+  latitude: Float
+  longitude: Float
+}
+
+type PlatformContentSchedules {
+  website(input: RelatedWebsiteSchedulesInput = {}): WebsiteScheduleConnection! @refMany(model: "website.Schedule", localField: "_id", foreignField: "content.$id")
+  magazine(input: RelatedMagazineSchedulesInput = {}): MagazineScheduleConnection! @refMany(model: "magazine.Schedule", localField: "_id", foreignField: "content.$id")
+  email(input: RelatedEmailSchedulesInput = {}): EmailScheduleConnection! @refMany(model: "email.Schedule", localField: "_id", foreignField: "content.$id")
+}
+
+enum PlatformContentMutation {
+  Email
+  Magazine
+  Website
+}
+
+enum PlatformContentType {
+  Apparatus
+  Article
+  Blog
+  Collection
+  Company
+  Contact
+  Document
+  Ebook
+  EngineSpec
+  Event
+  Group
+  InQuarters
+  Infographic
+  Job
+  MediaGallery
+  News
+  Page
+  Podcast
+  PressRelease
+  Product
+  ProductExternal
+  Promotion
+  Review
+  Sponsored
+  TextAd
+  Video
+  Webinar
+  Whitepaper
+}
+
+interface PlatformContent {
+  # fields directly on platform.model::Content
+  id: Int! @value(localField: "_id")
+  type: PlatformContentType!
+  name(input: PlatformContentMutationInput = {}): String @mutatedValue
+  shortName: String
+  fullName: String # should be calculated in resolvers
+  hash: String
+  created: Date
+  updated: Date
+  touched: Date
+  published: Date
+  unpublished: Date
+  createdBy: PlatformSecurityUser @refOne(model: "platform.User")
+  updatedBy: PlatformSecurityUser @refOne(model: "platform.User")
+
+  # fields from platform.trait::StatusEnabled
+  status: Int
+
+  # fields from platform.trait::Content\BodyFields
+  teaser(input: PlatformContentMutationInput = {}): String @mutatedValue
+  body(input: PlatformContentMutationInput = {}): String @mutatedValue
+  notes: String
+
+  # fields from platform.trait::Taggable
+  taxonomy(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
+
+  # fields from platform.trait::ContentRelateable
+  relatedTo(input: RelatedPlatformContentInput = {}): PlatformContentConnection! @refMany(model: "platform.Content")
+
+  # fields from platform.trait::MediaRelatable
+  primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
+  images(input: RelatedPlatformAssetImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
+
+  # fields from platform.model::Content mutations
+  schedules: PlatformContentSchedules! @passThru
+  primarySite(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
+  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+
+  # fields from platform.trait::Content\SeoFields
+  seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
+  alias: String @value(localField: "mutations.Website.alias")
+  redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
+  slug: String @value(localField: "mutations.Website.slug")
+
+  # GraphQL-only fields.
+  createdDate(input: MomentFormat = {}): String @momentFormat(localField: "created")
+  updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
+  publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
+  unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
+}
+
+enum PlatformContentSortField {
+  id
+  name
+  fullName
+  created
+  updated
+  published
+  touched
+}
+
+type PlatformContentConnection @paginated {
+  totalCount: Int!
+  edges: [PlatformContentEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentEdge {
+  node: PlatformContent!
+  cursor: Cursor!
+}
+
+input RootPlatformContentQueryOne {
+  id: Int!
+  type: PlatformContentType
+}
+
+input RootPlatformContentQueryAll {
+  types: [PlatformContentType] = []
+  status: ReferenceStatus = all
+  sort: PlatformContentSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input RootPlatformContentQueryPublished {
+  types: [PlatformContentType] = []
+  since: Date
+  sort: PlatformContentSortInput = { field: published, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input PlatformContentQueryOne {
+  id: Int!
+}
+
+input PlatformContentQueryAll {
+  status: ReferenceStatus = all
+  sort: PlatformContentSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input PlatformContentQueryPublished {
+  since: Date
+  sort: PlatformContentSortInput = { field: published, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input PlatformContentSortInput {
+  field: PlatformContentSortField = name
+  order: SortOrder = asc
+}
+
+input PlatformContentMutationInput {
+  mutation: PlatformContentMutation = Website
+}
+
+input RelatedPlatformContentInput {
+  status: ReferenceStatus = active
+  sort: PlatformContentSortInput = {}
+  pagination: PaginationInput = {}
+}

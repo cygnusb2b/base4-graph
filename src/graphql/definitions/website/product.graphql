@@ -1,0 +1,55 @@
+type Query {
+  websiteProductSite(input: ModelStringIdInput!): WebsiteProductSite!
+  websiteProductSites(input: WebsiteProductSitesQueryInput!): WebsiteProductSiteConnection!
+}
+
+type WebsiteProductSite implements PlatformProduct {
+  # fields required by the PlatformProduct GraphQL interface
+  id: String! @value(localField: "_id")
+  type: String!
+  name: String
+  fullName: String
+  tagLine: String
+  description: String
+  logo: String
+  status: Int
+
+  # fields directly on website.model::Product\Site
+  sections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "site.$id")
+  # pages: [WebsitePage] # add args? @todo Add this model
+  options(input: RelatedWebsiteOptionsInput = {}): WebsiteOptionConnection! @refMany(model: "website.Option", localField: "_id", foreignField: "site.$id")
+  url: String
+  socialFollow: [PlatformEntityStubSocial]! @arrayValue
+  redirects: [String]! @arrayValue
+
+  # fields that are new to GraphQL
+  rootSections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection!
+}
+
+type WebsiteProductSiteConnection @paginated {
+  totalCount: Int!
+  edges: [WebsiteProductSiteEdge]!
+  pageInfo: PageInfo!
+}
+
+type WebsiteProductSiteEdge {
+  node: WebsiteProductSite!
+  cursor: Cursor!
+}
+
+enum WebsiteProductSiteSortField {
+  id
+  name
+  fullName
+}
+
+input WebsiteProductSitesQueryInput {
+  status: ReferenceStatus = active
+  sort: WebsiteProductSiteSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input WebsiteProductSiteSortInput {
+  field: WebsiteProductSiteSortField = name
+  order: SortOrder = asc
+}

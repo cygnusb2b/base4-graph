@@ -1,7 +1,7 @@
 version: '3'
 services:
   app:
-    image: node:8
+    image: node:8.11
     depends_on:
       - mongo
     tty: true
@@ -18,7 +18,7 @@ services:
       PORT: ${BASE4_GRAPH_PORT-8937}
       MONGO_DSN: ${BASE4_GRAPH_DSN-mongodb://mongo:27017}
   mongo:
-    image: mongo:3.4
+    image: mongo:3.6
     volumes:
       - mongodb:/data/db
     ports:

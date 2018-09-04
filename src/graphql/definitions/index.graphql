@@ -1,0 +1,60 @@
+# import Query.*, * from 'email/index.graphql'
+# import Query.*, * from 'magazine/index.graphql'
+# import Query.*, * from 'platform/index.graphql'
+# import Query.*, * from 'website/index.graphql'
+
+scalar Cursor
+scalar Date
+scalar JSON
+
+directive @paginated on OBJECT
+directive @refMany(model: String!, localField: String, foreignField: String = "_id", criteria: JSON) on FIELD_DEFINITION
+directive @refOne(model: String!, localField: String, foreignField: String = "_id", criteria: JSON) on FIELD_DEFINITION
+directive @value(localField: String, fallbackField: String) on FIELD_DEFINITION
+directive @mutatedValue(localField: String) on FIELD_DEFINITION
+directive @arrayValue(localField: String) on FIELD_DEFINITION
+directive @passThru(localField: String) on FIELD_DEFINITION
+directive @momentFormat(localField: String, defaultFormat: String! = "YYYY-MM-DDTHH:mm:ssZ") on FIELD_DEFINITION
+directive @contentQueryOne(type: PlatformContentType) on FIELD_DEFINITION
+directive @contentQueryAll(types: [PlatformContentType]! = [], publishedOnly: Boolean! = false) on FIELD_DEFINITION
+
+type Query {
+  ping: String!
+}
+
+type PageInfo {
+  hasNextPage: Boolean!
+  endCursor: Cursor
+}
+
+enum SortOrder {
+  asc
+  desc
+}
+
+enum ReferenceStatus {
+  all
+  active
+  deleted
+}
+
+input PaginationInput {
+  first: Int = 10
+  after: Cursor
+}
+
+input ModelIdInput {
+  id: Int!
+}
+
+input ModelStringIdInput {
+  id: String!
+}
+
+input ReferenceStatusInput {
+  status: ReferenceStatus = active
+}
+
+input MomentFormat {
+  format: String = "YYYY-MM-DDTHH:mm:ssZ"
+}

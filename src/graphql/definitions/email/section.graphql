@@ -1,0 +1,51 @@
+type Query {
+  emailSection(input: ModelIdInput!): EmailSection!
+}
+
+type EmailSection implements PlatformSection {
+  # fields required by the PlatformSection GraphQL interface
+  id: Int! @value(localField: "_id")
+  name: String
+  description: String
+  fullName: String
+  status: Int
+  sequence: Int
+
+  # fields directly on email.model::Section
+  deployment(input: ReferenceStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+
+  # fields from trait.platform::Content\SeoFields
+  seoTitle: String
+  alias: String
+  redirects: [String]! @arrayValue
+  slug: String
+}
+
+type EmailSectionConnection @paginated {
+  totalCount: Int!
+  edges: [EmailSectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type EmailSectionEdge {
+  node: EmailSection!
+  cursor: Cursor!
+}
+
+enum EmailSectionSortField {
+  id
+  name
+  fullName
+  sequence
+}
+
+input EmailSectionSortInput {
+  field: EmailSectionSortField = name
+  order: SortOrder = asc
+}
+
+input RelatedEmailSectionsInput {
+  status: ReferenceStatus = active
+  sort: EmailSectionSortInput = {}
+  pagination: PaginationInput = {}
+}

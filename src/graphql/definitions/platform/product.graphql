@@ -1,0 +1,12 @@
+interface PlatformProduct {
+  id: String! @value(localField: "_id")
+  type: String!
+  name: String
+  fullName: String
+  tagLine: String
+  description: String
+  logo: String
+
+  # fields from platform.trait::StatusEnabled
+  status: Int
+}

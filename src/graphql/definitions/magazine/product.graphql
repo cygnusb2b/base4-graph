@@ -1,0 +1,25 @@
+type Query {
+  magazineProductPublication(input: ModelStringIdInput!): MagazineProductPublication!
+}
+
+type MagazineProductPublication implements PlatformProduct {
+  # fields required by the PlatformProduct GraphQL interface
+  id: String! @value(localField: "_id")
+  type: String!
+  name: String
+  fullName: String
+  tagLine: String
+  description: String
+  logo: String
+  status: Int
+
+  # fields directly on magazine.model::Product\Publication
+  issues(input: RelatedMagazineIssuesInput = {}): MagazineIssueConnection! @refMany(model: "magazine.Issue", localField: "_id", foreignField: "publication.$id")
+  sections(input: RelatedMagazineSectionsInput = {}): MagazineSectionConnection! @refMany(model: "magazine.Section", localField: "_id", foreignField: "publication.$id")
+  coverImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
+  subscribeUrl: String
+  renewalUrl: String
+  reprintsUrl: String
+  einquiryUrl: String
+  socialLinks: [PlatformEntityStubSocial]! @arrayValue
+}

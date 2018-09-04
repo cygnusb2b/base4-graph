@@ -1,5 +1,7 @@
-const graph = require('./graph');
+const graphql = require('./graphql');
+const timings = require('./timings');
 
 module.exports = (app) => {
-  app.use('/graph', graph);
+  app.use('/graphql', graphql);
+  app.use('/timings', timings);
 };

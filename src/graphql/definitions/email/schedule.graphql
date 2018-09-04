@@ -1,0 +1,45 @@
+type Query {
+  emailSchedule(input: ModelStringIdInput!): EmailSchedule!
+}
+
+type EmailSchedule implements PlatformSchedule {
+  # fields required by the PlatformSchedule GraphQL interface
+  id: String! @value(localField: "_id")
+  content(input: ReferenceStatusInput = {}): PlatformContent @refOne(model: "platform.Content")
+  status: Int
+
+  # fields directly on email.model::Schedule
+  product(input: ReferenceStatusInput = {}): EmailProductNewsletter @refOne(model: "platform.Product", criteria: { type: "Newsletter" })
+  section(input: ReferenceStatusInput = {}): EmailSection @refOne(model: "email.Section")
+  deploymentDate: Date
+  sequence: Int
+  contentStatus: Int
+}
+
+type EmailScheduleConnection @paginated {
+  totalCount: Int!
+  edges: [EmailScheduleEdge]!
+  pageInfo: PageInfo!
+}
+
+type EmailScheduleEdge {
+  node: EmailSchedule!
+  cursor: Cursor!
+}
+
+enum EmailScheduleSortField {
+  id
+  deploymentDate
+  sequence
+}
+
+input EmailScheduleSortInput {
+  field: EmailScheduleSortField = deploymentDate
+  order: SortOrder = desc
+}
+
+input RelatedEmailSchedulesInput {
+  status: ReferenceStatus = active
+  sort: EmailScheduleSortInput = {}
+  pagination: PaginationInput = {}
+}

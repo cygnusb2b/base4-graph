@@ -1,0 +1,45 @@
+type Query {
+  platformTaxonomy(input: ModelIdInput!): PlatformTaxonomy!
+}
+
+type PlatformTaxonomy {
+  id: Int! @value(localField: "_id")
+  name: String
+  fullName: String
+  description: String
+  type: String
+  status: Int
+  redirects: [String]! @arrayValue
+  sequence: Int
+  parent(input: ReferenceStatusInput = {}): PlatformTaxonomy @refOne(model: "platform.Taxonomy")
+  children(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy", localField: "_id", foreignField: "parent.$id")
+}
+
+type PlatformTaxonomyConnection @paginated {
+  totalCount: Int!
+  edges: [PlatformTaxonomyEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformTaxonomyEdge {
+  node: PlatformTaxonomy!
+  cursor: Cursor!
+}
+
+enum PlatformTaxonomySortField {
+  id
+  name
+  fullName
+  sequence
+}
+
+input PlatformTaxonomySortInput {
+  field: PlatformTaxonomySortField = name
+  order: SortOrder = asc
+}
+
+input RelatedPlatformTaxonomyInput {
+  status: ReferenceStatus = active
+  sort: PlatformTaxonomySortInput = {}
+  pagination: PaginationInput = {}
+}

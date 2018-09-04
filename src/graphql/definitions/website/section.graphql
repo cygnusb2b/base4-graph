@@ -1,0 +1,63 @@
+type Query {
+  websiteSection(input: ModelIdInput!): WebsiteSection!
+  websiteSections(input: WebsiteSectionsQueryInput!): WebsiteSectionConnection!
+}
+
+type WebsiteSection implements PlatformSection {
+  # fields required by the PlatformSection GraphQL interface
+  id: Int! @value(localField: "_id")
+  name: String
+  description: String
+  fullName: String
+  status: Int
+  sequence: Int
+
+  # fields directly on website.model::Section
+  site(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", criteria: { type: "Site" })
+  parent(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "website.Section")
+  children(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @refMany(model: "website.Section", localField: "_id", foreignField: "parent.$id")
+  logo: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
+
+  # fields from trait.platform::Content\SeoFields
+  seoTitle: String
+  alias: String
+  redirects: [String]! @arrayValue
+  slug: String
+}
+
+type WebsiteSectionConnection @paginated {
+  totalCount: Int!
+  edges: [WebsiteSectionEdge]!
+  pageInfo: PageInfo!
+}
+
+type WebsiteSectionEdge {
+  node: WebsiteSection!
+  cursor: Cursor!
+}
+
+enum WebsiteSectionSortField {
+  id
+  name
+  fullName
+  sequence
+}
+
+input WebsiteSectionsQueryInput {
+  status: ReferenceStatus = active
+  parentId: Int
+  siteId: String
+  sort: WebsiteSectionSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input RelatedWebsiteSectionsInput {
+  status: ReferenceStatus = active
+  sort: WebsiteSectionSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input WebsiteSectionSortInput {
+  field: WebsiteSectionSortField = name
+  order: SortOrder = asc
+}

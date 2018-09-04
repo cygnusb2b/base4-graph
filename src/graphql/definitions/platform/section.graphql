@@ -1,0 +1,12 @@
+interface PlatformSection {
+  id: Int! @value(localField: "_id")
+  name: String
+  description: String
+  fullName: String
+
+  # fields from trait.platform::StatusEnabled
+  status: Int
+
+  # fields from trait.platform::Sequenceable
+  sequence: Int
+}

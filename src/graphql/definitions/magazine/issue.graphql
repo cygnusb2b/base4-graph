@@ -1,0 +1,50 @@
+type Query {
+  magazineIssue(input: ModelIdInput!): MagazineIssue!
+}
+
+type MagazineIssue {
+  # fields directly on platform.model::Issue
+  id: Int! @value(localField: "_id")
+  name: String
+  description: String
+  mailDate: Date
+  digitalEditionUrl: String
+  dedication: String
+  coverDescription: String
+  credit: String
+  publication(input: ReferenceStatusInput = {}): MagazineProductPublication @refOne(model: "platform.Product", criteria: { type: "Publication" })
+  sections(input: RelatedMagazineSectionsInput = {}): MagazineSectionConnection! @refMany(model: "magazine.Section", localField: "_id", foreignField: "issue.$id")
+  coverImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
+  redirects: [String]! @arrayValue
+
+  #fields from trait.platform::StatusEnabled
+  status: Int
+}
+
+type MagazineIssueConnection @paginated {
+  totalCount: Int!
+  edges: [MagazineIssueEdge]!
+  pageInfo: PageInfo!
+}
+
+type MagazineIssueEdge {
+  node: MagazineIssue!
+  cursor: Cursor!
+}
+
+enum MagazineIssueSortField {
+  id
+  name
+  mailDate
+}
+
+input MagazineIssueSortInput {
+  field: MagazineIssueSortField = name
+  order: SortOrder = asc
+}
+
+input RelatedMagazineIssuesInput {
+  status: ReferenceStatus = active
+  sort: MagazineIssueSortInput = {}
+  pagination: PaginationInput = {}
+}
