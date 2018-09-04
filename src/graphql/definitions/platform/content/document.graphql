@@ -18,7 +18,7 @@ type PlatformContentDocument implements PlatformContent {
   body(input: PlatformContentMutationInput = {}): String @mutatedValue
   notes: String
   taxonomy(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
-  relatedTo: [PlatformContent] # add args?
+  relatedTo(input: RelatedPlatformContentInput = {}): PlatformContentConnection! @refMany(model: "platform.Content")
   primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
   images(input: RelatedPlatformAssetImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
   schedules: PlatformContentSchedules! @passThru

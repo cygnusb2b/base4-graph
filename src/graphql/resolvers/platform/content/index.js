@@ -1,4 +1,5 @@
 const deepAssign = require('deep-assign');
+const paginationResolvers = require('../../../../pagination/resolvers');
 
 const apparatus = require('./apparatus');
 const contact = require('./contact');
@@ -11,6 +12,11 @@ module.exports = deepAssign(
   inQuarters,
   product,
   {
+    /**
+     *
+     */
+    PlatformContentConnection: paginationResolvers,
+
     /**
      *
      */

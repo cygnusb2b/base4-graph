@@ -111,7 +111,7 @@ interface PlatformContent {
   taxonomy(input: RelatedPlatformTaxonomyInput = {}): PlatformTaxonomyConnection! @refMany(model: "platform.Taxonomy")
 
   # fields from platform.trait::ContentRelateable
-  relatedTo: [PlatformContent] # add args?
+  relatedTo(input: RelatedPlatformContentInput = {}): PlatformContentConnection! @refMany(model: "platform.Content")
 
   # fields from platform.trait::MediaRelatable
   primaryImage: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
@@ -138,6 +138,18 @@ enum PlatformContentSortField {
   published
   touched
 }
+
+type PlatformContentConnection {
+  totalCount: Int!
+  edges: [PlatformContentEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentEdge {
+  node: PlatformContent!
+  cursor: Cursor!
+}
+
 
 input PlatformContentQueryOne {
   id: Int!
