@@ -1,9 +1,11 @@
 const deepAssign = require('deep-assign');
 
 const contact = require('./contact');
+const product = require('./product');
 
 module.exports = deepAssign(
   contact,
+  product,
   {
     /**
      *

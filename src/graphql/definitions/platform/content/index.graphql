@@ -4,6 +4,7 @@
 # import * from 'company.graphql'
 # import * from 'contact.graphql'
 # import * from 'ebook.graphql'
+# import * from 'engine-spec.graphql'
 # import * from 'event.graphql'
 # import * from 'job.graphql'
 # import * from 'media-gallery.graphql'
