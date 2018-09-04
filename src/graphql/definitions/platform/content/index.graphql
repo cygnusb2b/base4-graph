@@ -157,7 +157,7 @@ input RootPlatformContentQueryOne {
 }
 
 input RootPlatformContentQueryAll {
-  type: PlatformContentType
+  types: [PlatformContentType] = []
   status: ReferenceStatus = all
   sort: PlatformContentSortInput = { field: id, order: desc }
   pagination: PaginationInput = {}
