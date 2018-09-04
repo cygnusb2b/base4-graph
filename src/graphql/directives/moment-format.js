@@ -12,7 +12,6 @@ class MomentFormatDirective extends SchemaDirectiveVisitor {
     field.resolve = async (doc, { input }) => {
       const { localField, defaultFormat } = this.args;
       const value = objectPath.get(doc, localField || field.name);
-      console.info(value, value instanceof Date);
       if (!(value instanceof Date)) return value;
 
       const format = input && input.format ? input.format : defaultFormat;
