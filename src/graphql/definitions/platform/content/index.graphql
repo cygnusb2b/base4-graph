@@ -1,3 +1,4 @@
+# import * from 'apparatus.graphql'
 # import * from 'article.graphql'
 # import * from 'blog.graphql'
 # import * from 'collection.graphql'
@@ -6,6 +7,8 @@
 # import * from 'ebook.graphql'
 # import * from 'engine-spec.graphql'
 # import * from 'event.graphql'
+# import * from 'group.graphql'
+# import * from 'in-quarters.graphql'
 # import * from 'job.graphql'
 # import * from 'media-gallery.graphql'
 # import * from 'news.graphql'
