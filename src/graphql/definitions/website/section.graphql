@@ -25,7 +25,7 @@ type WebsiteSection implements PlatformSection {
   slug: String
 }
 
-type WebsiteSectionConnection {
+type WebsiteSectionConnection @paginated {
   totalCount: Int!
   edges: [WebsiteSectionEdge]!
   pageInfo: PageInfo!

@@ -21,7 +21,7 @@ type MagazineIssue {
   status: Int
 }
 
-type MagazineIssueConnection {
+type MagazineIssueConnection @paginated {
   totalCount: Int!
   edges: [MagazineIssueEdge]!
   pageInfo: PageInfo!

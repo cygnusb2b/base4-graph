@@ -22,7 +22,7 @@ type WebsiteSchedule implements PlatformSchedule {
   primarySection: WebsiteSection @refOne(model: "website.Section")
 }
 
-type WebsiteScheduleConnection {
+type WebsiteScheduleConnection @paginated {
   totalCount: Int!
   edges: [WebsiteScheduleEdge]!
   pageInfo: PageInfo!

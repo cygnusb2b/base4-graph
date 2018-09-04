@@ -1,13 +1,7 @@
 const { ObjectID } = require('mongodb');
-const paginationResolvers = require('../../../pagination/resolvers');
 const formatStatus = require('../../../utils/format-graph-status');
 
 module.exports = {
-  /**
-   *
-   */
-  WebsiteSectionConnection: paginationResolvers,
-
   /**
    *
    */

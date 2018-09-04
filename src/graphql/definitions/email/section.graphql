@@ -21,7 +21,7 @@ type EmailSection implements PlatformSection {
   slug: String
 }
 
-type EmailSectionConnection {
+type EmailSectionConnection @paginated {
   totalCount: Int!
   edges: [EmailSectionEdge]!
   pageInfo: PageInfo!

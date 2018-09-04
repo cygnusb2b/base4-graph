@@ -37,7 +37,7 @@ type PlatformAssetImageCrop {
   aspectRatio: String
 }
 
-type PlatformAssetImageConnection {
+type PlatformAssetImageConnection @paginated {
   totalCount: Int!
   edges: [PlatformAssetImageEdge]!
   pageInfo: PageInfo!

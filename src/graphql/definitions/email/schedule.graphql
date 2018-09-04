@@ -16,7 +16,7 @@ type EmailSchedule implements PlatformSchedule {
   contentStatus: Int
 }
 
-type EmailScheduleConnection {
+type EmailScheduleConnection @paginated {
   totalCount: Int!
   edges: [EmailScheduleEdge]!
   pageInfo: PageInfo!

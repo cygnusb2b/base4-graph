@@ -16,7 +16,7 @@ type MagazineSection implements PlatformSection {
   issue(input: ReferenceStatusInput = {}): MagazineIssue @refOne(model: "magazine.Issue")
 }
 
-type MagazineSectionConnection {
+type MagazineSectionConnection @paginated {
   totalCount: Int!
   edges: [MagazineSectionEdge]!
   pageInfo: PageInfo!

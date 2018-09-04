@@ -14,7 +14,7 @@ type WebsiteOption {
   status: Int
 }
 
-type WebsiteOptionConnection {
+type WebsiteOptionConnection @paginated {
   totalCount: Int!
   edges: [WebsiteOptionEdge]!
   pageInfo: PageInfo!

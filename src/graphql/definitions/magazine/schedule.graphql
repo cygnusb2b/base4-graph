@@ -16,7 +16,7 @@ type MagazineSchedule implements PlatformSchedule {
   expires: Date
 }
 
-type MagazineScheduleConnection {
+type MagazineScheduleConnection @paginated {
   totalCount: Int!
   edges: [MagazineScheduleEdge]!
   pageInfo: PageInfo!

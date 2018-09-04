@@ -26,7 +26,7 @@ type WebsiteProductSite implements PlatformProduct {
   rootSections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection!
 }
 
-type WebsiteProductSiteConnection {
+type WebsiteProductSiteConnection @paginated {
   totalCount: Int!
   edges: [WebsiteProductSiteEdge]!
   pageInfo: PageInfo!

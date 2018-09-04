@@ -1,11 +1,4 @@
-const paginationResolvers = require('../../../pagination/resolvers');
-
 module.exports = {
-  /**
-   *
-   */
-  MagazineIssueConnection: paginationResolvers,
-
   /**
    *
    */
