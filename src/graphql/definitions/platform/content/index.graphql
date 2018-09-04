@@ -6,6 +6,7 @@
 # import * from 'event.graphql'
 # import * from 'job.graphql'
 # import * from 'media-gallery.graphql'
+# import * from 'news.graphql'
 
 type Query {
   platformContent(input: ModelIdInput!): PlatformContent!
