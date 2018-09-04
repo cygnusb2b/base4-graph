@@ -1,4 +1,4 @@
-type PlatformContentProductExternal implements PlatformContent {
+type PlatformContentProduct implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
   type: PlatformContentType!
@@ -29,9 +29,19 @@ type PlatformContentProductExternal implements PlatformContent {
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
   slug: String @value(localField: "mutations.Website.slug")
 
-  # fields directly on platform.model::Content\ProductExternal
-  external: PlatformStubExternal
-  modelNumber: String
+  # fields directly on platform.model::Content\Product
+  bodyOriginal: String
+  productUrl: String
+  iTunesUrl: String
+  googlePlayUrl: String
+  downloadUrl: String
+  website: String
+  url360: String
+  contentStatus: String
+
+  # fields directly on platform.model::Content\Product mutations
+  primaryCategory: String @value(localField: "mutations.Website.primaryCategory")
+  headline: String @value(localField: "mutations.Magazine.headline")
 
   # fields from platform.trait::CompanyRelatable
   company(input: ReferenceStatusInput = {}): PlatformContentCompany @refOne(model: "platform.Content")

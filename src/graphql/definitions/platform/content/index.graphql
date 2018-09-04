@@ -10,6 +10,7 @@
 # import * from 'page.graphql'
 # import * from 'press-release.graphql'
 # import * from 'product-external.graphql'
+# import * from 'product.graphql'
 
 type Query {
   platformContent(input: ModelIdInput!): PlatformContent!
