@@ -3,6 +3,7 @@ const ContentQueryAllDirective = require('./content-query-all');
 const ContentQueryOneDirective = require('./content-query-one');
 const MomentFormatDirective = require('./moment-format');
 const MutatedValueDirective = require('./mutated-value');
+const PaginatedDirective = require('./paginated');
 const PassThruDirective = require('./pass-thru');
 const RefManyDirective = require('./ref-many');
 const RefOneDirective = require('./ref-one');
@@ -14,6 +15,7 @@ module.exports = {
   ContentQueryOneDirective,
   MomentFormatDirective,
   MutatedValueDirective,
+  PaginatedDirective,
   PassThruDirective,
   RefManyDirective,
   RefOneDirective,

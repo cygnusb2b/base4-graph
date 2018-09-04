@@ -147,7 +147,7 @@ enum PlatformContentSortField {
   touched
 }
 
-type PlatformContentConnection {
+type PlatformContentConnection @paginated {
   totalCount: Int!
   edges: [PlatformContentEdge]!
   pageInfo: PageInfo!
