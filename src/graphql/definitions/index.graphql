@@ -13,6 +13,7 @@ directive @value(localField: String, fallbackField: String) on FIELD_DEFINITION
 directive @mutatedValue(localField: String) on FIELD_DEFINITION
 directive @arrayValue(localField: String) on FIELD_DEFINITION
 directive @passThru(localField: String) on FIELD_DEFINITION
+directive @momentFormat(localField: String, defaultFormat: String! = "YYYY-MM-DDTHH:mm:ssZ") on FIELD_DEFINITION
 directive @contentQueryOne(type: PlatformContentType) on FIELD_DEFINITION
 directive @contentQueryAll(types: [PlatformContentType]! = [], publishedOnly: Boolean! = false) on FIELD_DEFINITION
 
@@ -51,4 +52,8 @@ input ModelStringIdInput {
 
 input ReferenceStatusInput {
   status: ReferenceStatus = active
+}
+
+input MomentFormat {
+  format: String = "YYYY-MM-DDTHH:mm:ssZ"
 }
