@@ -28,6 +28,10 @@ type PlatformContentProduct implements PlatformContent {
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
   slug: String @value(localField: "mutations.Website.slug")
+  createdDate(input: MomentFormat = {}): String @momentFormat(localField: "created")
+  updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
+  publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
+  unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
 
   # fields directly on platform.model::Content\Product
   bodyOriginal: String
