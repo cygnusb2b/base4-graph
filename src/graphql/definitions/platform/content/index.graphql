@@ -65,7 +65,6 @@ enum PlatformContentType {
   Review
   Sponsored
   TextAd
-  UsedProduct
 }
 
 interface PlatformContent {
