@@ -9,6 +9,7 @@
 # import * from 'engine-spec.graphql'
 # import * from 'event.graphql'
 # import * from 'group.graphql'
+# import * from 'infographic.graphql'
 # import * from 'in-quarters.graphql'
 # import * from 'job.graphql'
 # import * from 'media-gallery.graphql'
