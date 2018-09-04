@@ -25,6 +25,7 @@
 # import * from 'text-ad.graphql'
 # import * from 'video.graphql'
 # import * from 'webinar.graphql'
+# import * from 'whitepaper.graphql'
 
 type Query {
   platformContent(input: ModelIdInput!): PlatformContent!
