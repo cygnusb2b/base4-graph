@@ -30,6 +30,7 @@
 type Query {
   platformContent(input: RootPlatformContentQueryOne!): PlatformContent! @contentQueryOne
   allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
+  publishedPlatformContent(input: RootPlatformContentQueryPublished = {}): PlatformContentConnection! @contentQueryAll(publishedOnly: true)
 }
 
 type PlatformContentStubSidebar {
@@ -160,6 +161,13 @@ input RootPlatformContentQueryAll {
   types: [PlatformContentType] = []
   status: ReferenceStatus = all
   sort: PlatformContentSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input RootPlatformContentQueryPublished {
+  types: [PlatformContentType] = []
+  since: Date
+  sort: PlatformContentSortInput = { field: published, order: desc }
   pagination: PaginationInput = {}
 }
 
