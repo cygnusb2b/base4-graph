@@ -40,6 +40,24 @@ class Base4 {
     this.tenant.check();
   }
 
+  async find(modelName, {
+    pagination,
+    sort,
+    criteria,
+  }) {
+    if (pagination) {
+      return this.paginate(modelName, {
+        pagination,
+        sort,
+        criteria,
+      });
+    }
+    const { namespace, resource } = Base4.parseModelName(modelName);
+    const collection = await this.collection(namespace, resource);
+    if (sort) return collection.find(criteria).sort(sort);
+    return collection.find(criteria);
+  }
+
   async findById(namespace, resource, id, criteria) {
     if (!id) return null;
     const collection = await this.collection(namespace, resource);
