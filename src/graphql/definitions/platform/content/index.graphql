@@ -11,6 +11,7 @@
 # import * from 'press-release.graphql'
 # import * from 'product-external.graphql'
 # import * from 'product.graphql'
+# import * from 'promotion.graphql'
 
 type Query {
   platformContent(input: ModelIdInput!): PlatformContent!
