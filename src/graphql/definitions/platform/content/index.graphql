@@ -12,6 +12,7 @@
 # import * from 'product-external.graphql'
 # import * from 'product.graphql'
 # import * from 'promotion.graphql'
+# import * from 'sponsored.graphql'
 
 type Query {
   platformContent(input: ModelIdInput!): PlatformContent!
