@@ -1,5 +1,7 @@
 type Query {
   platformContentArticle(input: PlatformContentQueryOne!): PlatformContentArticle! @contentQueryOne(type: Article)
+  platformContentArticles(input: PlatformContentQueryAll = {}): PlatformContentArticleConnection! @contentQueryAll(types: [Article])
+  publishedPlatformContentArticles(input: PlatformContentQueryPublished = {}): PlatformContentArticleConnection! @contentQueryAll(types: [Article], publishedOnly: true)
 }
 
 type PlatformContentArticle implements PlatformContent {
@@ -43,4 +45,15 @@ type PlatformContentArticle implements PlatformContent {
   authors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
   contributors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
   photographers(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+}
+
+type PlatformContentArticleConnection {
+  totalCount: Int!
+  edges: [PlatformContentArticleEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentArticleEdge {
+  node: PlatformContentArticle!
+  cursor: Cursor!
 }

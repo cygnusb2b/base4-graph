@@ -175,6 +175,18 @@ input PlatformContentQueryOne {
   id: Int!
 }
 
+input PlatformContentQueryAll {
+  status: ReferenceStatus = all
+  sort: PlatformContentSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input PlatformContentQueryPublished {
+  since: Date
+  sort: PlatformContentSortInput = { field: published, order: desc }
+  pagination: PaginationInput = {}
+}
+
 input PlatformContentSortInput {
   field: PlatformContentSortField = name
   order: SortOrder = asc
