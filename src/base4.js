@@ -44,12 +44,14 @@ class Base4 {
     pagination,
     sort,
     criteria,
+    projection,
   }) {
     if (pagination) {
       return this.paginate(modelName, {
         pagination,
         sort,
         criteria,
+        projection,
       });
     }
     const { namespace, resource } = Base4.parseModelName(modelName);
@@ -58,14 +60,14 @@ class Base4 {
     return collection.find(criteria);
   }
 
-  async findById(namespace, resource, id, criteria) {
+  async findById(namespace, resource, id, criteria, projection) {
     if (!id) return null;
     const collection = await this.collection(namespace, resource);
-    return collection.findOne({ ...criteria, _id: Base4.coerceID(id) });
+    return collection.findOne({ ...criteria, _id: Base4.coerceID(id) }, { projection });
   }
 
-  async strictFindById(namespace, resource, id, criteria) {
-    const doc = await this.findById(namespace, resource, id, criteria);
+  async strictFindById(namespace, resource, id, criteria, projection) {
+    const doc = await this.findById(namespace, resource, id, criteria, projection);
     if (!doc) throw new ApolloError(`No ${namespace} ${resource} record found for ID ${id}`, 'RECORD_NOT_FOUND');
     return doc;
   }
@@ -82,6 +84,7 @@ class Base4 {
     pagination = {},
     sort = {},
     criteria,
+    projection,
   }) {
     const { namespace, resource } = Base4.parseModelName(modelName);
     const collection = await this.collection(namespace, resource);
@@ -90,6 +93,7 @@ class Base4 {
       sort,
       pagination: { first, after: Base4.coerceID(after) },
       criteria,
+      projection,
     });
   }
 
@@ -135,13 +139,14 @@ class Base4 {
     localField,
     foreignField,
     criteria,
+    projection,
   }) {
     const ref = objectPath.get(doc, localField);
     const id = Base4.extractRefId(ref);
     if (!id) return null;
     const { namespace, resource } = Base4.parseModelName(relatedModel);
     const collection = await this.collection(namespace, resource);
-    return collection.findOne({ ...criteria, [foreignField]: id });
+    return collection.findOne({ ...criteria, [foreignField]: id }, { projection });
   }
 
   /**
@@ -177,6 +182,7 @@ class Base4 {
     criteria,
     sort,
     pagination,
+    projection,
   }) {
     const refs = objectPath.get(doc, localField);
     const ids = Base4.extractRefIds(isArray(refs) ? refs : [refs]);
@@ -186,12 +192,13 @@ class Base4 {
         pagination,
         sort,
         criteria: query,
+        projection,
       });
     }
     const { namespace, resource } = Base4.parseModelName(relatedModel);
     const collection = await this.collection(namespace, resource);
-    if (sort) return collection.find(query).sort(sort);
-    return collection.find(query);
+    if (sort) return collection.find(query, { projection }).sort(sort);
+    return collection.find(query, { projection });
   }
 
   /**
