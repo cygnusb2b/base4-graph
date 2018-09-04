@@ -1,5 +1,5 @@
 # import * from 'apparatus.graphql'
-# import * from 'article.graphql'
+# import Query.*, * from 'article.graphql'
 # import * from 'blog.graphql'
 # import * from 'collection.graphql'
 # import * from 'company.graphql'
@@ -137,6 +137,10 @@ enum PlatformContentSortField {
   updated
   published
   touched
+}
+
+input PlatformContentQueryOne {
+  id: Int!
 }
 
 input PlatformContentSortInput {

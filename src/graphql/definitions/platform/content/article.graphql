@@ -1,3 +1,7 @@
+type Query {
+  platformContentArticle(input: PlatformContentQueryOne!): PlatformContentArticle! @contentQueryOne(type: Article)
+}
+
 type PlatformContentArticle implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
