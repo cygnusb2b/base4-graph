@@ -34,6 +34,10 @@ type PlatformContentMediaGallery implements PlatformContent {
   contributors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
   photographers(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
 
+  # fields directly on platform.model::Content\MediaGallery (from scomm.nfn overrides)
+  fotomotoCollectionId: String
+  enableFotomoto: Boolean
+
   # fields directly on platform.model::Content\MediaGallery mutations
   deck: String @value(localField: "mutations.Magazine.deck")
 }
