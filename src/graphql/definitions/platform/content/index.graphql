@@ -137,6 +137,10 @@ interface PlatformContent {
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
 }
 
+# NOTE: these fields must be properly indexed (with the correct collation)
+# otherwise sorted queries will be **slow** (5ms vs 500ms slow).
+# Generally speaking the index for each field would be:
+# `createIndex({ [field]: 1, _id: 1 }, { collation: { locale: 'en_US } })`
 enum PlatformContentSortField {
   id
   name

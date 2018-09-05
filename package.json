@@ -23,7 +23,7 @@
     "test:run": "yarn lint:run && mocha 'test/**/*.spec.js' --reporter spec",
     "test:ci": "yarn lint:run && mocha 'test/**/*.spec.js' --reporter mocha-junit-reporter --reporter-options mochaFile=./coverage/test-results.xml",
     "lint:run": "eslint src",
-    "coverage:run": "nyc yarn test:run"
+    "coverage:run": "nyc yarn test:ci"
   },
   "nyc": {
     "check-coverage": false,
