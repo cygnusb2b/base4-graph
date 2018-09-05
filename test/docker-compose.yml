@@ -15,7 +15,7 @@ services:
       PORT: 8100
       MONGO_DSN: mongodb://mongo:27017/base4graph
   mongo:
-    image: mongo:3.6
+    image: mongo:3.4
     volumes:
       - mongodb:/data/db
 volumes:
