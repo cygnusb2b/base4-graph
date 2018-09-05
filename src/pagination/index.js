@@ -79,11 +79,14 @@ class Pagination {
       if (this.projection) {
         opts.projection = this.projection;
       }
+      if (this.shouldCollate()) {
+        opts.collation = this.sort.collation;
+      }
 
-      const cursor = await this.collection.find(criteria, opts)
+      const cursor = await this.collection
+        .find(criteria, opts)
         .sort(this.sort.value)
-        .limit(this.first.value)
-        .collation(this.sort.collation);
+        .limit(this.first.value);
       const docs = await cursor.toArray();
       return docs.map(doc => ({ node: doc, cursor: doc._id }));
     };
@@ -119,12 +122,15 @@ class Pagination {
   async hasNextPage() {
     const run = async () => {
       const criteria = await this.getQueryCriteria();
-      const count = await this.collection.find(criteria)
-        .project({ _id: 1 })
+      const opts = { projection: { _id: 1 } };
+      if (this.shouldCollate()) {
+        opts.collation = this.sort.collation;
+      }
+
+      const count = await this.collection.find(criteria, opts)
         .skip(this.first.value)
-        .limit(1)
         .sort(this.sort.value)
-        .collation(this.sort.collation)
+        .limit(1)
         .count(true);
       return Boolean(count);
     };
@@ -198,6 +204,19 @@ class Pagination {
       this.promises.criteria = run();
     }
     return this.promises.criteria;
+  }
+
+  /**
+   * Determines if collation should be used.
+   *
+   * @todo This needs to be expanded to include the data type of the sort field
+   *       as only string types need to be collated. `this.sort` should likely
+   *       have a `type` property.
+   * @returns {boolean}
+   */
+  shouldCollate() {
+    const { field } = this.sort;
+    return field !== '_id';
   }
 }
 
