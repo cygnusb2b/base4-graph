@@ -60,6 +60,12 @@ class Base4 {
     return collection.find(criteria);
   }
 
+  async findOne(modelName, { criteria, projection }) {
+    const { namespace, resource } = Base4.parseModelName(modelName);
+    const collection = await this.collection(namespace, resource);
+    return collection.findOne(criteria, { projection });
+  }
+
   async findById(namespace, resource, id, criteria, projection) {
     if (!id) return null;
     const collection = await this.collection(namespace, resource);
