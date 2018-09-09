@@ -31,6 +31,8 @@ type Query {
   platformContent(input: RootPlatformContentQueryOne!): PlatformContent! @contentQueryOne
   allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
   publishedPlatformContent(input: RootPlatformContentQueryPublished = {}): PlatformContentConnection! @contentQueryAll(publishedOnly: true)
+  # From Cygnus\ApplicationBundle\Icarus\BlockHandler\WebsiteScheduleQuery
+  websiteScheduledPlatformContent(input: WebsiteScheduledPlatformContentQuery = {}): PlatformScheduledContentConnection!
 }
 
 type PlatformContentStubSidebar {
@@ -135,6 +137,9 @@ interface PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ContentRelated
+  # @todo Implement and set to all content types.
+  # relatedContent(input: PlatformContentRelatedInput = {}): PlatformContentConnection!
 }
 
 # NOTE: these fields must be properly indexed (with the correct collation)
@@ -160,6 +165,23 @@ type PlatformContentConnection @paginated {
 type PlatformContentEdge {
   node: PlatformContent!
   cursor: Cursor!
+}
+
+type PlatformScheduledContentConnection @paginated {
+  totalCount: Int!
+  edges: [PlatformScheduledContentEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformScheduledContentEdge {
+  node: PlatformScheduledContent!
+  cursor: Cursor!
+}
+
+type PlatformScheduledContent {
+  id: String! @value(localField: "_id")
+  start: Date
+  content: PlatformContent @refOne(model: "platform.Content", localField: "contentId")
 }
 
 input RootPlatformContentQueryOne {
@@ -209,5 +231,28 @@ input PlatformContentMutationInput {
 input RelatedPlatformContentInput {
   status: ReferenceStatus = active
   sort: PlatformContentSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+# From Icarus\Definitions\BlockDefinitions::getContentRelatedDefinition()
+input PlatformContentRelatedInput {
+  minLimit: Int = 3
+  excludeContentTypes: [PlatformContentType]! = []
+  includeContentTypes: [PlatformContentType]! = []
+  requiresImage: Boolean = false
+  sort: PlatformContentSortInput = { field: published, order: desc }
+  pagination: PaginationInput = { first: 3 }
+}
+
+# From Icarus\Definitions\BlockDefinitions::getWebsiteScheduleQueryDefinition()
+input WebsiteScheduledPlatformContentQuery {
+  sectionId: Int!
+  optionId: Int
+  excludeSectionIds: [Int!] = []
+  excludeContentTypes: [PlatformContentType!] = []
+  includeContentTypes: [PlatformContentType!] = []
+  requiresImage: Boolean = false
+  useOptionFallback: Boolean = false
+  sectionBubbling: Boolean = true
   pagination: PaginationInput = {}
 }
