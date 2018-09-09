@@ -19,6 +19,7 @@ _Note_: GraphQL sort pagination also uses the `_id` in addition to the sort fiel
 **platform.Content**
 status+type
 mutations.Website.primarySection.$id
+company
 
 **website.Section**
 status + parent.$id
