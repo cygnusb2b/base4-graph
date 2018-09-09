@@ -139,7 +139,10 @@ interface PlatformContent {
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
   # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ContentRelated
   # @todo Implement and set to all content types.
-  # relatedContent(input: PlatformContentRelatedInput = {}): PlatformContentConnection!
+  ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
+  inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
+  combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
+  sectionRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: primarySection)
 }
 
 # NOTE: these fields must be properly indexed (with the correct collation)
@@ -236,12 +239,11 @@ input RelatedPlatformContentInput {
 
 # From Icarus\Definitions\BlockDefinitions::getContentRelatedDefinition()
 input PlatformContentRelatedInput {
-  minLimit: Int = 3
-  excludeContentTypes: [PlatformContentType]! = []
-  includeContentTypes: [PlatformContentType]! = []
+  excludeContentTypes: [PlatformContentType!] = []
+  includeContentTypes: [PlatformContentType!] = []
   requiresImage: Boolean = false
   sort: PlatformContentSortInput = { field: published, order: desc }
-  pagination: PaginationInput = { first: 3 }
+  pagination: PaginationInput = { first: 5 }
 }
 
 # From Icarus\Definitions\BlockDefinitions::getWebsiteScheduleQueryDefinition()
