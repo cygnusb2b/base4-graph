@@ -43,7 +43,7 @@ class Base4 {
   async find(modelName, {
     pagination,
     sort,
-    limit,
+    limit = 0,
     criteria,
     projection,
   }) {
@@ -57,7 +57,6 @@ class Base4 {
     }
     const { namespace, resource } = Base4.parseModelName(modelName);
     const collection = await this.collection(namespace, resource);
-    console.dir(criteria, { depth: 10 });
     if (sort) return collection.find(criteria, { projection }).sort(sort).limit(limit);
     return collection.find(criteria, { projection }).limit(limit);
   }
