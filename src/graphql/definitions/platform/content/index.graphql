@@ -138,7 +138,6 @@ interface PlatformContent {
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
   # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ContentRelated
-  # @todo Implement and set to all content types.
   ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
   combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
