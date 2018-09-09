@@ -6,6 +6,10 @@ const Sort = require('./sort');
 
 const { isArray } = Array;
 const mergeOptions = { isMergeableObject: isPlainObject };
+const collatableFields = [
+  'name',
+  'fullName',
+];
 
 class Pagination {
   /**
@@ -209,14 +213,11 @@ class Pagination {
   /**
    * Determines if collation should be used.
    *
-   * @todo This needs to be expanded to include the data type of the sort field
-   *       as only string types need to be collated. `this.sort` should likely
-   *       have a `type` property.
    * @returns {boolean}
    */
   shouldCollate() {
     const { field } = this.sort;
-    return field !== '_id';
+    return collatableFields.includes(field);
   }
 }
 
