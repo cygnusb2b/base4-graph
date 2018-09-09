@@ -7,6 +7,7 @@ const PaginatedDirective = require('./paginated');
 const PassThruDirective = require('./pass-thru');
 const RefManyDirective = require('./ref-many');
 const RefOneDirective = require('./ref-one');
+const RelatedContentDirective = require('./related-content');
 const ValueDirective = require('./value');
 
 module.exports = {
@@ -19,5 +20,6 @@ module.exports = {
   PassThruDirective,
   RefManyDirective,
   RefOneDirective,
+  RelatedContentDirective,
   ValueDirective,
 };

@@ -12,6 +12,7 @@ const {
   PassThruDirective,
   RefManyDirective,
   RefOneDirective,
+  RelatedContentDirective,
   ValueDirective,
 } = require('./directives');
 
@@ -30,6 +31,7 @@ module.exports = makeExecutableSchema({
     passThru: PassThruDirective,
     refMany: RefManyDirective,
     refOne: RefOneDirective,
+    relatedContent: RelatedContentDirective,
     value: ValueDirective,
   },
 });

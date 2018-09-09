@@ -17,6 +17,7 @@ directive @passThru(localField: String) on FIELD_DEFINITION
 directive @momentFormat(localField: String, defaultFormat: String! = "YYYY-MM-DDTHH:mm:ssZ") on FIELD_DEFINITION
 directive @contentQueryOne(type: PlatformContentType) on FIELD_DEFINITION
 directive @contentQueryAll(types: [PlatformContentType]! = [], publishedOnly: Boolean! = false) on FIELD_DEFINITION
+directive @relatedContent(type: RelatedContentQueryType!) on FIELD_DEFINITION
 
 type Query {
   ping: String!
@@ -36,6 +37,17 @@ enum ReferenceStatus {
   all
   active
   deleted
+}
+
+enum RelatedContentQueryType {
+  # returns related content from doc.relatedTo
+  owned
+  # returns related content on the inverse of doc.relatedTo
+  inverse
+  # returns both `to` and `inverse` combined
+  combined
+  # returns related content based on primary section
+  primarySection
 }
 
 input PaginationInput {
