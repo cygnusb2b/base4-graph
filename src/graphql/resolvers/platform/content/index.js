@@ -98,7 +98,6 @@ module.exports = {
         pagination,
         sort: { field: 'start', order: 'desc' },
         criteria,
-        collate: false,
         projection: { _id: 1, contentId: 1, start: 1 },
       });
       const edges = await paginated.getEdges();
