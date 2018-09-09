@@ -16,6 +16,18 @@ module.exports = {
   /**
    *
    */
+  PlatformScheduledContentConnection: {
+    totalCount: ({ paginated }) => paginated.getTotalCount(),
+    edges: ({ edges }) => edges,
+    pageInfo: ({ paginated }) => ({
+      hasNextPage: () => paginated.hasNextPage(),
+      endCursor: () => paginated.getEndCursor(),
+    }),
+  },
+
+  /**
+   *
+   */
   Query: {
     /**
      *
@@ -82,13 +94,27 @@ module.exports = {
         criteria.hasImage = true;
       }
 
-      return base4.find('website.SectionQuery', {
+      const paginated = await base4.find('website.SectionQuery', {
         pagination,
         sort: { field: 'start', order: 'desc' },
         criteria,
         collate: false,
         projection: { _id: 1, contentId: 1, start: 1 },
       });
+      const edges = await paginated.getEdges();
+      const contentIds = edges.map(({ node }) => node.contentId);
+      const cursor = await base4.find('platform.Content', {
+        criteria: { _id: { $in: contentIds } },
+      });
+      const content = await cursor.toArray();
+      return {
+        paginated,
+        edges: edges.map((edge) => {
+          const { node } = edge;
+          node.content = content.find(c => c._id === node.contentId);
+          return edge;
+        }),
+      };
     },
   },
 };
