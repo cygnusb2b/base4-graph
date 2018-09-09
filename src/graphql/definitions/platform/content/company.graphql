@@ -1,3 +1,7 @@
+type Query {
+  platformContentCompany(input: PlatformContentQueryOne!): PlatformContentCompany! @contentQueryOne(type: Company)
+}
+
 type PlatformContentCompany implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
@@ -76,6 +80,10 @@ type PlatformContentCompany implements PlatformContent {
   zip: String
   country: String
   location: PlatformContentStubLocation
+
+  # GraphQL-only fields.
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler::PlatformContentCompanyContentQuery
+  companyRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: company)
 }
 
 type PlatformContentCompanyConnection @paginated {

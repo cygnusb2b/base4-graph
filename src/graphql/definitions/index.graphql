@@ -48,6 +48,8 @@ enum RelatedContentQueryType {
   combined
   # returns related content based on primary section
   primarySection
+  # returns related content based on inverse company and relatedTo
+  company
 }
 
 input PaginationInput {

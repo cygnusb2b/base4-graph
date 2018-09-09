@@ -2,7 +2,7 @@
 # import Query.*, * from 'article.graphql'
 # import * from 'blog.graphql'
 # import * from 'collection.graphql'
-# import * from 'company.graphql'
+# import Query.*, * from 'company.graphql'
 # import * from 'contact.graphql'
 # import * from 'document.graphql'
 # import * from 'ebook.graphql'

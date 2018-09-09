@@ -3,15 +3,6 @@ const { UserInputError } = require('apollo-server-express');
 const objectPath = require('object-path');
 const Base4 = require('../../base4');
 
-const retrieveInverseIds = async (ownerId, base4) => {
-  const cursor = await base4.find('platform.Content', {
-    criteria: { 'relatedTo.$id': ownerId },
-    projection: { _id: 1 },
-  });
-  const docs = await cursor.toArray();
-  return docs.map(d => d._id);
-};
-
 class RelatedContentDirective extends SchemaDirectiveVisitor {
   /**
    *
@@ -43,7 +34,6 @@ class RelatedContentDirective extends SchemaDirectiveVisitor {
         ],
       };
 
-      let inverseIds = [];
       const sectionId = Base4.extractRefId(objectPath.get(doc, 'mutations.Website.primarySection'));
       const relatedToIds = Base4.extractRefIds(doc.relatedTo);
 
@@ -52,15 +42,22 @@ class RelatedContentDirective extends SchemaDirectiveVisitor {
           criteria._id = { $in: relatedToIds };
           break;
         case 'inverse':
-          inverseIds = await retrieveInverseIds(doc._id, base4);
           criteria['relatedTo.$id'] = doc._id;
           break;
         case 'combined':
-          inverseIds = await retrieveInverseIds(doc._id, base4);
-          criteria._id = { $in: relatedToIds.concat(inverseIds) };
+          criteria.$or = [
+            { _id: { $in: relatedToIds } },
+            { 'relatedTo.$id': doc._id },
+          ];
           break;
         case 'primarySection':
           criteria['mutations.Website.primarySection.$id'] = sectionId;
+          break;
+        case 'company':
+          criteria.$or = [
+            { company: doc._id },
+            { 'relatedTo.$id': doc._id },
+          ];
           break;
         default:
           throw new UserInputError(`No related content handler found for type '${type}'`);
