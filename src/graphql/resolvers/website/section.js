@@ -18,6 +18,16 @@ module.exports = {
     /**
      *
      */
+    websiteSectionAlias: async (_, { input }, { auth, base4 }) => {
+      auth.check();
+      const { alias } = input;
+      const criteria = { alias };
+      return base4.strictFindOne('website.Section', { criteria });
+    },
+
+    /**
+     *
+     */
     websiteSections: async (_, { input }, { auth, base4 }) => {
       auth.check();
       const {
