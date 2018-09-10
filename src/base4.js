@@ -67,6 +67,12 @@ class Base4 {
     return collection.findOne(criteria, { projection });
   }
 
+  async strictFindOne(modelName, { criteria, projection }) {
+    const doc = await this.findOne(modelName, { criteria, projection });
+    if (!doc) throw new ApolloError(`No ${modelName} record found for ID ${JSON.stringify(criteria)}`, 'RECORD_NOT_FOUND');
+    return doc;
+  }
+
   async findById(namespace, resource, id, criteria, projection) {
     if (!id) return null;
     const collection = await this.collection(namespace, resource);
