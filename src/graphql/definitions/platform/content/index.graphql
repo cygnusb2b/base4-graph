@@ -188,7 +188,6 @@ type PlatformScheduledContent {
 
 input RootPlatformContentQueryOne {
   id: Int!
-  type: PlatformContentType
 }
 
 input RootPlatformContentQueryAll {
