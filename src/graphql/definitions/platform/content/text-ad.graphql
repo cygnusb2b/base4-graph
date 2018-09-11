@@ -1,7 +1,7 @@
 type PlatformContentTextAd implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
-  type: PlatformContentType!
+  type(input: PlatformContentTypeInput = {}): String! @inflect
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
   shortName: String
   fullName: String
@@ -23,7 +23,7 @@ type PlatformContentTextAd implements PlatformContent {
   images(input: RelatedPlatformAssetImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
   schedules: PlatformContentSchedules! @passThru
   primarySite(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
-  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "website.Section", localField: "mutations.Website.primarySection")
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
