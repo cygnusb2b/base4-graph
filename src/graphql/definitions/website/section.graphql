@@ -45,6 +45,7 @@ enum WebsiteSectionSortField {
 }
 
 input WebsiteSectionAliasQueryInput {
+  status: ReferenceStatus = active
   alias: String!
 }
 
