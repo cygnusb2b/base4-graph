@@ -22,8 +22,9 @@ mutations.Website.primarySection.$id
 company
 
 **website.Section**
-status + parent.$id
-site.$id
+`{ "status": 1, "alias": 1 }`
+`{ "status": 1, "parent.$id" : 1 }`
+`{ "site.$id": 1 }`
 
 **website.Schedule**
 status + content.$id

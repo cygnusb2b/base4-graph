@@ -19,13 +19,13 @@ const model = {
 Because of the different query input options, multiple indexes are possible.
 
 ### Queries
-- `{ sectionId: 1, optionId: 1, start: -1, end: 1 }`
-- `{ sectionId: 1, optionId: 1, start: -1, end: 1, hasImage: 1 }`
-- `{ sectionId: 1, optionId: 1, start: -1, end: 1, contentType: 1 }`
-- `{ sectionId: 1, optionId: 1, start: -1, end: 1, hasImage: 1, contentType: 1 }`
+- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1 }`
+- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1, "hasImage": 1 }`
+- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1, "contentType": 1 }`
+- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1, "hasImage": 1, "contentType": 1 }`
 
 ### Sorting
-- `{ start: -1, _id: -1 }` (ID added by pagination)
+- `{ "start": -1, "_id": -1 }` (ID added by pagination)
 
 ## When Hooks Fire
 When a hook is fired, all query entries for the related content ID will be removed and then all entries will be reinserted.
