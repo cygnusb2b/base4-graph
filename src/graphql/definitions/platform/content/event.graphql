@@ -1,3 +1,9 @@
+type Query {
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\UpcomingContentQuery
+  # @todo Implement.
+  upcomingPlatformContentEvents(input: PlatformContentEventQueryUpcoming = {}): PlatformContentEventConnection!
+}
+
 type PlatformContentEvent implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
@@ -74,4 +80,22 @@ type PlatformContentEvent implements PlatformContent {
 type PlatformContentEventStubContact {
   type: String
   contact(input: ReferenceStatusInput = {}): PlatformContentContact @refOne(model: "platform.Content")
+}
+
+type PlatformContentEventConnection @paginated {
+  totalCount: Int!
+  edges: [PlatformContentEventEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentEventEdge {
+  node: PlatformContentEvent!
+  cursor: Cursor!
+}
+
+# @todo Implement.
+input PlatformContentEventQueryUpcoming {
+  excludeContentTypes: [PlatformContentType]! = []
+  includeContentTypes: [PlatformContentType]! = []
+  taxonomyFilter: [Int]! = []
 }

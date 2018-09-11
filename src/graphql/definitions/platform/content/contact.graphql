@@ -61,6 +61,17 @@ type PlatformContentContact implements PlatformContent {
   zip: String
   country: String
   location: PlatformContentStubLocation
+
+  # GraphQL-only fields.
+  # @todo Implement.
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ContentAuthorQuery
+  ownedContent(input: PlatformContentContactOwnedContactInput = {}): PlatformContentConnection!
+}
+
+enum PlatformContentContactAuthorType {
+  author
+  contributor
+  photographer
 }
 
 type PlatformContentContactConnection @paginated {
@@ -72,4 +83,14 @@ type PlatformContentContactConnection @paginated {
 type PlatformContentContactEdge {
   node: PlatformContentContact!
   cursor: Cursor!
+}
+
+# @todo Implement.
+input PlatformContentContactOwnedContactInput {
+  type: PlatformContentContactAuthorType # a null value means all types
+  excludeContentTypes: [PlatformContentType]! = []
+  includeContentTypes: [PlatformContentType]! = []
+  requiresImage: Boolean = false
+  sort: PlatformContentSortInput = { field: published, order: desc }
+  pagination: PaginationInput = {}
 }

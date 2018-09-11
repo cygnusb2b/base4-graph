@@ -1,3 +1,12 @@
+type Query {
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\UpcomingContentQuery
+  # @todo Implement.
+  upcomingPlatformContentWebinars(input: PlatformContentWebinarQueryUpcoming = {}): PlatformContentWebinarConnection!
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ArchivedContentQuery
+  # @todo Implement.
+  archivedPlatformContentWebinars: PlatformContentWebinarConnection!
+}
+
 type PlatformContentWebinar implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
@@ -51,4 +60,22 @@ type PlatformContentWebinar implements PlatformContent {
 
   # fields from platform.trait::CompanyRelatable
   company(input: ReferenceStatusInput = {}): PlatformContentCompany @refOne(model: "platform.Content")
+}
+
+type PlatformContentWebinarConnection @paginated {
+  totalCount: Int!
+  edges: [PlatformContentWebinarEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentWebinarEdge {
+  node: PlatformContentWebinar!
+  cursor: Cursor!
+}
+
+# @todo Implement.
+input PlatformContentWebinarQueryUpcoming {
+  excludeContentTypes: [PlatformContentType]! = []
+  includeContentTypes: [PlatformContentType]! = []
+  taxonomyFilter: [Int]! = []
 }
