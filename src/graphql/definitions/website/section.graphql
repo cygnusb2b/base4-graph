@@ -1,5 +1,6 @@
 type Query {
   websiteSection(input: ModelIdInput!): WebsiteSection!
+  websiteSectionAlias(input: WebsiteSectionAliasQueryInput!): WebsiteSection!
   websiteSections(input: WebsiteSectionsQueryInput!): WebsiteSectionConnection!
 }
 
@@ -41,6 +42,11 @@ enum WebsiteSectionSortField {
   name
   fullName
   sequence
+}
+
+input WebsiteSectionAliasQueryInput {
+  status: ReferenceStatus = active
+  alias: String!
 }
 
 input WebsiteSectionsQueryInput {

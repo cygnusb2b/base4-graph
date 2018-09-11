@@ -43,6 +43,7 @@ class Base4 {
   async find(modelName, {
     pagination,
     sort,
+    limit = 0,
     criteria,
     projection,
   }) {
@@ -56,8 +57,20 @@ class Base4 {
     }
     const { namespace, resource } = Base4.parseModelName(modelName);
     const collection = await this.collection(namespace, resource);
-    if (sort) return collection.find(criteria).sort(sort);
-    return collection.find(criteria);
+    if (sort) return collection.find(criteria, { projection }).sort(sort).limit(limit);
+    return collection.find(criteria, { projection }).limit(limit);
+  }
+
+  async findOne(modelName, { criteria, projection }) {
+    const { namespace, resource } = Base4.parseModelName(modelName);
+    const collection = await this.collection(namespace, resource);
+    return collection.findOne(criteria, { projection });
+  }
+
+  async strictFindOne(modelName, { criteria, projection }) {
+    const doc = await this.findOne(modelName, { criteria, projection });
+    if (!doc) throw new ApolloError(`No ${modelName} record found for ID ${JSON.stringify(criteria)}`, 'RECORD_NOT_FOUND');
+    return doc;
   }
 
   async findById(namespace, resource, id, criteria, projection) {

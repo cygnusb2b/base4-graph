@@ -1,3 +1,12 @@
+type Query {
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\UpcomingContentQuery
+  # @todo Implement.
+  upcomingPlatformContentWebinars(input: PlatformContentWebinarQueryUpcoming = {}): PlatformContentWebinarConnection!
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ArchivedContentQuery
+  # @todo Implement.
+  archivedPlatformContentWebinars: PlatformContentWebinarConnection!
+}
+
 type PlatformContentWebinar implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
@@ -32,6 +41,10 @@ type PlatformContentWebinar implements PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
+  ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
+  inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
+  combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
+  sectionRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: primarySection)
 
   # fields from platform.model::Content\Media
   fileName: String
@@ -40,11 +53,29 @@ type PlatformContentWebinar implements PlatformContent {
   sourceFile: String
   contacts(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
 
-  # fields directly on platform.model::Content\Podcast
+  # fields directly on platform.model::Content\Webinar
   startDate: Date
   duration: Int
   linkUrl: String
 
   # fields from platform.trait::CompanyRelatable
   company(input: ReferenceStatusInput = {}): PlatformContentCompany @refOne(model: "platform.Content")
+}
+
+type PlatformContentWebinarConnection @paginated {
+  totalCount: Int!
+  edges: [PlatformContentWebinarEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformContentWebinarEdge {
+  node: PlatformContentWebinar!
+  cursor: Cursor!
+}
+
+# @todo Implement.
+input PlatformContentWebinarQueryUpcoming {
+  excludeContentTypes: [PlatformContentType]! = []
+  includeContentTypes: [PlatformContentType]! = []
+  taxonomyFilter: [Int]! = []
 }

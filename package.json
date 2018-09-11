@@ -42,6 +42,7 @@
     "@limit0/graphql-custom-types": "^1.0.1",
     "apollo-server-express": "^2.0.4",
     "bluebird": "^3.5.1",
+    "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "deep-assign": "^2.0.0",
     "deepmerge": "^2.1.1",

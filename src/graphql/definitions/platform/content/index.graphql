@@ -2,7 +2,7 @@
 # import Query.*, * from 'article.graphql'
 # import * from 'blog.graphql'
 # import * from 'collection.graphql'
-# import * from 'company.graphql'
+# import Query.*, * from 'company.graphql'
 # import * from 'contact.graphql'
 # import * from 'document.graphql'
 # import * from 'ebook.graphql'
@@ -31,6 +31,8 @@ type Query {
   platformContent(input: RootPlatformContentQueryOne!): PlatformContent! @contentQueryOne
   allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
   publishedPlatformContent(input: RootPlatformContentQueryPublished = {}): PlatformContentConnection! @contentQueryAll(publishedOnly: true)
+  # From Cygnus\ApplicationBundle\Icarus\BlockHandler\WebsiteScheduleQuery
+  websiteScheduledPlatformContent(input: WebsiteScheduledPlatformContentQuery = {}): PlatformScheduledContentConnection!
 }
 
 type PlatformContentStubSidebar {
@@ -135,6 +137,11 @@ interface PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
+  # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ContentRelated
+  ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
+  inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
+  combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
+  sectionRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: primarySection)
 }
 
 # NOTE: these fields must be properly indexed (with the correct collation)
@@ -162,9 +169,25 @@ type PlatformContentEdge {
   cursor: Cursor!
 }
 
+type PlatformScheduledContentConnection {
+  totalCount: Int!
+  edges: [PlatformScheduledContentEdge]!
+  pageInfo: PageInfo!
+}
+
+type PlatformScheduledContentEdge {
+  node: PlatformScheduledContent!
+  cursor: Cursor!
+}
+
+type PlatformScheduledContent {
+  id: String! @value(localField: "_id")
+  start: Date
+  content: PlatformContent
+}
+
 input RootPlatformContentQueryOne {
   id: Int!
-  type: PlatformContentType
 }
 
 input RootPlatformContentQueryAll {
@@ -209,5 +232,27 @@ input PlatformContentMutationInput {
 input RelatedPlatformContentInput {
   status: ReferenceStatus = active
   sort: PlatformContentSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+# From Icarus\Definitions\BlockDefinitions::getContentRelatedDefinition()
+input PlatformContentRelatedInput {
+  excludeContentTypes: [PlatformContentType!] = []
+  includeContentTypes: [PlatformContentType!] = []
+  requiresImage: Boolean = false
+  sort: PlatformContentSortInput = { field: published, order: desc }
+  pagination: PaginationInput = { first: 5 }
+}
+
+# From Icarus\Definitions\BlockDefinitions::getWebsiteScheduleQueryDefinition()
+input WebsiteScheduledPlatformContentQuery {
+  sectionId: Int!
+  optionId: Int
+  excludeSectionIds: [Int!] = []
+  excludeContentTypes: [PlatformContentType!] = []
+  includeContentTypes: [PlatformContentType!] = []
+  requiresImage: Boolean = false
+  useOptionFallback: Boolean = false
+  sectionBubbling: Boolean = true
   pagination: PaginationInput = {}
 }
