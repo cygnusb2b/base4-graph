@@ -1,6 +1,7 @@
 const ArrayValueDirective = require('./array-value');
 const ContentQueryAllDirective = require('./content-query-all');
 const ContentQueryOneDirective = require('./content-query-one');
+const InflectDirective = require('./inflect');
 const MomentFormatDirective = require('./moment-format');
 const MutatedValueDirective = require('./mutated-value');
 const PaginatedDirective = require('./paginated');
@@ -14,6 +15,7 @@ module.exports = {
   ArrayValueDirective,
   ContentQueryAllDirective,
   ContentQueryOneDirective,
+  InflectDirective,
   MomentFormatDirective,
   MutatedValueDirective,
   PaginatedDirective,
