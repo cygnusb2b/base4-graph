@@ -73,15 +73,16 @@ class Base4 {
     return doc;
   }
 
-  async findById(namespace, resource, id, criteria, projection) {
+  async findById(modelName, id, criteria, projection) {
     if (!id) return null;
+    const { namespace, resource } = Base4.parseModelName(modelName);
     const collection = await this.collection(namespace, resource);
     return collection.findOne({ ...criteria, _id: Base4.coerceID(id) }, { projection });
   }
 
-  async strictFindById(namespace, resource, id, criteria, projection) {
-    const doc = await this.findById(namespace, resource, id, criteria, projection);
-    if (!doc) throw new ApolloError(`No ${namespace} ${resource} record found for ID ${id}`, 'RECORD_NOT_FOUND');
+  async strictFindById(modelName, id, criteria, projection) {
+    const doc = await this.findById(modelName, id, criteria, projection);
+    if (!doc) throw new ApolloError(`No ${modelName} record found for ID ${id}`, 'RECORD_NOT_FOUND');
     return doc;
   }
 

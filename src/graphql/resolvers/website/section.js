@@ -12,7 +12,7 @@ module.exports = {
     websiteSection: async (_, { input }, { auth, base4 }) => {
       auth.check();
       const { id } = input;
-      return base4.strictFindById('website', 'Section', id);
+      return base4.strictFindById('website.Section', id);
     },
 
     /**

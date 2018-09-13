@@ -70,7 +70,7 @@ module.exports = {
       }
 
       if (sectionBubbling) {
-        const section = await base4.strictFindById('website', 'Section', sectionId, {}, { descendantIds: 1 });
+        const section = await base4.strictFindById('website.Section', sectionId, {}, { descendantIds: 1 });
         const { descendantIds } = section;
         if (isArray(descendantIds) && descendantIds.length) {
           criteria.sectionId = { $in: descendantIds };
