@@ -142,6 +142,10 @@ interface PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
+  canonicalPath(input: PlatformContentCanonicalPathInput = {}): String! @contentPath
+  # Determines if this content item should redirect to another location.
+  redirectTo: String @contentRedirectTo
+
   # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ContentRelated
   ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
@@ -161,6 +165,13 @@ enum PlatformContentSortField {
   updated
   published
   touched
+}
+
+enum PlatfromContentPathField {
+  id
+  type
+  slug
+  sectionAlias
 }
 
 type PlatformContentConnection @paginated {
@@ -223,6 +234,10 @@ input PlatformContentQueryPublished {
   since: Date
   sort: PlatformContentSortInput = { field: published, order: desc }
   pagination: PaginationInput = {}
+}
+
+input PlatformContentCanonicalPathInput {
+  fields: [PlatfromContentPathField] = [sectionAlias, type, id, slug]
 }
 
 input PlatformContentSortInput {
