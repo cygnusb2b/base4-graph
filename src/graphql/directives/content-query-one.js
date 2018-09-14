@@ -17,7 +17,7 @@ class ContentQueryOneDirective extends SchemaDirectiveVisitor {
         criteria.type = input.type;
       }
 
-      return base4.strictFindById('platform', 'Content', id, criteria);
+      return base4.findById('platform.Content', id, criteria);
     };
   }
 }

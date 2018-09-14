@@ -1,7 +1,7 @@
 type PlatformContentGroup implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
-  type: PlatformContentType!
+  type(input: PlatformContentTypeInput = {}): String! @inflect
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
   shortName: String
   fullName: String
@@ -23,7 +23,7 @@ type PlatformContentGroup implements PlatformContent {
   images(input: RelatedPlatformAssetImagesInput = {}): PlatformAssetImageConnection! @refMany(model: "platform.Asset", criteria: { type: "Image" })
   schedules: PlatformContentSchedules! @passThru
   primarySite(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
-  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "website.Section", localField: "mutations.Website.primarySection")
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
   alias: String @value(localField: "mutations.Website.alias")
   redirects: [String]! @arrayValue(localField: "mutations.Website.redirects")
@@ -32,6 +32,8 @@ type PlatformContentGroup implements PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
+  canonicalPath(input: PlatformContentCanonicalPathInput = {}): String! @contentPath
+  redirectTo: String @contentRedirectTo
   ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
   combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)

@@ -1,4 +1,5 @@
 const { ObjectID } = require('mongodb');
+const Base4 = require('../../../base4');
 const formatStatus = require('../../../utils/format-graph-status');
 
 module.exports = {
@@ -11,8 +12,9 @@ module.exports = {
      */
     websiteSection: async (_, { input }, { auth, base4 }) => {
       auth.check();
-      const { id } = input;
-      return base4.strictFindById('website', 'Section', id);
+      const { id, status } = input;
+      const criteria = { _id: Base4.coerceID(id), ...formatStatus(status) };
+      return base4.findOne('website.Section', { criteria });
     },
 
     /**
@@ -21,8 +23,19 @@ module.exports = {
     websiteSectionAlias: async (_, { input }, { auth, base4 }) => {
       auth.check();
       const { alias, status } = input;
-      const criteria = { ...formatStatus(status), alias };
-      return base4.strictFindOne('website.Section', { criteria });
+      const criteria = { alias, ...formatStatus(status) };
+      return base4.findOne('website.Section', { criteria });
+    },
+
+    /**
+     *
+     */
+    websiteSectionRedirect: async (_, { input }, { auth, base4 }) => {
+      auth.check();
+      const { alias, status } = input;
+      const criteria = { redirects: alias, ...formatStatus(status) };
+      console.info(criteria);
+      return base4.findOne('website.Section', { criteria });
     },
 
     /**

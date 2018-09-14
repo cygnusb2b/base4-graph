@@ -31,7 +31,7 @@ module.exports = {
     websiteProductSite: (_, { input }, { auth, base4 }) => {
       auth.check();
       const { id } = input;
-      return base4.strictFindById('platform', 'Product', id, { type: 'Site' });
+      return base4.strictFindById('platform.Product', id, { type: 'Site' });
     },
 
     /**

@@ -4,8 +4,11 @@ const { importSchema } = require('graphql-import');
 const resolvers = require('./resolvers');
 const {
   ArrayValueDirective,
+  ContentPathDirective,
   ContentQueryAllDirective,
   ContentQueryOneDirective,
+  ContentRedirectToDirective,
+  InflectDirective,
   MomentFormatDirective,
   MutatedValueDirective,
   PaginatedDirective,
@@ -23,8 +26,11 @@ module.exports = makeExecutableSchema({
   resolvers,
   schemaDirectives: {
     arrayValue: ArrayValueDirective,
+    contentPath: ContentPathDirective,
     contentQueryAll: ContentQueryAllDirective,
     contentQueryOne: ContentQueryOneDirective,
+    contentRedirectTo: ContentRedirectToDirective,
+    inflect: InflectDirective,
     momentFormat: MomentFormatDirective,
     mutatedValue: MutatedValueDirective,
     paginated: PaginatedDirective,

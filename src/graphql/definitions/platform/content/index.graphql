@@ -28,7 +28,7 @@
 # import * from 'whitepaper.graphql'
 
 type Query {
-  platformContent(input: RootPlatformContentQueryOne!): PlatformContent! @contentQueryOne
+  platformContent(input: RootPlatformContentQueryOne!): PlatformContent @contentQueryOne
   allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
   publishedPlatformContent(input: RootPlatformContentQueryPublished = {}): PlatformContentConnection! @contentQueryAll(publishedOnly: true)
   # From Cygnus\ApplicationBundle\Icarus\BlockHandler\WebsiteScheduleQuery
@@ -87,10 +87,15 @@ enum PlatformContentType {
   Whitepaper
 }
 
+enum PlatformContentTypeFormat {
+  standard
+  dasherize
+}
+
 interface PlatformContent {
   # fields directly on platform.model::Content
   id: Int! @value(localField: "_id")
-  type: PlatformContentType!
+  type(input: PlatformContentTypeInput = {}): String! @inflect
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
   shortName: String
   fullName: String # should be calculated in resolvers
@@ -124,7 +129,7 @@ interface PlatformContent {
   # fields from platform.model::Content mutations
   schedules: PlatformContentSchedules! @passThru
   primarySite(input: ReferenceStatusInput = {}): WebsiteProductSite @refOne(model: "platform.Product", localField: "mutations.Website.primarySite", criteria: { type: "Site" })
-  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "platform.Product", localField: "mutations.Website.primarySection")
+  primarySection(input: ReferenceStatusInput = {}): WebsiteSection @refOne(model: "website.Section", localField: "mutations.Website.primarySection")
 
   # fields from platform.trait::Content\SeoFields
   seoTitle: String @value(localField: "mutations.Website.seoTitle", fallbackField: "name")
@@ -137,6 +142,10 @@ interface PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
+  canonicalPath(input: PlatformContentCanonicalPathInput = {}): String! @contentPath
+  # Determines if this content item should redirect to another location.
+  redirectTo: String @contentRedirectTo
+
   # @see Cygnus\ApplicationBundle\Icarus\BlockHandler\ContentRelated
   ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
@@ -156,6 +165,13 @@ enum PlatformContentSortField {
   updated
   published
   touched
+}
+
+enum PlatfromContentPathField {
+  id
+  type
+  slug
+  sectionAlias
 }
 
 type PlatformContentConnection @paginated {
@@ -220,6 +236,10 @@ input PlatformContentQueryPublished {
   pagination: PaginationInput = {}
 }
 
+input PlatformContentCanonicalPathInput {
+  fields: [PlatfromContentPathField] = [sectionAlias, type, id, slug]
+}
+
 input PlatformContentSortInput {
   field: PlatformContentSortField = name
   order: SortOrder = asc
@@ -233,6 +253,10 @@ input RelatedPlatformContentInput {
   status: ReferenceStatus = active
   sort: PlatformContentSortInput = {}
   pagination: PaginationInput = {}
+}
+
+input PlatformContentTypeInput {
+  format: PlatformContentTypeFormat = dasherize
 }
 
 # From Icarus\Definitions\BlockDefinitions::getContentRelatedDefinition()

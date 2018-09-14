@@ -18,7 +18,7 @@ module.exports = {
     magazineProductPublication: async (_, { input }, { auth, base4 }) => {
       auth.check();
       const { id } = input;
-      return base4.strictFindById('platform', 'Product', id, { type: 'Publication' });
+      return base4.strictFindById('platform.Product', id, { type: 'Publication' });
     },
   },
 };
