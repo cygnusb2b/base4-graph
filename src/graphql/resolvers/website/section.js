@@ -34,7 +34,6 @@ module.exports = {
       auth.check();
       const { alias, status } = input;
       const criteria = { redirects: alias, ...formatStatus(status) };
-      console.info(criteria);
       return base4.findOne('website.Section', { criteria });
     },
 

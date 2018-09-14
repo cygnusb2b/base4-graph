@@ -54,5 +54,5 @@ db.getCollection('Schedule').aggregate([
       schedules: 1,
     },
   },
-  { $out: 'SectionQueryArray' },
+  { $out: 'SectionQuery' },
 ]);

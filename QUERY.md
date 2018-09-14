@@ -58,10 +58,11 @@ db.getCollection('SectionQueryArray').find({
 ### Sort Index
 ```json
 {
-    "schedules.0.start" : 1
+    "schedules.0.start" : -1,
+    "_id": -1
 }
 ```
-@todo: Must determine how to handle this index with pagination.
+Note: The `_id` field must be added to the short index due to how pagination works.
 
 ## When Hooks Fire
 When a hook is fired, all query entries for the related content ID will be removed and then all entries will be reinserted.

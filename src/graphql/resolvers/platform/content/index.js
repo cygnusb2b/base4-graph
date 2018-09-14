@@ -46,7 +46,18 @@ module.exports = {
       } = input;
 
       const now = new Date();
-      const criteria = {
+
+      let sectionIds = sectionId;
+      if (sectionBubbling) {
+        const section = await base4.strictFindById('website.Section', sectionId, {}, { descendantIds: 1 });
+        const { descendantIds } = section;
+        if (isArray(descendantIds) && descendantIds.length) {
+          sectionIds = { $in: descendantIds };
+        }
+      }
+
+      const $elemMatch = {
+        sectionId: sectionIds,
         start: { $lte: now },
         $and: [
           {
@@ -64,41 +75,34 @@ module.exports = {
           projection: { _id: 1 },
         });
         if (!defaultOption) throw new Error('No default/standard option was found.');
-        criteria.optionId = defaultOption._id;
+        $elemMatch.optionId = defaultOption._id;
       } else {
-        criteria.optionId = optionId;
-      }
-
-      if (sectionBubbling) {
-        const section = await base4.strictFindById('website.Section', sectionId, {}, { descendantIds: 1 });
-        const { descendantIds } = section;
-        if (isArray(descendantIds) && descendantIds.length) {
-          criteria.sectionId = { $in: descendantIds };
-        } else {
-          criteria.sectionId = sectionId;
-        }
-      } else {
-        criteria.sectionId = sectionId;
+        $elemMatch.optionId = optionId;
       }
 
       if (excludeSectionIds.length) {
-        criteria.$and.push({ sectionId: { $nin: excludeSectionIds } });
+        $elemMatch.$and.push({ sectionId: { $nin: excludeSectionIds } });
+      }
+
+      const criteria = { schedules: { $elemMatch } };
+
+      if (requiresImage) {
+        criteria.hasImage = true;
       }
       if (includeContentTypes.length) {
+        if (!isArray(criteria.$and)) criteria.$and = [];
         criteria.$and.push({ contentType: { $in: includeContentTypes } });
       }
       if (excludeContentTypes.length) {
+        if (!isArray(criteria.$and)) criteria.$and = [];
         criteria.$and.push({ contentType: { $nin: excludeContentTypes } });
-      }
-      if (requiresImage) {
-        criteria.hasImage = true;
       }
 
       const paginated = await base4.find('website.SectionQuery', {
         pagination,
-        sort: { field: 'start', order: 'desc' },
+        sort: { field: 'schedules.0.start', order: 'desc' },
         criteria,
-        projection: { _id: 1, contentId: 1, start: 1 },
+        projection: { contentId: 1, 'schedules.$.start': 1 },
       });
       const edges = await paginated.getEdges();
       const contentIds = edges.map(({ node }) => node.contentId);
@@ -110,6 +114,7 @@ module.exports = {
         paginated,
         edges: edges.map((edge) => {
           const { node } = edge;
+          node.start = node.schedules[0].start,
           node.content = content.find(c => c._id === node.contentId);
           return edge;
         }),
