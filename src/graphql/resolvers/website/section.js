@@ -14,7 +14,7 @@ module.exports = {
       auth.check();
       const { id, status } = input;
       const criteria = { _id: Base4.coerceID(id), ...formatStatus(status) };
-      return base4.strictFindOne('website.Section', { criteria });
+      return base4.findOne('website.Section', { criteria });
     },
 
     /**
@@ -24,7 +24,18 @@ module.exports = {
       auth.check();
       const { alias, status } = input;
       const criteria = { alias, ...formatStatus(status) };
-      return base4.strictFindOne('website.Section', { criteria });
+      return base4.findOne('website.Section', { criteria });
+    },
+
+    /**
+     *
+     */
+    websiteSectionRedirect: async (_, { input }, { auth, base4 }) => {
+      auth.check();
+      const { alias, status } = input;
+      const criteria = { redirects: alias, ...formatStatus(status) };
+      console.info(criteria);
+      return base4.findOne('website.Section', { criteria });
     },
 
     /**
