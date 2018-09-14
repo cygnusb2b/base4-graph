@@ -1,5 +1,5 @@
 type Query {
-  platformContentArticle(input: PlatformContentQueryOne!): PlatformContentArticle! @contentQueryOne(type: Article)
+  platformContentArticle(input: PlatformContentQueryOne!): PlatformContentArticle @contentQueryOne(type: Article)
   platformContentArticles(input: PlatformContentQueryAll = {}): PlatformContentArticleConnection! @contentQueryAll(types: [Article])
   publishedPlatformContentArticles(input: PlatformContentQueryPublished = {}): PlatformContentArticleConnection! @contentQueryAll(types: [Article], publishedOnly: true)
 }

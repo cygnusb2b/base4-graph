@@ -28,7 +28,7 @@
 # import * from 'whitepaper.graphql'
 
 type Query {
-  platformContent(input: RootPlatformContentQueryOne!): PlatformContent! @contentQueryOne
+  platformContent(input: RootPlatformContentQueryOne!): PlatformContent @contentQueryOne
   allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
   publishedPlatformContent(input: RootPlatformContentQueryPublished = {}): PlatformContentConnection! @contentQueryAll(publishedOnly: true)
   # From Cygnus\ApplicationBundle\Icarus\BlockHandler\WebsiteScheduleQuery
