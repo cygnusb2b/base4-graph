@@ -32,7 +32,7 @@ class ContentPathDirective extends SchemaDirectiveVisitor {
 
       const { type, linkUrl } = doc;
       const types = ['Promotion', 'TextAd'];
-      if (types.includes(type) && linkUrl) return null;
+      if (types.includes(type) && linkUrl) return linkUrl;
 
       const values = await Promise.all(fields.map((key) => {
         const fn = resolvers[key];
@@ -40,7 +40,7 @@ class ContentPathDirective extends SchemaDirectiveVisitor {
       }));
 
       const path = values.filter(v => v).join('/');
-      if (!path) return null;
+      if (!path) return '';
       return `/${path}`;
     };
   }
