@@ -97,7 +97,7 @@ interface PlatformContent {
   id: Int! @value(localField: "_id")
   type(input: PlatformContentTypeInput = {}): String! @inflect
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
-  shortName: String
+  shortName: String @value(fallbackField: "name") @value(fallbackField: "name")
   fullName: String # should be calculated in resolvers
   hash: String
   created: Date
@@ -112,6 +112,7 @@ interface PlatformContent {
   status: Int
 
   # fields from platform.trait::Content\BodyFields
+  # @todo Add truncate support!
   teaser(input: PlatformContentMutationInput = {}): String @mutatedValue
   body(input: PlatformContentMutationInput = {}): String @mutatedValue
   notes: String
