@@ -114,7 +114,7 @@ module.exports = {
         paginated,
         edges: edges.map((edge) => {
           const { node } = edge;
-          node.start = node.schedules[0].start,
+          node.start = node.schedules[0].start;
           node.content = content.find(c => c._id === node.contentId);
           return edge;
         }),
