@@ -164,7 +164,6 @@ enum PlatformContentSortField {
   created
   updated
   published
-  touched
 }
 
 enum PlatfromContentPathField {
