@@ -19,6 +19,10 @@ type PlatformAssetImage {
   # from platform.model::Asset\Image mutations
   approvedWebsite: Boolean @value(localField: "mutations.Website.approved")
   approvedMagazine: Boolean @value(localField: "mutations.Magazine.approved")
+
+  #GraphQL specific fields
+  src(input: PlatformAssetImageSrcInput = {}): String!
+  alt: String!
 }
 
 type PlatformAssetImageSource {
@@ -64,4 +68,9 @@ input PlatformAssetImageSortInput {
 input RelatedPlatformAssetImagesInput {
   sort: PlatformAssetImageSortInput = {}
   pagination: PaginationInput = {}
+}
+
+input PlatformAssetImageSrcInput {
+  host: String!
+  size: String = "640w"
 }

@@ -2,30 +2,67 @@
 
 ## Sample Model
 ```js
-// Example taken from cygnus_ofcr_website::Schedule
-// ObjectId("5a9567b368deea9d39658ddd")
 const model = {
-  priority: 1,
-  sectionId: 56406,
   contentId: 20994010,
-  contentType: 'Webinar',
+  contentType: 'Product',
   hasImage: true,
-  start: ISODate('2018-01-09T15:50:41.000-05:00'),
-  end: ISODate('2018-03-11T14:50:00.000-05:00'),
+  created: ISODate('2018-09-14T11:22:32.109-05:00'),
+  // The schedules array *must* be sorted by start, descending so the most recent schedule appears first in the list.
+  schedules: [
+    {
+      sectionId: 56305,
+      optionId: 2,
+      start: ISODate('2018-01-16T12:43:13.000-05:00'),
+    },
+    {
+      sectionId: 56298,
+      optionId: 2,
+      start: ISODate('2018-01-16T12:43:11.000-05:00'),
+      end: ISODatE('2018-12-31T12:43:11.000-05:00'),
+    },
+  ],
 };
 ```
 
+## Sample Query
+```js
+db.getCollection('SectionQueryArray').find({
+  schedules: {
+    $elemMatch: {
+      sectionId: { $in: [56403, 56208] },
+      optionId: 2,
+      start: { $lte: new Date() },
+      $and: [
+        {
+          $or: [
+            { end: { $gt: new Date() } },
+            { end: { $exists: false } },
+          ],
+        },
+      ],
+    },
+  },
+}, { contentId: 1, 'schedules.$.start': 1 }).sort({ 'schedules.0.start': -1 }).limit(20);
+```
+
 ## Indexing
-Because of the different query input options, multiple indexes are possible.
 
-### Queries
-- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1 }`
-- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1, "hasImage": 1 }`
-- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1, "contentType": 1 }`
-- `{ "sectionId": 1, "optionId": 1, "start": -1, "end": 1, "hasImage": 1, "contentType": 1 }`
+### Query Index
+```json
+{
+    "schedules.sectionId" : 1,
+    "schedules.optionId" : 1
+}
+```
 
-### Sorting
-- `{ "start": -1, "_id": -1 }` (ID added by pagination)
+### Sort Index
+```json
+{
+    "schedules.0.start" : -1,
+    "_id": -1
+}
+```
+Note: The `_id` field must be added to the short index due to how pagination works.
 
 ## When Hooks Fire
 When a hook is fired, all query entries for the related content ID will be removed and then all entries will be reinserted.

@@ -20,17 +20,62 @@ Generally, `status` should be indexed, where applicable
 _Note_: GraphQL sort pagination also uses the `_id` in addition to the sort field. For example, when sorting by name, the actual index needed would be `{ name: 1, _id: 1 }`
 
 **platform.Content**
-status+type
-mutations.Website.primarySection.$id
-company
+```json
+{
+  "status": 1,
+  "type": 1
+}
+
+{
+  "mutations.Website.primarySection.$id": 1
+}
+
+{
+  "company": 1
+}
+// Sort indexes.
+// Ensure collation is used: createIndex({ [field]: 1, _id: 1 }, { collation: { locale: 'en_US } })
+{
+  "name": 1,
+  "_id": 1
+}
+
+{
+  "fullName": 1,
+  "_id": 1
+}
+
+{
+  "created": 1,
+  "_id": 1
+}
+
+{
+  "updated": 1,
+  "_id": 1
+}
+
+{
+  "published": 1,
+  "_id": 1
+}
+```
 
 **website.Section**
-`{ "status": 1, "alias": 1 }`
-`{ "status": 1, "parent.$id" : 1 }`
-`{ "site.$id": 1 }`
+```json
+{
+  "status": 1,
+  "alias": 1
+}
+
+{
+  "site.$id": 1
+}
+
+{
+  "parent.$id": 1
+}
+```
 
 **website.Schedule**
 status + content.$id
-
-**platform.Product**
-status + site
