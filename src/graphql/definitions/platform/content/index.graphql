@@ -167,6 +167,16 @@ enum PlatformContentSortField {
   published
 }
 
+enum PlatformContentContactSortField {
+  id
+  name
+  lastName
+  firstName
+  created
+  updated
+  published
+}
+
 enum PlatfromContentPathField {
   id
   type
@@ -245,6 +255,11 @@ input PlatformContentSortInput {
   order: SortOrder = asc
 }
 
+input PlatformContentContactSortInput {
+  field: PlatformContentContactSortField = name
+  order: SortOrder = asc
+}
+
 input PlatformContentMutationInput {
   mutation: PlatformContentMutation = Website
 }
@@ -252,6 +267,12 @@ input PlatformContentMutationInput {
 input RelatedPlatformContentInput {
   status: ReferenceStatus = active
   sort: PlatformContentSortInput = {}
+  pagination: PaginationInput = {}
+}
+
+input RelatedPlatformContentContactInput {
+  status: ReferenceStatus = active
+  sort: PlatformContentContactSortInput = {}
   pagination: PaginationInput = {}
 }
 

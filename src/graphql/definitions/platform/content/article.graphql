@@ -52,9 +52,9 @@ type PlatformContentArticle implements PlatformContent {
   deck: String @value(localField: "mutations.Magazine.deck")
 
   # fields from platform.trait::Content\Authorable
-  authors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
-  contributors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
-  photographers(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  authors(input: RelatedPlatformContentContactInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  contributors(input: RelatedPlatformContentContactInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  photographers(input: RelatedPlatformContentContactInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
 }
 
 type PlatformContentArticleConnection @paginated {

@@ -56,9 +56,9 @@ type PlatformContentInQuarters implements PlatformContent {
   servingArea: Int
 
   # fields from platform.trait::Content\Authorable
-  authors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
-  contributors(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
-  photographers(input: RelatedPlatformContentInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  authors(input: RelatedPlatformContentContactInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  contributors(input: RelatedPlatformContentContactInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
+  photographers(input: RelatedPlatformContentContactInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")
 }
 
 type PlatformContentInQuartersConnection @paginated {
