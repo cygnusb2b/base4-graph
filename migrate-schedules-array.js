@@ -56,3 +56,7 @@ db.getCollection('Schedule').aggregate([
   },
   { $out: 'SectionQuery' },
 ]);
+
+db.getCollection('SectionQuery').createIndex({ 'schedules.sectionId' : 1, 'schedules.optionId' : 1 });
+db.getCollection('SectionQuery').createIndex({ contentId: 1 }, { unique: true });
+db.getCollection('SectionQuery').createIndex({ 'schedules.0.start' : -1, _id: -1 });
