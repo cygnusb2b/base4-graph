@@ -37,6 +37,7 @@ module.exports = {
       const {
         sectionId,
         optionId,
+        excludeContentIds,
         excludeSectionIds,
         includeContentTypes,
         excludeContentTypes,
@@ -96,6 +97,9 @@ module.exports = {
       if (excludeContentTypes.length) {
         if (!isArray(criteria.$and)) criteria.$and = [];
         criteria.$and.push({ contentType: { $nin: excludeContentTypes } });
+      }
+      if (excludeContentIds.length) {
+        criteria.contentId = { $nin: excludeContentIds };
       }
 
       const paginated = await base4.find('website.SectionQuery', {

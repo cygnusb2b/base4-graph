@@ -50,16 +50,20 @@ db.getCollection('SectionQueryArray').find({
 ### Query Index
 ```json
 {
-    "schedules.sectionId" : 1,
-    "schedules.optionId" : 1
+  "schedules.sectionId" : 1,
+  "schedules.optionId" : 1
+}
+// Unique
+{
+  "contentId": 1
 }
 ```
 
 ### Sort Index
 ```json
 {
-    "schedules.0.start" : -1,
-    "_id": -1
+  "schedules.0.start" : -1,
+  "_id": -1
 }
 ```
 Note: The `_id` field must be added to the short index due to how pagination works.

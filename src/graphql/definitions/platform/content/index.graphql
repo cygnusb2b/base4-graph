@@ -282,6 +282,7 @@ input PlatformContentRelatedInput {
 input WebsiteScheduledPlatformContentQuery {
   sectionId: Int!
   optionId: Int
+  excludeContentIds: [Int!] = []
   excludeSectionIds: [Int!] = []
   excludeContentTypes: [PlatformContentType!] = []
   includeContentTypes: [PlatformContentType!] = []
