@@ -197,19 +197,8 @@ type PlatformContentEdge {
 
 type PlatformScheduledContentConnection {
   totalCount: Int!
-  edges: [PlatformScheduledContentEdge]!
+  edges: [PlatformContentEdge]!
   pageInfo: PageInfo!
-}
-
-type PlatformScheduledContentEdge {
-  node: PlatformScheduledContent!
-  cursor: Cursor!
-}
-
-type PlatformScheduledContent {
-  id: String! @value(localField: "_id")
-  start: Date
-  content: PlatformContent
 }
 
 input RootPlatformContentQueryOne {
