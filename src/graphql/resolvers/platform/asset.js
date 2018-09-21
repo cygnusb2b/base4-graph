@@ -18,10 +18,12 @@ module.exports = {
    */
   PlatformAssetImage: {
     src: (image, { input }) => {
-      const { host, size } = input;
+      const { host, size, aspectRatio } = input;
       const { filePath, fileName } = image;
-      const file = size === 'original' ? fileName : fileName.replace(/\.png$/, '.jpg');
-      return `https://${host}/${filePath}/${size}/${file}`;
+      const file = fileName.replace(/\.png$/, '.jpg');
+      const ar = aspectRatio ? `/${aspectRatio}` : '';
+      const sz = size !== 'original' ? `/${size}` : '';
+      return `https://${host}/${filePath}${ar}${sz}/${file}`;
     },
     alt: (image) => {
       const { caption, name, fileName } = image;

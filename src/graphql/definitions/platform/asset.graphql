@@ -73,4 +73,5 @@ input RelatedPlatformAssetImagesInput {
 input PlatformAssetImageSrcInput {
   host: String!
   size: String = "640w"
+  aspectRatio: String = "16x9"
 }
