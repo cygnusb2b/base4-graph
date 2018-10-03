@@ -235,7 +235,7 @@ class Base4 {
    */
   static extractRefId(ref) {
     const id = isObject(ref) && ref.oid ? ref.oid : ref;
-    return id || null;
+    return Base4.coerceID(id) || null;
   }
 
   /**
