@@ -97,7 +97,8 @@ interface PlatformContent {
   id: Int! @value(localField: "_id")
   type(input: PlatformContentTypeInput = {}): String! @inflect
   name(input: PlatformContentMutationInput = {}): String @mutatedValue
-  shortName: String @value(fallbackField: "name") @value(fallbackField: "name")
+  # @todo Add support for falling back to the provided mutation input.
+  shortName: String @value(fallbackField: "name")
   fullName: String # should be calculated in resolvers
   hash: String
   created: Date
