@@ -16,7 +16,7 @@ const resolvers = {
       foreignField: '_id',
       projection: { alias: 1 },
     });
-    return section ? section.alias : null;
+    return section ? section.alias : 'home';
   },
 };
 
