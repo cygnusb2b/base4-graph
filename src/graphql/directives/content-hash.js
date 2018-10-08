@@ -5,10 +5,12 @@ class ContentHashDirective extends SchemaDirectiveVisitor {
    *
    * @param {*} field
    */
-  static visitFieldDefinition(field) {
-    const key = 'platform.Content';
+  visitFieldDefinition(field) { // eslint-disable-line class-methods-use-this
     // eslint-disable-next-line no-param-reassign
-    field.resolve = async (_, { input }, { base4 }) => base4.findOne(key, { criteria: input });
+    field.resolve = async (_, { input: { hash } }, { base4 }) => {
+      const key = 'platform.Content';
+      return base4.findOne(key, { criteria: { hash } });
+    };
   }
 }
 
