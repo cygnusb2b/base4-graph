@@ -1,4 +1,5 @@
 const ArrayValueDirective = require('./array-value');
+const ContentHashDirective = require('./content-hash');
 const ContentPathDirective = require('./content-path');
 const ContentQueryAllDirective = require('./content-query-all');
 const ContentQueryOneDirective = require('./content-query-one');
@@ -15,6 +16,7 @@ const ValueDirective = require('./value');
 
 module.exports = {
   ArrayValueDirective,
+  ContentHashDirective,
   ContentPathDirective,
   ContentQueryAllDirective,
   ContentQueryOneDirective,

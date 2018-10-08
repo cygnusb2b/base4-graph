@@ -16,6 +16,7 @@ directive @arrayValue(localField: String) on FIELD_DEFINITION
 directive @passThru(localField: String) on FIELD_DEFINITION
 directive @inflect(localField: String) on FIELD_DEFINITION
 directive @momentFormat(localField: String, defaultFormat: String! = "YYYY-MM-DDTHH:mm:ssZ") on FIELD_DEFINITION
+directive @contentHash on FIELD_DEFINITION
 directive @contentQueryOne(type: PlatformContentType) on FIELD_DEFINITION
 directive @contentQueryAll(types: [PlatformContentType]! = [], publishedOnly: Boolean! = false) on FIELD_DEFINITION
 directive @contentPath on FIELD_DEFINITION
