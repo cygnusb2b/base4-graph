@@ -224,6 +224,10 @@ input PlatformContentQueryOne {
   id: Int!
 }
 
+input PlatformContentHash {
+  hash: String!
+}
+
 input PlatformContentQueryAll {
   status: ReferenceStatus = all
   sort: PlatformContentSortInput = { field: id, order: desc }

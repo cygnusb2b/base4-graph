@@ -1,5 +1,6 @@
 type Query {
   platformContentCompany(input: PlatformContentQueryOne!): PlatformContentCompany @contentQueryOne(type: Company)
+  platformContentCompanyHash(input: PlatformContentHash!): PlatformContentCompany @contentHash
 }
 
 type PlatformContentCompany implements PlatformContent {
