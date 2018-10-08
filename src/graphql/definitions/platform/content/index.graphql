@@ -29,6 +29,7 @@
 
 type Query {
   platformContent(input: RootPlatformContentQueryOne!): PlatformContent @contentQueryOne
+  platformContentHash(input: PlatformContentHash!): PlatformContent @contentHash
   allPlatformContent(input: RootPlatformContentQueryAll = {}): PlatformContentConnection! @contentQueryAll
   publishedPlatformContent(input: RootPlatformContentQueryPublished = {}): PlatformContentConnection! @contentQueryAll(publishedOnly: true)
   # From Cygnus\ApplicationBundle\Icarus\BlockHandler\WebsiteScheduleQuery
