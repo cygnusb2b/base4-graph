@@ -47,7 +47,7 @@ enum WebsiteSectionSortField {
 
 input WebsiteSectionQueryInput {
   status: ReferenceStatus = active
-  id: String!
+  id: Int!
 }
 
 input WebsiteSectionAliasQueryInput {
