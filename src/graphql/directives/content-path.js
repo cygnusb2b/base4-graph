@@ -1,6 +1,7 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
 const objectPath = require('object-path');
 const inflection = require('inflection');
+const { UserInputError } = require('apollo-server-express');
 
 const { underscore, dasherize } = inflection;
 
@@ -29,6 +30,12 @@ class ContentPathDirective extends SchemaDirectiveVisitor {
     // eslint-disable-next-line no-param-reassign
     field.resolve = async (doc, { input }, ctx) => {
       const { fields } = input;
+
+      if (!fields.includes('id')) {
+        throw new UserInputError('The canonicalPath arguments must at least contain "id"', {
+          invalidArgs: fields,
+        });
+      }
 
       const { type, linkUrl } = doc;
       const types = ['Promotion', 'TextAd'];
