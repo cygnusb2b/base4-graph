@@ -48,7 +48,6 @@ module.exports = {
         siteId,
         sort,
         pagination,
-        ids,
       } = input;
 
       const criteria = { ...formatStatus(status) };
@@ -58,7 +57,16 @@ module.exports = {
         criteria['parent.$id'] = parentId;
       }
       if (siteId) criteria['site.$id'] = new ObjectID(siteId);
-      if (ids) criteria._id = { $in: ids };
+      return base4.paginate('website.Section', { pagination, sort, criteria });
+    },
+
+    /**
+     *
+     */
+    websiteSectionsByIds: async (_, { input }, { auth, base4 }) => {
+      auth.check();
+      const { ids, sort, pagination } = input;
+      const criteria = { _id: { $in: ids } };
       return base4.paginate('website.Section', { pagination, sort, criteria });
     },
   },
