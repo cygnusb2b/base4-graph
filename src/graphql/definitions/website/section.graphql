@@ -3,7 +3,7 @@ type Query {
   websiteSectionAlias(input: WebsiteSectionAliasQueryInput!): WebsiteSection
   websiteSectionRedirect(input: WebsiteSectionAliasQueryInput!): WebsiteSection
   websiteSections(input: WebsiteSectionsQueryInput!): WebsiteSectionConnection!
-  websiteSectionsByIds(input: WebsiteSectionIdsInput!): WebsiteSectionConnection!
+  websiteSectionsFromIds(input: WebsiteSectionsFromIdsQueryInput!): WebsiteSectionConnection!
 }
 
 type WebsiteSection implements PlatformSection {
