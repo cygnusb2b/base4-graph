@@ -216,6 +216,15 @@ class Base4 {
   }
 
   /**
+   *
+   */
+  async distinct(modelName, field, query) {
+    const { namespace, resource } = Base4.parseModelName(modelName);
+    const collection = await this.collection(namespace, resource);
+    return collection.distinct(field, query);
+  }
+
+  /**
    * Parses a model name into its namespace and resource parts.
    *
    * For example, `platform.Content` becomes `{ namespace: 'platform', resource: 'Content' }`

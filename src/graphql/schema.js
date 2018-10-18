@@ -6,6 +6,7 @@ const {
   ArrayValueDirective,
   ContentPathDirective,
   ContentQueryAllDirective,
+  ContentQueryHashDirective,
   ContentQueryOneDirective,
   ContentRedirectToDirective,
   InflectDirective,
@@ -16,6 +17,7 @@ const {
   RefManyDirective,
   RefOneDirective,
   RelatedContentDirective,
+  ScheduledSectionsDirective,
   ValueDirective,
 } = require('./directives');
 
@@ -28,6 +30,7 @@ module.exports = makeExecutableSchema({
     arrayValue: ArrayValueDirective,
     contentPath: ContentPathDirective,
     contentQueryAll: ContentQueryAllDirective,
+    contentQueryHash: ContentQueryHashDirective,
     contentQueryOne: ContentQueryOneDirective,
     contentRedirectTo: ContentRedirectToDirective,
     inflect: InflectDirective,
@@ -38,6 +41,7 @@ module.exports = makeExecutableSchema({
     refMany: RefManyDirective,
     refOne: RefOneDirective,
     relatedContent: RelatedContentDirective,
+    scheduledSections: ScheduledSectionsDirective,
     value: ValueDirective,
   },
 });

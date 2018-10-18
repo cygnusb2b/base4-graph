@@ -3,6 +3,7 @@ type Query {
   websiteSectionAlias(input: WebsiteSectionAliasQueryInput!): WebsiteSection
   websiteSectionRedirect(input: WebsiteSectionAliasQueryInput!): WebsiteSection
   websiteSections(input: WebsiteSectionsQueryInput!): WebsiteSectionConnection!
+  websiteSectionsFromIds(input: WebsiteSectionsFromIdsQueryInput!): WebsiteSectionConnection!
 }
 
 type WebsiteSection implements PlatformSection {
@@ -59,6 +60,12 @@ input WebsiteSectionsQueryInput {
   status: ReferenceStatus = active
   parentId: Int
   siteId: String
+  sort: WebsiteSectionSortInput = { field: id, order: desc }
+  pagination: PaginationInput = {}
+}
+
+input WebsiteSectionsFromIdsQueryInput {
+  ids: [Int!]
   sort: WebsiteSectionSortInput = { field: id, order: desc }
   pagination: PaginationInput = {}
 }
