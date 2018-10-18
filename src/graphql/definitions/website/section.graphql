@@ -59,6 +59,7 @@ input WebsiteSectionsQueryInput {
   status: ReferenceStatus = active
   parentId: Int
   siteId: String
+  ids: [Int]
   sort: WebsiteSectionSortInput = { field: id, order: desc }
   pagination: PaginationInput = {}
 }
