@@ -38,6 +38,7 @@ type PlatformContentBlog implements PlatformContent {
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
   combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
   sectionRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: primarySection)
+  scheduledWebsiteSections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @scheduledSections(type: Website)
 
   # fields from platform.trait::Content\Authorable
   authors(input: RelatedPlatformContentContactInput = {}): PlatformContentContactConnection! @refMany(model: "platform.Content")

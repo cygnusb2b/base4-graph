@@ -154,6 +154,7 @@ interface PlatformContent {
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
   combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
   sectionRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: primarySection)
+  scheduledWebsiteSections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @scheduledSections(type: Website)
 }
 
 # NOTE: these fields must be properly indexed (with the correct collation)

@@ -38,6 +38,7 @@ type PlatformContentEngineSpec implements PlatformContent {
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)
   combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
   sectionRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: primarySection)
+  scheduledWebsiteSections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @scheduledSections(type: Website)
 
   # fields directly on platform.model::Content\EngineSpec
   products(input: RelatedPlatformContentInput = {}): PlatformContentProductConnection! @refMany(model: "platform.Content")
