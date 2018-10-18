@@ -14,6 +14,7 @@ const RefManyDirective = require('./ref-many');
 const RefOneDirective = require('./ref-one');
 const RelatedContentDirective = require('./related-content');
 const ScheduledSectionsDirective = require('./scheduled-sections');
+const SectionMetadata = require('./section-metadata');
 const ValueDirective = require('./value');
 
 module.exports = {
@@ -33,5 +34,6 @@ module.exports = {
   RefOneDirective,
   RelatedContentDirective,
   ScheduledSectionsDirective,
+  SectionMetadata,
   ValueDirective,
 };

@@ -19,6 +19,7 @@ const {
   RefOneDirective,
   RelatedContentDirective,
   ScheduledSectionsDirective,
+  SectionMetadata,
   ValueDirective,
 } = require('./directives');
 
@@ -44,6 +45,7 @@ module.exports = makeExecutableSchema({
     refOne: RefOneDirective,
     relatedContent: RelatedContentDirective,
     scheduledSections: ScheduledSectionsDirective,
+    sectionMetadata: SectionMetadata,
     value: ValueDirective,
   },
 });

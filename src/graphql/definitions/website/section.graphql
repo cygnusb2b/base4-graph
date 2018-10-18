@@ -6,6 +6,11 @@ type Query {
   websiteSectionsFromIds(input: WebsiteSectionsFromIdsQueryInput!): WebsiteSectionConnection!
 }
 
+type WebsiteSectionMetadata {
+  title: String
+  description: String
+}
+
 type WebsiteSection implements PlatformSection {
   # fields required by the PlatformSection GraphQL interface
   id: Int! @value(localField: "_id")
@@ -22,7 +27,7 @@ type WebsiteSection implements PlatformSection {
   logo: PlatformAssetImage @refOne(model: "platform.Asset", criteria: { type: "Image" })
 
   # fields from trait.platform::Content\SeoFields
-  seoTitle: String
+  metadata: WebsiteSectionMetadata! @sectionMetadata
   alias: String
   redirects: [String]! @arrayValue
   slug: String

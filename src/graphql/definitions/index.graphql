@@ -22,6 +22,7 @@ directive @contentQueryOne(type: PlatformContentType) on FIELD_DEFINITION
 directive @contentPath on FIELD_DEFINITION
 directive @contentRedirectTo on FIELD_DEFINITION
 directive @contentMetadata on FIELD_DEFINITION
+directive @sectionMetadata on FIELD_DEFINITION
 directive @relatedContent(type: RelatedContentQueryType!) on FIELD_DEFINITION
 directive @scheduledSections(type: PlatformContentMutation!) on FIELD_DEFINITION
 
