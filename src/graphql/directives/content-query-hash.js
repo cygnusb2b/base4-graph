@@ -1,6 +1,6 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
 
-class ContentHashDirective extends SchemaDirectiveVisitor {
+class ContentQueryHashDirective extends SchemaDirectiveVisitor {
   /**
    *
    * @param {*} field
@@ -14,4 +14,4 @@ class ContentHashDirective extends SchemaDirectiveVisitor {
   }
 }
 
-module.exports = ContentHashDirective;
+module.exports = ContentQueryHashDirective;

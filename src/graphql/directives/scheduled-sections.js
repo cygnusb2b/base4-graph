@@ -8,8 +8,6 @@ class ScheduledSectionsDirective extends SchemaDirectiveVisitor {
   visitFieldDefinition(field) { // eslint-disable-line class-methods-use-this
     // eslint-disable-next-line no-param-reassign
     field.resolve = async ({ _id }, { input: { pagination, sort } }, { base4 }) => {
-      console.warn('scheduled-sections directive', _id);
-
       const coll = await base4.collection('website', 'Schedule');
       const ids = await coll.distinct('section', { 'content.$id': _id });
       const criteria = { _id: { $in: ids } };
