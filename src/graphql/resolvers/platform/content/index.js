@@ -32,6 +32,20 @@ module.exports = {
     /**
      *
      */
+    platformContentPage: (_, { input }, { auth, base4 }) => {
+      auth.check();
+      const { alias } = input;
+      const criteria = {
+        'mutations.Website.alias': alias,
+        type: 'Page',
+        status: 1,
+      };
+      return base4.findOne('platform.Content', { criteria });
+    },
+
+    /**
+     *
+     */
     websiteScheduledPlatformContent: async (_, { input }, { auth, base4 }) => {
       auth.check();
       const {

@@ -14,7 +14,7 @@
 # import * from 'job.graphql'
 # import * from 'media-gallery.graphql'
 # import * from 'news.graphql'
-# import * from 'page.graphql'
+# import Query.*, * from 'page.graphql'
 # import * from 'podcast.graphql'
 # import * from 'press-release.graphql'
 # import * from 'product-external.graphql'

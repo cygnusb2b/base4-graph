@@ -31,6 +31,10 @@ _Note_: GraphQL sort pagination also uses the `_id` in addition to the sort fiel
 }
 
 {
+  "mutations.Website.alias": 1
+}
+
+{
   "company": 1
 }
 // Sort indexes.

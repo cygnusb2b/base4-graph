@@ -1,3 +1,7 @@
+type Query {
+  platformContentPage(input: PlatformContentPageQueryOne!): PlatformContentPage
+}
+
 type PlatformContentPage implements PlatformContent {
   # fields required by the PlatfomContent GraphQL interface
   id: Int! @value(localField: "_id")
@@ -40,4 +44,8 @@ type PlatformContentPage implements PlatformContent {
   combinedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: combined)
   sectionRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: primarySection)
   scheduledWebsiteSections(input: RelatedWebsiteSectionsInput = {}): WebsiteSectionConnection! @scheduledSections(type: Website)
+}
+
+input PlatformContentPageQueryOne {
+  alias: String!
 }
