@@ -64,7 +64,7 @@ input WebsiteSectionsQueryInput {
   pagination: PaginationInput = {}
 }
 
-input WebsiteSectionIdsInput {
+input WebsiteSectionsFromIdsQueryInput {
   ids: [Int!]
   sort: WebsiteSectionSortInput = { field: id, order: desc }
   pagination: PaginationInput = {}
