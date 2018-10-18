@@ -12,6 +12,7 @@ const PassThruDirective = require('./pass-thru');
 const RefManyDirective = require('./ref-many');
 const RefOneDirective = require('./ref-one');
 const RelatedContentDirective = require('./related-content');
+const ScheduledSectionsDirective = require('./scheduled-sections');
 const ValueDirective = require('./value');
 
 module.exports = {
@@ -29,5 +30,6 @@ module.exports = {
   RefManyDirective,
   RefOneDirective,
   RelatedContentDirective,
+  ScheduledSectionsDirective,
   ValueDirective,
 };

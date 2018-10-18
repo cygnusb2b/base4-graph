@@ -22,6 +22,7 @@ directive @contentQueryAll(types: [PlatformContentType]! = [], publishedOnly: Bo
 directive @contentPath on FIELD_DEFINITION
 directive @contentRedirectTo on FIELD_DEFINITION
 directive @relatedContent(type: RelatedContentQueryType!) on FIELD_DEFINITION
+directive @scheduledSections(type: PlatformContentMutation!) on FIELD_DEFINITION
 
 type Query {
   ping: String!

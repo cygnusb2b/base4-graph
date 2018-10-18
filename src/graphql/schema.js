@@ -17,6 +17,7 @@ const {
   RefManyDirective,
   RefOneDirective,
   RelatedContentDirective,
+  ScheduledSectionsDirective,
   ValueDirective,
 } = require('./directives');
 
@@ -40,6 +41,7 @@ module.exports = makeExecutableSchema({
     refMany: RefManyDirective,
     refOne: RefOneDirective,
     relatedContent: RelatedContentDirective,
+    scheduledSections: ScheduledSectionsDirective,
     value: ValueDirective,
   },
 });
