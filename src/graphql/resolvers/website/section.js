@@ -63,7 +63,7 @@ module.exports = {
     /**
      *
      */
-    websiteSectionsByIds: async (_, { input }, { auth, base4 }) => {
+    websiteSectionsFromIds: async (_, { input }, { auth, base4 }) => {
       auth.check();
       const { ids, sort, pagination } = input;
       const criteria = { _id: { $in: ids } };
