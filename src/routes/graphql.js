@@ -19,6 +19,7 @@ router.use(authenticate);
 const server = new ApolloServer({
   schema,
   playground: false,
+  introspection: true,
   context: ({ req }) => {
     const { auth } = req;
     const base4 = new Base4({ db, tenantKey: req.get('X-Tenant-Key') });
