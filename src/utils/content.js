@@ -42,4 +42,12 @@ const createTitle = async (doc, base4) => {
   return title;
 };
 
-module.exports = { createTitle };
+const createDescription = (doc) => {
+  if (!isObject(doc)) return null;
+  const description = striptags((Base4.fillMutation(doc, 'Website', 'teaser') || '').trim());
+  if (description) return description;
+  const body = striptags(Base4.fillMutation(doc, 'Website', 'body') || '');
+  return `${body.substring(0, 155)}...`;
+};
+
+module.exports = { createTitle, createDescription };

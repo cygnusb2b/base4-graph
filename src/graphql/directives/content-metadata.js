@@ -1,5 +1,5 @@
 const { SchemaDirectiveVisitor } = require('graphql-tools');
-const { createTitle } = require('../../utils/content');
+const { createTitle, createDescription } = require('../../utils/content');
 
 class ContentMetadataDirective extends SchemaDirectiveVisitor {
   /**
@@ -10,7 +10,7 @@ class ContentMetadataDirective extends SchemaDirectiveVisitor {
     // eslint-disable-next-line no-param-reassign
     field.resolve = async (doc, _, { base4 }) => ({
       title: await createTitle(doc, base4),
-      description: '',
+      description: createDescription(doc),
     });
   }
 }
