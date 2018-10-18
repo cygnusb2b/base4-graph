@@ -4,6 +4,7 @@ const { importSchema } = require('graphql-import');
 const resolvers = require('./resolvers');
 const {
   ArrayValueDirective,
+  ContentMetadata,
   ContentPathDirective,
   ContentQueryAllDirective,
   ContentQueryHashDirective,
@@ -28,6 +29,7 @@ module.exports = makeExecutableSchema({
   resolvers,
   schemaDirectives: {
     arrayValue: ArrayValueDirective,
+    contentMetadata: ContentMetadata,
     contentPath: ContentPathDirective,
     contentQueryAll: ContentQueryAllDirective,
     contentQueryHash: ContentQueryHashDirective,

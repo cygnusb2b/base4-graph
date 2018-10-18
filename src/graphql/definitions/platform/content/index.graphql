@@ -51,6 +51,11 @@ type PlatformContentSchedules {
   email(input: RelatedEmailSchedulesInput = {}): EmailScheduleConnection! @refMany(model: "email.Schedule", localField: "_id", foreignField: "content.$id")
 }
 
+type PlatformContentMetadata {
+  title: String
+  description: String
+}
+
 enum PlatformContentMutation {
   Email
   Magazine
@@ -141,6 +146,7 @@ interface PlatformContent {
   slug: String @value(localField: "mutations.Website.slug")
 
   # GraphQL-only fields.
+  metadata: PlatformContentMetadata! @contentMetadata
   createdDate(input: MomentFormat = {}): String @momentFormat(localField: "created")
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
