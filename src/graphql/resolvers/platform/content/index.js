@@ -13,6 +13,13 @@ module.exports = {
     },
   },
 
+  PlatformContentCompany: {
+    scheduledWebsiteSectionIds: async ({ _id }, _, { base4 }) => {
+      const coll = await base4.collection('website', 'Schedule');
+      return coll.distinct('section', { 'content.$id': _id });
+    },
+  },
+
   /**
    *
    */

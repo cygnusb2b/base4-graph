@@ -86,6 +86,8 @@ type PlatformContentCompany implements PlatformContent {
   # GraphQL-only fields.
   # @see Cygnus\ApplicationBundle\Icarus\BlockHandler::PlatformContentCompanyContentQuery
   companyRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: company)
+  # Unique list of WebsiteSections the content is scheduled to (for CUF)
+  scheduledWebsiteSectionIds: [Int!]
 }
 
 type PlatformContentCompanyConnection @paginated {
