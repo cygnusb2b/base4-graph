@@ -151,7 +151,7 @@ interface PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
-  canonicalPath(input: PlatformContentCanonicalPathInput = {}): String! @contentPath
+  canonicalPath: String! @contentPath
   # Determines if this content item should redirect to another location.
   redirectTo: String @contentRedirectTo
 
@@ -246,10 +246,6 @@ input PlatformContentQueryPublished {
   since: Date
   sort: PlatformContentSortInput = { field: published, order: desc }
   pagination: PaginationInput = {}
-}
-
-input PlatformContentCanonicalPathInput {
-  fields: [PlatfromContentPathField] = [sectionAlias, type, id, slug]
 }
 
 input PlatformContentSortInput {

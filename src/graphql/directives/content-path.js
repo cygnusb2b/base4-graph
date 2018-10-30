@@ -28,12 +28,12 @@ class ContentPathDirective extends SchemaDirectiveVisitor {
    */
   visitFieldDefinition(field) { // eslint-disable-line class-methods-use-this
     // eslint-disable-next-line no-param-reassign
-    field.resolve = async (doc, { input }, ctx) => {
-      const { fields } = input;
+    field.resolve = async (doc, _, ctx) => {
+      const { contentPaths } = ctx;
 
-      if (!fields.includes('id')) {
+      if (!contentPaths.includes('id')) {
         throw new UserInputError('The canonicalPath arguments must at least contain "id"', {
-          invalidArgs: fields,
+          invalidArgs: contentPaths,
         });
       }
 
@@ -41,7 +41,7 @@ class ContentPathDirective extends SchemaDirectiveVisitor {
       const types = ['Promotion', 'TextAd'];
       if (types.includes(type) && linkUrl) return linkUrl;
 
-      const values = await Promise.all(fields.map((key) => {
+      const values = await Promise.all(contentPaths.map((key) => {
         const fn = resolvers[key];
         return typeof fn === 'function' ? fn(doc, ctx) : doc[key];
       }));

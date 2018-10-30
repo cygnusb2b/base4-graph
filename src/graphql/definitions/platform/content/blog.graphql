@@ -33,7 +33,7 @@ type PlatformContentBlog implements PlatformContent {
   updatedDate(input: MomentFormat = {}): String @momentFormat(localField: "updated")
   publishedDate(input: MomentFormat = {}): String @momentFormat(localField: "published")
   unpublishedDate(input: MomentFormat = {}): String @momentFormat(localField: "unpublished")
-  canonicalPath(input: PlatformContentCanonicalPathInput = {}): String! @contentPath
+  canonicalPath: String! @contentPath
   redirectTo: String @contentRedirectTo
   ownedRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: owned)
   inverseRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: inverse)

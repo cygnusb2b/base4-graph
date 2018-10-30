@@ -16,6 +16,12 @@ const authenticate = (req, res, next) => {
 };
 router.use(authenticate);
 
+const getCanonicalPaths = (req) => {
+  const header = req.get('x-content-canonical-paths');
+  if (!header) return ['sectionAlias', 'type', 'id', 'slug'];
+  return header.split(',');
+};
+
 const server = new ApolloServer({
   schema,
   playground: false,
@@ -23,7 +29,7 @@ const server = new ApolloServer({
   context: ({ req }) => {
     const { auth } = req;
     const base4 = new Base4({ db, tenantKey: req.get('X-Tenant-Key') });
-    return { auth, base4 };
+    return { auth, base4, contentPaths: getCanonicalPaths(req) };
   },
 });
 server.applyMiddleware({ app: router, path: '/' });
