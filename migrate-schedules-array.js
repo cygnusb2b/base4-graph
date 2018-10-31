@@ -55,7 +55,7 @@ db.getCollection('Schedule').aggregate([
     },
   },
   { $out: 'SectionQuery' },
-]);
+], { allowDiskUse: true });
 
 db.getCollection('SectionQuery').createIndex({ 'schedules.sectionId' : 1, 'schedules.optionId' : 1 });
 db.getCollection('SectionQuery').createIndex({ contentId: 1 }, { unique: true });
