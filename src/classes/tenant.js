@@ -33,6 +33,16 @@ const tenants = [
   'scomm_nvp',
   'scomm_nvs',
   'scomm_wcp',
+  // PennWell
+  'ebm_cim',
+  'ebm_ils',
+  'ebm_ias',
+  'ebm_lfw',
+  'ebm_leds',
+  'ebm_lw',
+  'ebm_mae',
+  'ebm_up',
+  'ebm_vsd',
 ];
 
 class Tenant {
