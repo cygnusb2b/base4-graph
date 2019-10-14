@@ -23,6 +23,7 @@ const tenants = [
   'ebm_hpn',
   'ebm_mlo',
   'ebm_pm',
+  'ebm_pcm',
   'ebm_wto',
   'indm_cen',
   'indm_ddt',
@@ -43,6 +44,15 @@ const tenants = [
   'ebm_mae',
   'ebm_up',
   'ebm_vsd',
+  'ebm_bow',
+  'ebm_btr',
+  'ebm_de',
+  'ebm_diq',
+  'ebm_os',
+  'ebm_pia',
+  'ebm_rdh',
+  'ebm_su',
+  'ebm_up',
 ];
 
 class Tenant {
