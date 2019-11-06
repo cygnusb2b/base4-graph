@@ -53,6 +53,8 @@ const tenants = [
   'ebm_rdh',
   'ebm_su',
   'ebm_up',
+  'ebm_ww',
+  'ebm_ogj',
   'pmmi_all',
   'indm_all',
 ];
