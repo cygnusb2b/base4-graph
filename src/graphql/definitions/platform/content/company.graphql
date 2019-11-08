@@ -88,6 +88,16 @@ type PlatformContentCompany implements PlatformContent {
   # GraphQL-only fields.
   # @see Cygnus\ApplicationBundle\Icarus\BlockHandler::PlatformContentCompanyContentQuery
   companyRelatedTo(input: PlatformContentRelatedInput = {}): PlatformContentConnection! @relatedContent(type: company)
+
+  numberOfEmployees: String
+  trainingInformation: String
+  yearsInOperation: String
+  salesRegion: String
+  servicesProvided: String
+  salesChannels: String
+  productSummary: String
+  serviceInformation: String
+  warrantyInformation: String
 }
 
 type PlatformContentCompanyConnection @paginated {
