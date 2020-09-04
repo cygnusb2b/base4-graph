@@ -57,7 +57,7 @@
     "is-plain-object": "^2.0.4",
     "moment": "^2.22.2",
     "moment-timezone": "^0.5.21",
-    "mongodb": "^3.1.4",
+    "mongodb": "^3.1.13",
     "object-path": "^0.11.4",
     "passport": "^0.4.0",
     "passport-http-bearer": "^1.0.1",
